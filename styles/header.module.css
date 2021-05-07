@@ -4,6 +4,7 @@
     top: 0px;
     left: 0px;
     right: 0px;
+    z-index: 1000;
 }
 #appBar{
     height: 56px;
@@ -43,9 +44,9 @@
     float: right;
     overflow: hidden;
     line-height: 31px;
-    margin-left: 10px;
+    margin-left: 18px;
     border-left: 1px solid #7f8b95;
-    padding-left: 10px;
+    padding-left: 20px;
     height: 30px;
 }
 .portrait{
