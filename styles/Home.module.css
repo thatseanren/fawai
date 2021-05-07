@@ -119,3 +119,9 @@
     flex-direction: column;
   }
 }
+.homeBox{
+  width: 1232px;
+  padding: 0 16px;
+  margin: 0px auto;
+  padding-top: 56px;
+}
