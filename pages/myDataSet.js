@@ -15,6 +15,10 @@ export default class my extends React.Component{
         super(props);
         this.state = {
             focusFn: 0,
+            data:[{title:'数据格式',arr:['dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124']},
+            {title:'标注类型',arr:['dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124']},
+            {title:'任务类型',arr:['dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124']}
+            ],
         };
     }
     
@@ -47,7 +51,7 @@ export default class my extends React.Component{
                         </div>
                     </div>
                     <div className={DataSet.leftContent}>
-                        <DataSetLeft />
+                        <DataSetLeft data={this.state.data} />
                     </div> 
                 </div>
             </div>
