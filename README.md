@@ -32,6 +32,3 @@ We will be using _flask_ as our backend service, _socket.io_ as our communicatio
 
 3. Synchronousing annotation result
     when a annotation is drew it will be passed through socket to backend and saved. 
-
-
-
