@@ -16,6 +16,14 @@ export default class Home extends React.Component{
         ],
     };
   }
+
+  componentDidMount() {
+    localStorage.setItem("phone", "123")
+  //对象
+    let user = JSON.parse(localStorage.getItem("username"))
+    console.log(user)
+  }
+
   render() {
 
   // localStorage.setItem("phone", "123")
