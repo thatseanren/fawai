@@ -1,11 +1,11 @@
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
+  /* min-height: 100vh; */
+  /* padding: 0 0.5rem; */
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .main {
@@ -118,4 +118,107 @@
     width: 100%;
     flex-direction: column;
   }
+}
+.homeBox{
+  background: #324d57;
+  width: 100%;
+  height: 424px;
+  padding: 0 16px;
+  margin: 0px auto;
+  margin-top: 56px;
+  position: relative;
+}
+.img{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  background-size: 100%;
+  bottom: 0px;
+}
+.imgleft{
+  float: left;
+}
+.imgright{
+  float: right;
+}
+.searchBox{
+  position: absolute;
+  left: 50%;
+  top: calc(28% + 140px);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: #fff;
+  height: 56px;
+  border-radius: 5px;
+  width: 960px;
+}
+.searchHome{
+  padding: 0px 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.searchLeft{
+  width: calc(100% - 200px);
+  display: flex;
+  flex-wrap: wrap;
+}
+.searchInput{
+  height: 56px;
+  border: none;
+  background: transparent;
+  outline: transparent;
+  font-size: 16px;
+  color: #7f8b95;
+  width: calc(100% - 254px);
+  margin-left: 20px;
+}
+.searchRight{
+  width: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  color: #7f8b95;
+  font-size: 14px;
+  display: inline-block;
+  line-height: 56px;
+  text-align: end;
+}
+.searchNumber{
+  color: #1bdcd7;
+  margin-right: 4px;
+}
+.homeTitle{
+  font-size: 40px;
+  display: flex;
+  -webkit-flex-flow: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  flex-flow: column;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  color: #fff;
+  line-height: 1.5;
+}
+.listContainer{
+  display: flex;
+}
+.filterContainer{
+  width: 280px;
+  margin-right: 8px;
+  padding-top: 30px;
+}
+.listHome{
+  width: 1223px;
+  margin: 0px auto;
 }

@@ -1,10 +1,13 @@
-import DataSet from '../styles/DataSet.module.css'
+import DataSet from '../styles/DataSet.module.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import KeyboardArrowUpRoundedIcon from '@material-ui/icons/KeyboardArrowUpRounded';
 
 export default class left extends React.Component{
+    
+    //切换数据
     handle = (value,number,ind) => {
         console.log(value+"+"+number);
         const listindex = this.state.index
@@ -13,7 +16,8 @@ export default class left extends React.Component{
             index :listindex
         });
     }
-
+    
+    //展开全部数据
     open = value => {
         const openindex = this.state.openlist
         openindex[value] === 0 ? openindex[value] = 1 : openindex[value] = 0;
@@ -22,11 +26,19 @@ export default class left extends React.Component{
         });
     }
 
+    onscrollto = value => {
+        window.scrollTo({ 
+            top: 0, 
+            behavior: "smooth" 
+        });
+    }
+
     constructor(props) {
         super(props);
         this.state = {
             index:[0,0,0],
             openlist:[0,0,0],
+            scroindex:0,
         };
     }
 
@@ -39,7 +51,11 @@ export default class left extends React.Component{
         const scrollTop = (event.srcElement ? event.srcElement.documentElement.scrollTop : false) 
                                     || window.pageYOffset
                                     || (event.srcElement ? event.srcElement.body.scrollTop : 0);
-        console.log(scrollTop)
+        let scroind = 0
+        scrollTop > 0 ? scroind = 1 : scroind = 0;
+        this.setState({
+            scroindex :scroind
+        });
     }
 
 render() {
@@ -49,6 +65,9 @@ render() {
 
     return (
         <div>
+            <div onClick={()=> this.onscrollto()} className={DataSet.scro} style={{display: this.state.scroindex === 0? 'none' : 'block'}}>
+                <KeyboardArrowUpRoundedIcon style={{ fontSize: 32}} />
+            </div>
             <div className={DataSet.left}>
                 {data.map((item,index) =>{
                     return(
@@ -68,7 +87,7 @@ render() {
                     </div>
                     <div className={DataSet.arrow} onClick={()=> this.open(index)}>                   
                         {this.state.openlist[index] === 0 ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
-                        <div className={DataSet.arrowOpen}>展开全部</div>
+                        <div className={DataSet.arrowOpen}>{this.state.openlist[index] === 0 ? '展开全部' : '收起'}</div>
                     </div>
                 </div>
                     )
