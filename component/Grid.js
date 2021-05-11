@@ -84,7 +84,7 @@ export default function Dataset(props) {
 
     return (
         <div className={"first_Dataset_Div"} style={{ width: "calc(100% - 280px)", display: "flex", paddingTop: "15px",flexWrap:"wrap" }}>
-            {tags.map(value=><Paper className={"second_Dataset_Div"} style={{ width: "calc((100% - 32px)/3)", height: "fit-content",marginRight:"10px",marginBottom:"16px" }} elevation={1}>
+            {tags.map(value=> <Paper className={"second_Dataset_Div"} style={{ width: "calc((100% - 32px)/3)", height: "fit-content",marginRight:"10px",marginBottom:"16px" }} elevation={1}>
                 <Grid container justify="center" style={{ Width: "calc(100% - 32px)", flexFlow: "column" }} >
                     <Grid item className={"forth_Dataset_Div_Grid_item"} style={{ position: "relative" }}  >
                         <img className={classes.img} />
@@ -127,7 +127,7 @@ export default function Dataset(props) {
                                 {props.category || "Category"}
                             </span>
                         </div>
-                        {<div className={classes.metaData_Div}> {tags}</div>}
+                        {<div className={classes.metaData_Div} > {tags}</div>}
                         <div className={classes.metaData_Div}>
                             <span style={{ fontSize: "12px" }}>
                                 {props.author || "Author"}
