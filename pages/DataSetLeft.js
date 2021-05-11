@@ -60,6 +60,7 @@ export default class left extends React.Component{
 
 render() {
     const {data} = this.props;
+
     
 
     return (
