@@ -60,7 +60,6 @@ export default class left extends React.Component{
 
 render() {
     const {data} = this.props;
-    console.log(this.state.index);
     
 
     return (
