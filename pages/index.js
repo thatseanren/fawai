@@ -68,6 +68,7 @@ export default class Home extends React.Component{
           <DataSetLeft data={this.state.data} />
           </div>
         </div>
+        < Dataset />
       </div>
 
     </div>
