@@ -6,14 +6,14 @@ import Header from './header.js'
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded'
 import DataSetLeft from './DataSetLeft.js'
 
-export default class Home extends React.Component{
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        data:[{title:'数据格式',arr:['dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124']},
-        {title:'标注类型',arr:['dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124']},
-        {title:'任务类型',arr:['dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124','dd21','124']}
-        ],
+      data: [{ title: '数据格式', arr: ['dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124'] },
+      { title: '标注类型', arr: ['dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124'] },
+      { title: '任务类型', arr: ['dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124'] }
+      ],
     };
   }
 
@@ -61,14 +61,14 @@ export default class Home extends React.Component{
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.listHome}>
-        <div className={styles.listContainer}>
-          <div className={styles.filterContainer}>
-          <DataSetLeft data={this.state.data} />
+        <div className={styles.listHome}>
+          <div className={styles.listContainer}>
+            <div className={styles.filterContainer}>
+              <DataSetLeft data={this.state.data} />
+            </div>
           </div>
+
         </div>
-        < Dataset />
       </div>
 
     </div>
