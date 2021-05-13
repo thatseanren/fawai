@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx'
 import Dataset from '../component/Grid'
 
-export default class my extends React.Component {
+export default class My extends React.Component {
 
     constructor(props) {
         super(props);
