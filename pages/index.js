@@ -22,6 +22,13 @@ export default class Home extends React.Component {
     //对象
     let user = JSON.parse(localStorage.getItem("username"))
     console.log(user)
+    // Remove the server-side injected CSS.
+    // const jssStyles = document.querySelector(`style[data-meta~="makeStyles"]`)
+    // if (jssStyles) {
+    //   console.log(`remove jssStyles`)
+    //   jssStyles.parentElement.removeChild(jssStyles);
+    // }
+
   }
 
   render() {
