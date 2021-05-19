@@ -14,6 +14,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import PagesIcon from "@material-ui/icons/Pages";
 import { TabPanel, TabContext } from "@material-ui/lab";
 const useStyles = makeStyles({
+  Tasktag: {
+    root: {
+      background: "rgba(90,60,255,0.063)",
+      letterSpacing: "0.5px",
+      fontSize: "12px",
+      padding: "2px 8px",
+      color: "rgb(90,60,255)",
+      marginRight: "8px",
+    },
+  },
+
   autocomplete: {
     root: { width: "343px" },
     '& div[class*="MuiFormControl-root"][class*="MuiTextField-root"]': {
@@ -29,10 +40,10 @@ const useStyles = makeStyles({
       '& div[class*="MuiInputBase-root"][class*="Mui-focused"]': {
         paddingBottom: "0",
         paddingTop: "0",
-        "& input": { padding: "8px 0" },
+        "& input": { padding: "8px 0px 8px 12px" },
       },
       '&  div[class*="MuiInputBase-root"]': {
-        "& input": { padding: "8px 0" },
+        "& input": { padding: "8px 0px 8px 12px" },
       },
     },
   },
@@ -88,9 +99,15 @@ const useStyles = makeStyles({
   },
 });
 
+function Tasktag(props) {
+  const classes = useStyles();
+  return <div className={classes.Tasktag.root}>{props.tag || "2D矩形"}</div>;
+}
+
 export default function AnnotationTask(props) {
   const [value, setValue] = React.useState(1);
   const [tab, setTab] = React.useState(1);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -107,6 +124,7 @@ export default function AnnotationTask(props) {
         top: "56px",
         flexDirection: "column",
         margin: "16px 8px",
+        width: "initial",
       }}
     >
       <Grid
@@ -119,6 +137,7 @@ export default function AnnotationTask(props) {
           flexWrap: "nowrap",
           alignItems: "center",
           height: "40px",
+          width: "initial",
         }}
       >
         <Grid item style={{ flexBasis: "347px" }}>
@@ -169,7 +188,13 @@ export default function AnnotationTask(props) {
             {/* <TabPanel value={2} /> */}
           </Tabs>
           <TabPanel
-            style={{ display: "flex", margin: "8px", padding: "0px" }}
+            style={{
+              flexFlow: "nowrap",
+
+              display: "flex",
+              margin: "8px",
+              padding: "0px",
+            }}
             value={1}
             children={
               <>
@@ -180,7 +205,13 @@ export default function AnnotationTask(props) {
             }
           />
           <TabPanel
-            style={{ display: "flex", margin: "8px", padding: "0px" }}
+            style={{
+              display: "flex",
+              margin: "8px",
+              padding: "0px",
+
+              flexFlow: "nowrap",
+            }}
             value={2}
             children={
               <>
@@ -202,7 +233,7 @@ export default function AnnotationTask(props) {
 function PaperLikeTask(props) {
   const classes = useStyles();
   return (
-    <Paper style={{ width: "343px", margin: "8px" }}>
+    <Paper style={{ margin: "8px" }}>
       <Grid container style={{ padding: "20px 16px 12px" }}>
         <Grid
           item
@@ -219,7 +250,7 @@ function PaperLikeTask(props) {
           {"Name"}
         </Grid>
         <Grid item container style={{ marginBottom: "12px" }}>
-          <TagsWithin />
+          <Tasktag />
         </Grid>
         <Grid item container style={{ marginBottom: "8px" }}>
           <div
@@ -308,25 +339,9 @@ function PaperLikeTask(props) {
           }}
         >
           {" "}
-          标注中{" "}
+          {"标注中"}{" "}
         </span>
       </Grid>
     </Paper>
-  );
-}
-function TagsWithin(props) {
-  return (
-    <div
-      style={{
-        background: "rgba(90,60,255,0.063)",
-        letterSpacing: "0.5px",
-        fontSize: "12px",
-        padding: "2px 8px",
-        color: "rgb(90,60,255)",
-        marginRight: "8px",
-      }}
-    >
-      {"2D矩形"}
-    </div>
   );
 }
