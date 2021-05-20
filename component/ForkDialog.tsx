@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import Dialog from "@material-ui/core/Dialog"
+import Dialog from "@material-ui/core/Dialog";
 import Radio from "@material-ui/core/Radio";
 import {
   FormLabel,
   DialogContent,
   DialogTitle,
-  RadioGroup
+  RadioGroup,
 } from "@material-ui/core";
 import PublicIcon from "@material-ui/icons/Public";
 import PersonIcon from "@material-ui/icons/Person";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 const useStyles = makeStyles(
   {
@@ -19,27 +19,28 @@ const useStyles = makeStyles(
       margin: "0",
       fontSize: "14px",
       color: "#a8b0b7",
-      marginBottom: "12px"
+      marginBottom: "12px",
     },
     Size12: {
-      fontSize: "12px"
+      fontSize: "12px",
     },
     MarginBottom16: {
-      marginBottom: "16px"
+      marginBottom: "16px",
     },
     flexDiv: {
       display: "flex",
-      flexFlow: "column"
+      flexFlow: "column",
     },
     flexMargin: {
       display: "flex",
       flexFlow: "row",
-      marginTop: "10px"
-    }
+      marginTop: "10px",
+    },
   },
   { classNamePrefix: "pureCSS" }
 );
-export default function ForkDialog(props) {
+
+export default function ForkDialog(props: any): any {
   const classes = useStyles();
   const [show, setShow] = useState(true);
   const [dataSetName, setDataSetName] = useState("");
