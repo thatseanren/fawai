@@ -18,7 +18,7 @@ export default function ForkPage(props) {
                 </Link>
                 <Link color="inherit" href="/getting-started/installation/">
                     Core
-  </Link>
+                </Link>
             </Breadcrumbs>
 
         </React.Fragment>
