@@ -86,6 +86,10 @@ const useStyles = makeStyles({
     }
 })
 export default function Dataset(props) {
+    const {data} = props
+    console.log(data);
+    console.log(1);
+    
     const classes = useStyles();
     var tags = [];
     var sample = new Array(100);

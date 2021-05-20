@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link'
@@ -18,8 +18,14 @@ function App() {
                 <Link href="/myDataSet">
                     <a className={headerstyle.appBarLink}>我的数据集</a>
                 </Link>
+                <Link href="/dataDetailed">
+                    <a className={headerstyle.appBarLink}>我的数据集1</a>
+                </Link>
                 <Link href="/">
                     <a className={headerstyle.appBarLink}>公开数据集</a>
+                </Link>
+                <Link href="/tagDetails">
+                    <a className={headerstyle.appBarLink}>公开数据集444</a>
                 </Link>
             </div>
             <div className={headerstyle.barRight}>
