@@ -39,9 +39,9 @@ const useStyles = makeStyles({
         lineHeight: "7px",
       },
       '& div[class*="MuiInputBase-root MuiOutlinedInput-root MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"]':
-      {
-        padding: 0,
-      },
+        {
+          padding: 0,
+        },
       '& div[class*="MuiInputBase-root"][class*="Mui-focused"]': {
         paddingBottom: "0",
         paddingTop: "0",
@@ -111,9 +111,9 @@ const useStyles = makeStyles({
   taskPaper: {
     margin: "8px",
     // https://css-tricks.com/almanac/selectors/n/nth-of-type/
-    '& > div:nth-of-type(1)': {
+    "& > div:nth-of-type(1)": {
       padding: "20px 16px 12px",
-      '& > div:nth-of-type(1)': {
+      "& > div:nth-of-type(1)": {
         color: "rgb(75,57,83)",
         letterSpacing: "1px",
         fontWeight: "bold",
@@ -122,48 +122,48 @@ const useStyles = makeStyles({
         overflow: "hidden",
         textOverflow: "ellipsis",
       },
-      '& > div:nth-of-type(2)': {
-        '& div': {
+      "& > div:nth-of-type(2)": {
+        "& div": {
           background: "rgba(90,60,255,0.063)",
           letterSpacing: "0.5px",
           fontSize: "12px",
           padding: "2px 8px",
           color: "rgb(90,60,255)",
           marginRight: "8px",
-        }
+        },
       },
-      '& > div:nth-of-type(3)': {
-        '& > div:nth-of-type(1)': {
+      "& > div:nth-of-type(3)": {
+        "& > div:nth-of-type(1)": {
           flexBasis: "56px",
           color: "#999",
           fontSize: "14px",
           boxFlex: "0",
         },
-        '& > div:nth-of-type(2)': {
+        "& > div:nth-of-type(2)": {
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
           paddingLeft: "16px",
           fontSize: "14px",
-        }
+        },
       },
-      '& > div:nth-of-type(4)': {
-        '& > div:nth-of-type(1)': {
+      "& > div:nth-of-type(4)": {
+        "& > div:nth-of-type(1)": {
           flexBasis: "56px",
           color: "#999",
           fontSize: "14px",
           boxFlex: "0",
         },
-        '& > div:nth-of-type(2)': {
+        "& > div:nth-of-type(2)": {
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
           paddingLeft: "16px",
           fontSize: "14px",
-        }
+        },
       },
     },
-    '& > div:nth-of-type(2)': {
+    "& > div:nth-of-type(2)": {
       whiteSpace: "nowrap",
       marginBottom: "16px",
       padding: "0px 16px",
@@ -172,8 +172,8 @@ const useStyles = makeStyles({
       color: "rgb(39, 42,66)",
       fontSize: "12px",
     },
-    '& > div:nth-of-type(3)': {
-      '& span': {
+    "& > div:nth-of-type(3)": {
+      "& span": {
         marginLeft: "12px",
         fontSize: "14px",
         fontWeight: "bold",
@@ -181,34 +181,45 @@ const useStyles = makeStyles({
         color: "rgb(4,178,238)",
       },
     },
-    info: {
-
-    }
-  }
+    info: {},
+  },
 });
-function Tasktag(props) {
+const Tasktag = (props: { tag: string }) => {
   const classes = useStyles();
   return <div>{props.tag || "2D矩形"}</div>;
-}
-function PaperLikeTask(props) {
+};
+const PaperLikeTask = (props: {
+  tags: string[];
+  Name: string;
+  Team: string;
+  Quantity: string;
+  TaskStatus: string;
+}) => {
+
   const classes = useStyles();
+  
   return (
     <Paper className={classes.taskPaper} component={"taskPaper"}>
-      <Grid container >
-        <Grid item> {props.datasetName || "Name"} </Grid>
+      <Grid container>
+        <Grid item> {props.Name || "Sample"} </Grid>
         <Grid item container style={{ marginBottom: "12px" }}>
-          <Tasktag />
+          {/* {
+            props.tags.map(value =>{
+              return(<Tasktag tag={value}/>)
+            })
+          } */}
+          <Tasktag tag={"Sample"} />
         </Grid>
         <Grid item container style={{ marginBottom: "8px" }}>
           <div children="数据集" />
-          <div children={"一汽南京"} />
+          <div children={props.Team || "Sample"} />
         </Grid>
         <Grid item container>
           <div children="数据量" />
-          <div children={"10000"} />
+          <div children={props.Quantity || "Sample"} />
         </Grid>
       </Grid>
-      <Grid item container >
+      <Grid item container>
         <AssignmentIndIcon className={classes.icon} />
         <span style={{ color: "rgb(39, 42,66))" }}> {"雷达开发部"}</span>
         <span style={{ margin: "0px 6px" }}> | </span>
@@ -216,27 +227,47 @@ function PaperLikeTask(props) {
         <span style={{ color: "rgb(39, 42,66))" }}> 2021-5-17 </span>
       </Grid>
       <Divider light />
-      <Grid item container style={{ padding: "12px 16px", }} >
+      <Grid item container style={{ padding: "12px 16px" }}>
         <i>
           <FiberManualRecordIcon
             style={{ color: "rgb(4,178,238)", fontSize: "14px" }}
           ></FiberManualRecordIcon>
         </i>
-        <span > {" "} {"标注中"}{" "} </span>
+        <span> {props.TaskStatus || "Sample"} </span>
       </Grid>
     </Paper>
   );
-}
-export default function AnnotationTask(props) {
+};
+
+export const AnnotationTask: React.FC<{}> = (props) => {
   const [value, setValue] = React.useState(1);
   const [tab, setTab] = React.useState(1);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   const handleTabChange = (e, v) => {
     setTab(v);
   };
+  const needTask: () => {
+    finish?: {
+      tags: string[];
+      Name: string;
+      Team: string;
+      Quantity: string;
+      TaskStatus: string;
+    }[];
+    unfinished?: {
+      tags: string[];
+      Name: string;
+      Team: string;
+      Quantity: string;
+      TaskStatus: string;
+    }[];
+  } = () => {
+    
+    return ["a"];
+  };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const classes = useStyles();
   return (
     <Grid container component={"body"} className={classes.body}>
@@ -264,7 +295,11 @@ export default function AnnotationTask(props) {
             <PagesIcon style={{ fontSize: "16px", marginRight: "8px" }} />
             服务介绍
           </Button>
-          <Button color="primary" variant="contained" className={classes.annotation} >
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.annotation}
+          >
             {" "}
             新建标注项目
           </Button>
@@ -289,24 +324,78 @@ export default function AnnotationTask(props) {
             value={1}
             children={
               <>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
               </>
             }
           />
           <TabPanel
-            component={"paperContainer"}
+            // component="paperContainer"
             className={classes.paperContainer}
             value={2}
             children={
               <>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
-                <PaperLikeTask></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
+                <PaperLikeTask
+                  tags={["1", "2d"]}
+                  Name={"HardCoding"}
+                  Team={"HardCoding"}
+                  Quantity={"HardCoding"}
+                  TaskStatus={"HardCoding"}
+                ></PaperLikeTask>
               </>
             }
           />
@@ -314,6 +403,5 @@ export default function AnnotationTask(props) {
       </Grid>
     </Grid>
   );
-}
-
-
+};
+export default AnnotationTask;
