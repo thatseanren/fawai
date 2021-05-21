@@ -108,12 +108,12 @@ export default function Dataset(props) {
         )
     });
     useEffect(() => {
-
+        
     })
     return (
         <div className={"first_Dataset_Div"} style={{ width: "calc(100% - 280px)", display: "flex", paddingTop: "15px", flexWrap: "wrap" }}>
             {tags.map(value =>
-                <Link href ="/fork/[name]/[set]"  as={`/fork/${"rensiyang"}/1`} >
+                <Link href ="/dataDetailed"  as={`/fork/${"rensiyang"}/1`} >
                     <a style={{ cursor: "pointer", width: "calc((100% - 32px)/3)", height: "fit-content", marginRight: "10px", marginBottom: "16px", position: "relative" }}>
                         <Paper className={clsx(classes.paper_hover, "second_Dataset_Div")} style={{ height: "fit-content", marginRight: "10px", marginBottom: "16px", position: "relative" }} elevation={1} >
                             <Grid container justify="center" style={{ Width: "calc(100% - 32px)", flexFlow: "column" }} >

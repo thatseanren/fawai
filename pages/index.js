@@ -34,18 +34,6 @@ export default class Home extends React.Component {
     // localStorage.setItem("phone", "123")
     // //对象
     // let user = JSON.parse(localStorage.getItem("username"))
-    // $.ajax({
-    //     type: "POST",
-    //     url: server_ip + 'get_record_list',
-    //     xhrFields: {
-    //       withCredentials: true
-    //     },
-    //     dataType: "json",
-    //     data: [],
-    //     success: function(res) {
-    //       console.log(res)
-    //     }
-    //   })
   }
 
   render() {
