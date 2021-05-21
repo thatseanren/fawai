@@ -5,11 +5,14 @@ import styles from '../styles/Home.module.css'
 import Header from './header.js'
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded'
 import DataSetLeft from './DataSetLeft.js'
+import server_ip from './main_config.js'
 import DataSet from '../component/Grid'
+import axios from 'axios'
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      record:'',
       data: [{ title: '数据格式', arr: ['dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124'] },
       { title: '标注类型', arr: ['dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124'] },
       { title: '任务类型', arr: ['dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124', 'dd21', '124'] }
@@ -18,17 +21,19 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    localStorage.setItem("phone", "123")
-    //对象
-    let user = JSON.parse(localStorage.getItem("username"))
-    console.log(user)
-    // Remove the server-side injected CSS.
-    // const jssStyles = document.querySelector(`style[data-meta~="makeStyles"]`)
-    // if (jssStyles) {
-    //   console.log(`remove jssStyles`)
-    //   jssStyles.parentElement.removeChild(jssStyles);
-    // }
-
+    const that = this;
+    axios.get(server_ip + 'get_record_list').then(function (response) {
+      console.log(response);
+      that.setState({
+        record: response.data
+      });
+      console.log(that.state.record)
+    }) .catch(function (error) {
+      console.log(error);
+    });
+    // localStorage.setItem("phone", "123")
+    // //对象
+    // let user = JSON.parse(localStorage.getItem("username"))
   }
 
   render() {
@@ -75,7 +80,7 @@ export default class Home extends React.Component {
             <div className={styles.filterContainer}>
               <DataSetLeft data={this.state.data} />
             </div>
-            <DataSet />
+            <DataSet data={this.state.record} />
           </div>
 
         </div>
