@@ -42,14 +42,15 @@ const useStyles = makeStyles(
 
 export default function ForkDialog(props: any): any {
   const classes = useStyles();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [dataSetName, setDataSetName] = useState("");
   const [visibility, setVisibility] = useState("Public");
   const handleCreate = () => {};
+
   return (
     <div style={{ position: "absolute", display: "flex" }}>
       <Dialog aria-labelledby="fork_dialog" open={show}>
-        <DialogTitle onClose={() => {}}>Fork数据集</DialogTitle>
+        <DialogTitle onClose={() => {}}> Fork数据集 </DialogTitle>
         <DialogContent dividers>
           <p className={classes.p14Gray}>
             通过开发者工具直接管理、使用、读取数据

@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import { Divider, Grid } from "@material-ui/core";
+import { Divider, Grid, Link } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import ScheduleIcon from "@material-ui/icons/Schedule";
@@ -13,6 +13,9 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import SearchIcon from "@material-ui/icons/Search";
 import PagesIcon from "@material-ui/icons/Pages";
 import { TabPanel, TabContext } from "@material-ui/lab";
+import clsx from "clsx";
+import axios from "axios";
+import server from "../pages/main_config";
 const useStyles = makeStyles({
   body: {
     position: "relative",
@@ -110,6 +113,7 @@ const useStyles = makeStyles({
   },
   taskPaper: {
     margin: "8px",
+    position: "relative",
     // https://css-tricks.com/almanac/selectors/n/nth-of-type/
     "& > div:nth-of-type(1)": {
       padding: "20px 16px 12px",
@@ -181,8 +185,19 @@ const useStyles = makeStyles({
         color: "rgb(4,178,238)",
       },
     },
-    info: {},
+    "&:hover:before": {
+      position: "absolute",
+      content: '""',
+      width: "100%",
+      height: "100%",
+      boxShadow: "5px 5px 18px 0 rgb(123 127 155 / 20%)",
+      opacity: 1,
+      borderRadius: "5px",
+      transition: "opacity .3s!important",
+      willChange: "auto",
+    },
   },
+  paper_hover: {},
 });
 const Tasktag = (props: { tag: string }) => {
   const classes = useStyles();
@@ -195,11 +210,12 @@ const PaperLikeTask = (props: {
   Quantity: string;
   TaskStatus: string;
 }) => {
-
   const classes = useStyles();
-  
+  React.useEffect(() => {
+    axios.get(`${server}`).catch((err) => console.log(err));
+  });
   return (
-    <Paper className={classes.taskPaper} component={"taskPaper"}>
+    <Paper className={clsx(classes.taskPaper)} component={"taskPaper"}>
       <Grid container>
         <Grid item> {props.Name || "Sample"} </Grid>
         <Grid item container style={{ marginBottom: "12px" }}>
@@ -261,7 +277,6 @@ export const AnnotationTask: React.FC<{}> = (props) => {
       TaskStatus: string;
     }[];
   } = () => {
-    
     return ["a"];
   };
   const handleChange = (event, newValue) => {
