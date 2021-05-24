@@ -13,6 +13,9 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import SearchIcon from "@material-ui/icons/Search";
 import PagesIcon from "@material-ui/icons/Pages";
 import { TabPanel, TabContext } from "@material-ui/lab";
+import ForkDialog from "./ForkDialog";
+import server_ip from './pages/man_config';
+import axios from 'axios';
 const useStyles = makeStyles({
   body: {
     position: "relative",
