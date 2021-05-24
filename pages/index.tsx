@@ -187,7 +187,7 @@ export default class Home extends React.Component<{}, HomeState> {
             <div className={styles.filterContainer}>
               <DataSetLeft data={this.state.data} />
             </div>
-            <DataSet data={this.state.List} />
+            <DataSet data={this.state.List} accessibility={"public"} />
           </div>
         </div>
       </div>

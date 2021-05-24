@@ -10,7 +10,7 @@ import VideocamIcon from "@material-ui/icons/Videocam";
 import StorageIcon from "@material-ui/icons/Storage";
 import clsx from "clsx";
 import Link from "next/link";
-import server from "../pages/main_config"
+import server from "../pages/main_config";
 const useStyles = makeStyles({
   briefInfo: {
     marginRight: "8px",
@@ -93,8 +93,8 @@ const useStyles = makeStyles({
     },
   },
 });
-export default function Dataset(
-  props: {
+export default function Dataset(props: {
+  data: {
     img: string;
     format: string;
     name: string;
@@ -105,8 +105,9 @@ export default function Dataset(
     category: string;
     create_time: string;
     department: string;
-  }[]
-) {
+  }[];
+  accessibility: string;
+}) {
   const classes = useStyles();
   return (
     <div
@@ -131,7 +132,7 @@ export default function Dataset(
           create_time,
           department,
         }) => (
-          <Link href="/dataDetailed" as={`/fork/${"rensiyang"}/1`}>
+          <Link href={`/dataDetailed/${props.accessibility}`} as={`/dataDetailed/${props.accessibility}`}>
             <a
               style={{
                 cursor: "pointer",
@@ -152,17 +153,16 @@ export default function Dataset(
                 }}
                 elevation={1}
               >
-                <Grid
-                  container
-                  justify="center"
-                  style={{  flexFlow: "column" }}
-                >
+                <Grid container justify="center" style={{ flexFlow: "column" }}>
                   <Grid
                     item
                     className={"forth_Dataset_Div_Grid_item"}
                     style={{ position: "relative", overflow: "hidden" }}
                   >
-                    <img className={classes.img} src={`${server}${img.slice(2,-1)}`}/>
+                    <img
+                      className={classes.img}
+                      src={`${server}${img.slice(2, -1)}`}
+                    />
                     <div className={classes.miniLabel}>
                       <div className={classes.briefInfo}>
                         <span className={classes.miniLabel_Span}>
@@ -174,10 +174,7 @@ export default function Dataset(
                         </span>
                         <span className={classes.miniLabel_Span}>
                           <BarChartIcon className={classes.miniLabel_icon} />
-                          <i style={{ fontSize: "12px" }}>
-                            {" "}
-                            {num || "C"}
-                          </i>
+                          <i style={{ fontSize: "12px" }}> {num || "C"}</i>
                         </span>
                         <span
                           style={{
@@ -188,10 +185,7 @@ export default function Dataset(
                           }}
                         >
                           <StorageIcon className={classes.miniLabel_icon} />
-                          <i style={{ fontSize: "12px" }}>
-                            {" "}
-                            {size || "S"}
-                          </i>
+                          <i style={{ fontSize: "12px" }}> {size || "S"}</i>
                         </span>
                       </div>
                     </div>

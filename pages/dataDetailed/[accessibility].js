@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
-import Header from "./header.js";
+import Header from "../header.js";
 import React from "react";
 import ReactDOM from "react-dom";
-import DataSet from "../styles/DataSet.module.css";
+import DataSet from "../../styles/DataSet.module.css";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
@@ -18,13 +18,15 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import clsx from "clsx";
-import Dataset from "../component/Grid";
-import ForkDialog from "../component/ForkDialog";
-
-const RefDialog = React.forwardRef((props,ref)=>{
-    return (<ForkDialog ref={ref}/>)
-})
-export default class Detailed extends React.Component {
+import Dataset from "../../component/Grid";
+import ForkDialog from "../../component/ForkDialog";
+import { useRouter } from "next/router";
+const Detailed_Wrapper = (props) => {
+  const { route } = useRouter();
+  return <Detailed {...props} router={route} />;
+};
+export default Detailed_Wrapper;
+export class Detailed extends React.Component {
   constructor(props) {
     super(props);
     this.ForkRef = React.createRef();
@@ -106,7 +108,7 @@ export default class Detailed extends React.Component {
     return (
       <div>
         <Header />
-        <RefDialog ref={this.ForkRef} />
+        <ForkDialog ref={this.ForkRef} />
         <div className={DataSet.home}>
           <div className={DataSet.grid}>
             <div className={DataSet.publicDataChip}>
@@ -158,7 +160,7 @@ export default class Detailed extends React.Component {
                 size="large"
                 color="primary"
                 onClick={() => {
-                  this.ForkRef.current
+                  this.ForkRef.current;
                 }}
               >
                 管理数据
