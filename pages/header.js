@@ -21,9 +21,6 @@ function App() {
                 <Link href="/">
                     <a className={headerstyle.appBarLink}>公开数据集</a>
                 </Link>
-                <Link href="/recordList">
-                    <a className={headerstyle.appBarLink}>数据记录</a>
-                </Link>
                 <Link href="/tools">
                     <a className={headerstyle.appBarLink}>应用</a>
                 </Link>
