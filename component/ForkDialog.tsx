@@ -13,6 +13,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import server_ip from '../pages/main_config';
+import axios from 'axios';
 const useStyles = makeStyles(
   {
     p14Gray: {
@@ -40,12 +42,29 @@ const useStyles = makeStyles(
   { classNamePrefix: "pureCSS" }
 );
 
+
 export default function ForkDialog(props: any): any {
+
+  // const openOpacity = (value) => {
+  //   console.log(value)
+  // }
+        
   const classes = useStyles();
   const [show, setShow] = useState(true);
   const [dataSetName, setDataSetName] = useState("");
   const [visibility, setVisibility] = useState("Public");
-  const handleCreate = () => {};
+  const handleCreate = () => {
+    axios.post(server_ip + 'add_dataset', {
+      name: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
   return (
     <div style={{ position: "absolute", display: "flex" }}>
       <Dialog aria-labelledby="fork_dialog" open={show}>
@@ -79,6 +98,7 @@ export default function ForkDialog(props: any): any {
                 value={visibility}
                 onChange={(e) => {
                   setVisibility(e.target.value);
+                  console.log(visibility);
                 }}
               >
                 {" "}
@@ -87,6 +107,7 @@ export default function ForkDialog(props: any): any {
                   <Radio
                     color="primary"
                     value={"Public"}
+                    // onChange={()=>{openOpacity("Public")}}
                     style={{ width: "24px", height: "24px" }}
                   />
                   <PublicIcon style={{ padding: "9px 9px 9px 0" }} />
@@ -102,6 +123,7 @@ export default function ForkDialog(props: any): any {
                   <Radio
                     value={"Private"}
                     color="primary"
+                    // onChange={()=>{openOpacity("Private")}}
                     style={{ width: "24px", height: "24px" }}
                   />
                   <PersonIcon style={{ padding: "9px 9px 9px 0" }} />
