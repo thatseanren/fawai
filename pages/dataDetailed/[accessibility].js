@@ -30,7 +30,7 @@ import {
   ClickAwayListener,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import ShareIcon from "@material-ui/icons/Share";
 const Detailed_Wrapper = (props) => {
   const route = useRouter();
   const id = route.query;
@@ -123,7 +123,7 @@ export class Detailed extends React.Component {
     // e.preventPro
   };
   componentDidMount() {
-    console.log(this.DialogRef,this.ButtonRef)
+    console.log(this.DialogRef, this.ButtonRef);
   }
   render() {
     let { accessibility } = this.props.router.query;
@@ -202,7 +202,9 @@ export class Detailed extends React.Component {
                     aria-controls={
                       this.state.openPopper ? "menu-list-grow" : undefined
                     }
-                    onClick={e=>{this.openPopper(e)}}
+                    onClick={(e) => {
+                      this.openPopper(e);
+                    }}
                   >
                     探索数据集
                     <ExpandMoreIcon style={{ marginLeft: "10px" }} />
@@ -224,10 +226,17 @@ export class Detailed extends React.Component {
                         }}
                       >
                         <Paper>
-                          <ClickAwayListener onClickAway={() => {this.openPopper()}}>
+                          <ClickAwayListener
+                            onClickAway={() => {
+                              this.openPopper();
+                            }}
+                          >
                             <MenuList>
-                              <MenuItem onClick={() =>this.DialogRef.current(true)}>
+                              <MenuItem
+                                onClick={() => this.DialogRef.current(true)}
+                              >
                                 {" "}
+                                <ShareIcon style={{marginRight:"10px",fontSize:"1.2rem"}}/>
                                 Fork数据集
                               </MenuItem>
                               <MenuItem> Comming Soon</MenuItem>
@@ -242,7 +251,6 @@ export class Detailed extends React.Component {
               )}
             </div>
             <ForDialogWrapper Syntec_ref={this.DialogRef} />
-            
           </div>
           <div className={DataSet.tabsContainer}>
             <div className={DataSet.muiButton}>

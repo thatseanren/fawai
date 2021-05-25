@@ -7,8 +7,8 @@ import headerstyle from'../styles/header.module.css';
 
 function App() {
     return (
-      <div className={headerstyle.Herder}>
-        <div id={headerstyle.appBar}>
+      <div className={headerstyle.Herder} style={{backgroundColor:"#324D57"}}id={"header_"}>
+        <div id={headerstyle.appBar} style={{backgroundColor:"#324D57"}}>
             <div className={headerstyle.logo}>
                  <Link href="/">
                     <a><Image src="/logo.png" alt="Fawai Logo" width={130} height={30} /></a>
