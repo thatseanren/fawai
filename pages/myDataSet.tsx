@@ -158,7 +158,7 @@ export default class My extends React.Component<
                 <DataSetLeft data={this.state.data} />
               </div>
             </div>
-            <Dataset data={this.state.List} />
+            <Dataset data={this.state.List} accessibility="private"/>
           </div>
         </div>
       </div>

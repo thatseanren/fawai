@@ -7,8 +7,8 @@ import headerstyle from'../styles/header.module.css';
 
 function App() {
     return (
-      <div className={headerstyle.Herder}>
-        <div id={headerstyle.appBar}>
+      <div className={headerstyle.Herder} style={{backgroundColor:"#324D57"}}id={"header_"}>
+        <div id={headerstyle.appBar} style={{backgroundColor:"#324D57"}}>
             <div className={headerstyle.logo}>
                  <Link href="/">
                     <a><Image src="/logo.png" alt="Fawai Logo" width={130} height={30} /></a>
@@ -18,7 +18,7 @@ function App() {
                 <Link href="/myDataSet">
                     <a className={headerstyle.appBarLink}>我的数据集</a>
                 </Link>
-                <Link href="/">
+                <Link href="/myDataSet">
                     <a className={headerstyle.appBarLink}>公开数据集</a>
                 </Link>
                 <Link href="/recordList">

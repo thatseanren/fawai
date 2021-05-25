@@ -130,6 +130,23 @@ export default class Home extends React.Component<{}, HomeState> {
     // localStorage.setItem("phone", "123")
     // //对象
     // let user = JSON.parse(localStorage.getItem("username"))
+    const homebox = document.querySelector('#homebox');
+    const header_ = document.querySelector('#header_');
+    let Observe_options = {
+      root:null,
+      rootMargin:"0px",
+      threshold:[0.9,0.89,0.88,0.8,0.7,0.5,0]
+    }
+    let callback = (entries, observer) =>{
+      entries.forEach(entry =>{
+        console.log(entry)
+        if (entry.intersectionRatio < 1) document.querySelector('#header_>div:nth-of-type(1)').style.backgroundColor = 'black'
+      })
+     
+    }
+
+    let observer = new IntersectionObserver(callback, Observe_options);
+    observer.observe(homebox)
   }
 
   render() {
@@ -145,7 +162,7 @@ export default class Home extends React.Component<{}, HomeState> {
           <link rel="icon" href="/logov.png" />
         </Head>
         <Header />
-        <div className={styles.homeBox}>
+        <div className={styles.homeBox} id = "homebox">
           {/* <div className={styles.img} style={{backgroundImage: "url(" + ("/bjt.png") + ")"}}> */}
           <div className={styles.img}>
             <Image

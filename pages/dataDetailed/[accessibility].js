@@ -19,18 +19,32 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import clsx from "clsx";
 import Dataset from "../../component/Grid";
-import ForkDialog from "../../component/ForkDialog";
+import ForDialogWrapper from "../../component/ForkDialog";
 import { useRouter } from "next/router";
+import {
+  Grow,
+  Popper,
+  MenuItem,
+  MenuList,
+  Paper,
+  ClickAwayListener,
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ShareIcon from "@material-ui/icons/Share";
 const Detailed_Wrapper = (props) => {
-  const { route } = useRouter();
+  const route = useRouter();
+  const id = route.query;
+  console.log(id);
   return <Detailed {...props} router={route} />;
 };
 export default Detailed_Wrapper;
 export class Detailed extends React.Component {
   constructor(props) {
     super(props);
-    this.ForkRef = React.createRef();
+    this.ButtonRef = React.createRef();
+    this.DialogRef = React.createRef();
     this.state = {
+      openPopper: false,
       openlist: 0,
       opacity: 0,
       showlist: 0, //显示隐藏数据列表
@@ -101,14 +115,22 @@ export class Detailed extends React.Component {
       fileshow: show,
     });
   };
+  openPopper = (e) => {
+    this.setState((prev) => {
+      let newState = !prev.openPopper;
+      return { openPopper: newState };
+    });
+    // e.preventPro
+  };
   componentDidMount() {
-    console.log(this.ForkRef.current);
+    console.log(this.DialogRef, this.ButtonRef);
   }
   render() {
+    let { accessibility } = this.props.router.query;
     return (
       <div>
         <Header />
-        <ForkDialog ref={this.ForkRef} />
+        {/* <ForkDialog ref={this.ForkRef} /> */}
         <div className={DataSet.home}>
           <div className={DataSet.grid}>
             <div className={DataSet.publicDataChip}>
@@ -155,17 +177,80 @@ export class Detailed extends React.Component {
               </div>
             </div>
             <div className={DataSet.dataButton}>
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                onClick={() => {
-                  this.ForkRef.current;
-                }}
-              >
-                管理数据
-              </Button>
+              {accessibility === "private" ? (
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={() => {
+                    this.ForkRef.current;
+                  }}
+                >
+                  管理数据
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    ref={this.ButtonRef}
+                    style={{
+                      padding: "6px 8px",
+                    }}
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    aria-haspopup="true"
+                    aria-controls={
+                      this.state.openPopper ? "menu-list-grow" : undefined
+                    }
+                    onClick={(e) => {
+                      this.openPopper(e);
+                    }}
+                  >
+                    探索数据集
+                    <ExpandMoreIcon style={{ marginLeft: "10px" }} />
+                  </Button>{" "}
+                  <Popper
+                    open={this.state.openPopper}
+                    anchorEl={this.ButtonRef.current}
+                    role={undefined}
+                    transition
+                  >
+                    {({ TransitionProps, placement }) => (
+                      <Grow
+                        {...TransitionProps}
+                        style={{
+                          transformOrigin:
+                            placement === "bottom"
+                              ? "center top"
+                              : "center bottom",
+                        }}
+                      >
+                        <Paper>
+                          <ClickAwayListener
+                            onClickAway={() => {
+                              this.openPopper();
+                            }}
+                          >
+                            <MenuList>
+                              <MenuItem
+                                onClick={() => this.DialogRef.current(true)}
+                              >
+                                {" "}
+                                <ShareIcon style={{marginRight:"10px",fontSize:"1.2rem"}}/>
+                                Fork数据集
+                              </MenuItem>
+                              <MenuItem> Comming Soon</MenuItem>
+                              <MenuItem> Comming Soon </MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
+                </>
+              )}
             </div>
+            <ForDialogWrapper Syntec_ref={this.DialogRef} />
           </div>
           <div className={DataSet.tabsContainer}>
             <div className={DataSet.muiButton}>
