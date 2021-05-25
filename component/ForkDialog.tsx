@@ -18,7 +18,7 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import server, { option } from "../pages/main_config";
 import ShareIcon from '@material-ui/icons/Share';
 const useStyles = makeStyles(
-  {``
+  {
     p14Gray: {
       margin: "0",
       fontSize: "14px",
@@ -50,6 +50,7 @@ interface httpObject {
 function ForDialogWrapper(props) {
   return <ForkDialog Syntec_ref={props.Syntec_ref}></ForkDialog>;
 }
+
 export default ForDialogWrapper;
 export function ForkDialog(props: any): any {
   const classes = useStyles();

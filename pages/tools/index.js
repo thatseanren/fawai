@@ -40,7 +40,7 @@ export default function Tools(props) {
         <Grid item>
           <Typography className={classes.MuiTypographyTitle}>数据标注</Typography>
         </Grid>
-        <Link href="/tools/annotation/">
+        <Link href="/tools/annotation">
           <a style={{ cursor: "pointer" }}>
             <Grid container item className={classes.GridContainerItem}>
               <Paper elevation={2} variant={"outlined"} className={classes.MuiPaper}>

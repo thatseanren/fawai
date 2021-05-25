@@ -1,4 +1,6 @@
 import React from "react";
+import Header from "../../header";
+import { useRouter } from "next/router";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
@@ -15,7 +17,8 @@ import PagesIcon from "@material-ui/icons/Pages";
 import { TabPanel, TabContext } from "@material-ui/lab";
 import clsx from "clsx";
 import axios from "axios";
-import server from "../pages/main_config";
+import ip, { option } from "../../main_config";
+
 const useStyles = makeStyles({
   body: {
     position: "relative",
@@ -211,54 +214,55 @@ const PaperLikeTask = (props: {
   TaskStatus: string;
 }) => {
   const classes = useStyles();
-  React.useEffect(() => {
-    axios.get(`${server}`).catch((err) => console.log(err));
-  });
+  // React.useEffect(() => {
+  //   axios.get(`${ip}`).catch((err) => console.log(err));
+  // });
   return (
-    <Paper className={clsx(classes.taskPaper)} component={"taskPaper"}>
-      <Grid container>
-        <Grid item> {props.Name || "Sample"} </Grid>
-        <Grid item container style={{ marginBottom: "12px" }}>
-          {/* {
-            props.tags.map(value =>{
-              return(<Tasktag tag={value}/>)
-            })
-          } */}
-          <Tasktag tag={"Sample"} />
-        </Grid>
-        <Grid item container style={{ marginBottom: "8px" }}>
-          <div children="数据集" />
-          <div children={props.Team || "Sample"} />
+    <Link href={`/taskdetail`} as={`/taskdetail`}>
+      <Paper className={clsx(classes.taskPaper)}>
+        <Grid container>
+          <Grid item> {props.Name || "Sample"} </Grid>
+          <Grid item container style={{ marginBottom: "12px" }}>
+            {/* {
+              props.tags.map(value =>{
+                return(<Tasktag tag={value}/>)
+              })
+            } */}
+            <Tasktag tag={"Sample"} />
+          </Grid>
+          <Grid item container style={{ marginBottom: "8px" }}>
+            <div children="数据集" />
+            <div children={props.Team || "Sample"} />
+          </Grid>
+          <Grid item container>
+            <div children="数据量" />
+            <div children={props.Quantity || "Sample"} />
+          </Grid>
         </Grid>
         <Grid item container>
-          <div children="数据量" />
-          <div children={props.Quantity || "Sample"} />
+          <AssignmentIndIcon className={classes.icon} />
+          <span style={{ color: "rgb(39, 42,66))" }}> {"雷达开发部"}</span>
+          <span style={{ margin: "0px 6px" }}> | </span>
+          <ScheduleIcon className={classes.icon} />
+          <span style={{ color: "rgb(39, 42,66))" }}> 2021-5-17 </span>
         </Grid>
-      </Grid>
-      <Grid item container>
-        <AssignmentIndIcon className={classes.icon} />
-        <span style={{ color: "rgb(39, 42,66))" }}> {"雷达开发部"}</span>
-        <span style={{ margin: "0px 6px" }}> | </span>
-        <ScheduleIcon className={classes.icon} />
-        <span style={{ color: "rgb(39, 42,66))" }}> 2021-5-17 </span>
-      </Grid>
-      <Divider light />
-      <Grid item container style={{ padding: "12px 16px" }}>
-        <i>
-          <FiberManualRecordIcon
-            style={{ color: "rgb(4,178,238)", fontSize: "14px" }}
-          ></FiberManualRecordIcon>
-        </i>
-        <span> {props.TaskStatus || "Sample"} </span>
-      </Grid>
-    </Paper>
+        <Divider light />
+        <Grid item container style={{ padding: "12px 16px" }}>
+          <i>
+            <FiberManualRecordIcon
+              style={{ color: "rgb(4,178,238)", fontSize: "14px" }}
+            ></FiberManualRecordIcon>
+          </i>
+          <span> {props.TaskStatus || "Sample"} </span>
+        </Grid>
+      </Paper>
+    </Link>
   );
 };
 
-export const AnnotationTask: React.FC<{}> = (props) => {
-  const [value, setValue] = React.useState(1);
+export const Body: React.FC<{}> = (props) => {
   const [tab, setTab] = React.useState(1);
-  const handleTabChange = (e, v) => {
+  const tabChangeHandler = (e, v) => {
     setTab(v);
   };
   const needTask: () => {
@@ -279,14 +283,19 @@ export const AnnotationTask: React.FC<{}> = (props) => {
   } = () => {
     return ["a"];
   };
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+  React.useEffect(() => {
+    axios
+      .get(`${ip}${option.getTaskList}`)
+      .then((list) => {})
+      .catch((e) => {
+        console.log(e);
+      });
+  });
   const classes = useStyles();
   return (
-    <Grid container component={"body"} className={classes.body}>
+    <Grid container className={classes.body}>
       <Grid item container className={classes.option}>
+        {/* //搜索 */}
         <Grid item style={{ flexBasis: "347px" }}>
           <Autocomplete
             className={classes.autocomplete}
@@ -305,34 +314,40 @@ export const AnnotationTask: React.FC<{}> = (props) => {
             )}
           />
         </Grid>
+        {/* //服务介绍 & 新建标注项目 */}
         <Grid item container style={{ width: "auto" }}>
+          {/* //服务介绍\*/}
           <Button color="primary" variant="text" className={classes.service}>
             <PagesIcon style={{ fontSize: "16px", marginRight: "8px" }} />
             服务介绍
           </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.annotation}
-          >
-            {" "}
-            新建标注项目
-          </Button>
+          {/* 新建标注项目 */}
+          <Link href={`/tools/annotation/creation`}>
+            <Button
+              color="primary"
+              variant="contained"
+              className={classes.annotation}
+            >
+              {" "}
+              新建标注项目
+            </Button>
+          </Link>
         </Grid>
       </Grid>
-      <Grid item component={"tags"}>
+      {/* 标注项目Grid */}
+      <Grid item component={"div"}>
         <TabContext value={tab}>
           <Tabs
             value={tab}
             indicatorColor="primary"
-            onChange={handleTabChange}
+            onChange={tabChangeHandler}
             aria-label="myTabs"
             className={classes.my_tab}
           >
             <Tab label={`我的待标目标 (${3})`} value={1} />
             <Tab label={`全部项目 (${6})`} value={2} />
 
-            {/* <TabPanel value={2} /> */}
+            {/* <TabPanel value={未完成} /> */}
           </Tabs>
           <TabPanel
             className={classes.paperContainer}
@@ -363,8 +378,8 @@ export const AnnotationTask: React.FC<{}> = (props) => {
               </>
             }
           />
+          {/* <TabPanel value={已完成} /> */}
           <TabPanel
-            // component="paperContainer"
             className={classes.paperContainer}
             value={2}
             children={
@@ -419,4 +434,12 @@ export const AnnotationTask: React.FC<{}> = (props) => {
     </Grid>
   );
 };
-export default AnnotationTask;
+export default function AnnotationPage(props) {
+  const router = useRouter();
+  return (
+    <>
+      <Header />
+      <Body />
+    </>
+  );
+}
