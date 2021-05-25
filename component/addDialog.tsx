@@ -13,9 +13,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import axios from "axios";
-import { url } from "inspector";
-import server, { option } from "../pages/main_config";
+import server_ip from '../pages/main_config';
+import axios from 'axios';
 const useStyles = makeStyles(
   {
     p14Gray: {
@@ -42,10 +41,8 @@ const useStyles = makeStyles(
   },
   { classNamePrefix: "pureCSS" }
 );
-interface httpObject {
-  dataSetName: string;
-  accessibility: string;
-}
+
+
 export default function ForkDialog(props: any): any {
 
   // const openOpacity = (value) => {
@@ -53,21 +50,25 @@ export default function ForkDialog(props: any): any {
   // }
         
   const classes = useStyles();
-  const [show, setShow] = useState<boolean>(true);
-  const [dataSetName, setDataSetName] = useState<string>("");
-  const [accessibility, setAccessibility] = useState<string>("Public");
+  const [show, setShow] = useState(true);
+  const [dataSetName, setDataSetName] = useState("");
+  const [visibility, setVisibility] = useState("Public");
   const handleCreate = () => {
-    const obj: httpObject = {
-      dataSetName: dataSetName,
-      accessibility: accessibility,
-    };
-    axios.get(`${server}${option.forkDataSet}`);
+    axios.post(server_ip + 'add_dataset', {
+      name: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
-
   return (
     <div style={{ position: "absolute", display: "flex" }}>
-      <Dialog aria-labelledby="fork_dialog" open={show} className={"fasd"}>
-        <DialogTitle onClose={() => {}}> Fork数据集 </DialogTitle>
+      <Dialog aria-labelledby="fork_dialog" open={show}>
+        <DialogTitle onClose={() => {}}>Fork数据集</DialogTitle>
         <DialogContent dividers>
           <p className={classes.p14Gray}>
             通过开发者工具直接管理、使用、读取数据
@@ -94,9 +95,10 @@ export default function ForkDialog(props: any): any {
             <div style={{ paddingTop: "20px" }}>
               <FormLabel component="description" children={"可见范围"} />
               <RadioGroup
-                value={accessibility}
+                value={visibility}
                 onChange={(e) => {
-                  setAccessibility(e.target.value);
+                  setVisibility(e.target.value);
+                  console.log(visibility);
                 }}
               >
                 {" "}
@@ -145,7 +147,7 @@ export default function ForkDialog(props: any): any {
                 style={{ alignSelf: "flex-start", marginRight: "10px" }}
                 onClick={() => {
                   handleCreate();
-                  props.hide();
+                  // setShow(false)
                 }}
               >
                 {"确认创建"}

@@ -133,6 +133,7 @@ export default function Dataset(props: {
           department,
         }) => (
           <Link href={`/dataDetailed/${props.accessibility}`} as={`/dataDetailed/${props.accessibility}`}>
+          {/* <Link href={`/dataDetailed?id=`+_id} as={`/dataDetailed/${props.accessibility}`}> */}
             <a
               style={{
                 cursor: "pointer",
