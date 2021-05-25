@@ -17,8 +17,9 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import clsx from 'clsx'
-import Dataset from '../component/Grid.js';
+import clsx from 'clsx';
+import server, { option } from "./main_config";
+import axios from 'axios';
 
 export default class Detailed extends React.Component {
 
@@ -26,6 +27,7 @@ export default class Detailed extends React.Component {
         super(props);
         this.state = {
             openlist: 0,
+            detaid:"60ab5cf4eef9f6835783b82a",
             opacity:0,
             showlist:0,//显示隐藏数据列表
             filedata: [{ title: 'test', arr: ['0009891e3ca4f4.jpg','0009891e3ca4f4.jpg','0009891e3ca4f4.jpg','0009891e3ca4f4.jpg','0009891e3ca4f4.jpg','0009891e3ca4f4.jpg','0009891e3ca4f4.jpg' ] },
@@ -69,7 +71,19 @@ export default class Detailed extends React.Component {
             fileshow :show
         });
     }
+    componentDidMount () {
 
+        //请求文件列表
+        axios.get(server + 'get_dataset_filelist?_id='+this.state.detaid,{})
+            .then(function (response) {
+            console.log(response.data)
+               
+            })
+            .catch(function (error) {
+                console.log(error);
+        });
+
+    }
     render() {
         return (
 

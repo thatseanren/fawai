@@ -9,14 +9,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Header from './header.js';
-import server_ip from './main_config.js';
+import server_ip from './main_config';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 
 
@@ -44,18 +40,6 @@ export default function StickyHeadTable() {
   const [row, setrow] = useState([]);
   const [id, setId] = useState(0);
   const [count, setCount] = useState([]);
-  const handleClickOpen = (value) => {
-    // setId(() => {
-    //     return value
-    // })   //使用函
-    console.log(id)
-    console.log(value)
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleCreate = (value) => {
     axios.get(server_ip + 'get_record_list?limit='+rowsPerPage+'&page='+value*1+1,{'limit':15,'page':1})
@@ -65,7 +49,20 @@ export default function StickyHeadTable() {
         let temp = []
         setCount(response.data.count)
         for(let i=0;i<data.length;i++){
-            temp.push(createData(data[i].data_name,data[i].create_time,data[i].file_name,data[i].file_size,data[i].tag,data[i].frame_num,"operation,"+data[i]._id));
+            var Format=["Kb","Mb","Gb","Tb","Pb"]
+            var filenumb=data[i].file_size/1024
+            var tag;
+            data[i].tag ? tag = data[i].tag.toString() : tag = ""
+            Format.forEach((item) => {
+              let numb = 0
+              if(filenumb >= 1024){
+                filenumb = parseFloat(filenumb/1024).toFixed(2)
+              } else if(filenumb <= 1024 && numb == 0) {
+                filenumb = filenumb+item
+                numb++
+              }   
+            })
+            temp.push(createData(data[i].data_name,data[i].create_time,data[i].file_name,filenumb,tag,data[i].frame_num,"operation,"+data[i]._id));
         }
         setrow(temp);
     })
@@ -166,27 +163,7 @@ useEffect(() => {
               ))}
             </TableRow>
           </TableHead>
-          <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        {/* <DialogTitle id="alert-dialog-title">{"分解数据集?"}</DialogTitle> */}
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          确定分解该数据集
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            取消
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            确定
-          </Button>
-        </DialogActions>
-      </Dialog>
+          
           <TableBody>
             {row.map((row) => {
               return (
@@ -196,7 +173,7 @@ useEffect(() => {
                     const value = row[column.id];
                     const numb=value+""
                     const type = numb.substring(0,9)
-                    const button =<Button variant="contained" key={numb.substring(10,numb.length)} size="large" onClick={()=>handleClickOpen(numb.substring(10,numb.length))} color="primary">
+                    const button =<Button variant="contained" key={numb.substring(10,numb.length)} size="large" color="primary">
                       分解
                     </Button>
                     return (
