@@ -12,13 +12,18 @@ import Header from './header.js';
 import server_ip from './main_config';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-
-
+import ForkDialog from '../component/addDialog';
 
 
 export default function StickyHeadTable() {
 
+ 
+    // getData=(data)=>{
+    //   console.log(data);
+    // }
+
     const [open, setOpen] = React.useState(false);
+    const DialogRef = React.createRef()
     const rows = [
         createData('India', 'IN', 1324171354, 3287263),
         createData('China', 'CN', 1403500365, 9596961),
@@ -143,6 +148,7 @@ useEffect(() => {
   return (
     <div style={{width: "1223px",margin: "0px auto",paddingTop:"56px"}}>
     <Header />
+    <ForkDialog Syntec_ref={DialogRef} />
     <div style={{color:"#272834",fontWeight:"500",fontSize:"18px",padding:"30px 0 20px 0",borderBottom:"1px solid rgba(0,0,0,.12)",marginBottom: "30px"}}>
       数据集记录
     </div>
@@ -173,7 +179,7 @@ useEffect(() => {
                     const value = row[column.id];
                     const numb=value+""
                     const type = numb.substring(0,9)
-                    const button =<Button variant="contained" key={numb.substring(10,numb.length)} size="large" color="primary">
+                    const button =<Button variant="contained" key={numb.substring(10,numb.length)} onClick={() => DialogRef.current(row)} size="large" color="primary">
                       分解
                     </Button>
                     return (
