@@ -18,7 +18,7 @@ function App() {
                 <Link href="/myDataSet">
                     <a className={headerstyle.appBarLink}>我的数据集</a>
                 </Link>
-                <Link href="/myDataSet">
+                <Link href="/">
                     <a className={headerstyle.appBarLink}>公开数据集</a>
                 </Link>
                 <Link href="/recordList">

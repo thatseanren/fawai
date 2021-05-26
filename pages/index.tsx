@@ -30,84 +30,15 @@ export default class Home extends React.Component<{}, HomeState> {
     super(props);
     this.state = {
       List:[],
-      data: [
-        {
-          title: "数据格式",
-          arr: [
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-          ],
-        },
-        {
-          title: "标注类型",
-          arr: [
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-          ],
-        },
-        {
-          title: "任务类型",
-          arr: [
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-            "dd21",
-            "124",
-          ],
-        },
-      ],
-    };
+      data: [{ 
+        title:"数据格式",
+        arr: ['4','5'], 
+      },
+      { 
+        title:"标注类型",
+        arr: ['4','5'], 
+      },],
+    }
   }
 
   componentDidMount() {
@@ -147,6 +78,23 @@ export default class Home extends React.Component<{}, HomeState> {
 
     let observer = new IntersectionObserver(callback, Observe_options);
     observer.observe(homebox)
+
+    axios.get(server + 'get_dataset_info',{})
+
+        .then((response) => {
+          
+          response.data.data
+          var setdata=this.state.data;
+          setdata[0].arr=response.data.data.tags
+          setdata[1].arr=response.data.data.tasks
+          console.log(setdata);
+            this.setState({
+              data:setdata
+            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
   }
 
   render() {

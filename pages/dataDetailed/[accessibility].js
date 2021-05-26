@@ -126,7 +126,8 @@ export class Detailed extends React.Component {
     console.log(this.DialogRef, this.ButtonRef);
   }
   render() {
-    let { accessibility } = this.props.router.query;
+    // let { accessibility } = this.props.router.query;
+    let { accessibility } = "private";
     return (
       <div>
         <Header />
@@ -186,7 +187,7 @@ export class Detailed extends React.Component {
                     this.ForkRef.current;
                   }}
                 >
-                  管理数据
+                  管理数据1
                 </Button>
               ) : (
                 <>
