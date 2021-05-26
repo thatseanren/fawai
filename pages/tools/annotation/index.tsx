@@ -18,7 +18,7 @@ import { TabPanel, TabContext } from "@material-ui/lab";
 import clsx from "clsx";
 import axios from "axios";
 import ip, { option } from "../../main_config";
-
+import qs from "qs";
 const useStyles = makeStyles({
   body: {
     position: "relative",
@@ -112,9 +112,10 @@ const useStyles = makeStyles({
     display: "flex",
     margin: "8px",
     padding: "0px",
-    flexFlow: "nowrap",
+    flexFlow: "wrap",
   },
   taskPaper: {
+    minWidth:"300px",
     margin: "8px",
     position: "relative",
     // https://css-tricks.com/almanac/selectors/n/nth-of-type/
@@ -206,87 +207,51 @@ const Tasktag = (props: { tag: string }) => {
   const classes = useStyles();
   return <div>{props.tag || "2D矩形"}</div>;
 };
-const PaperLikeTask = (props: {
-  tags: string[];
-  Name: string;
-  Team: string;
-  Quantity: string;
-  TaskStatus: string;
-}) => {
-  const classes = useStyles();
-  // React.useEffect(() => {
-  //   axios.get(`${ip}`).catch((err) => console.log(err));
-  // });
-  return (
-    <Link href={`/taskdetail`} as={`/taskdetail`}>
-      <Paper className={clsx(classes.taskPaper)}>
-        <Grid container>
-          <Grid item> {props.Name || "Sample"} </Grid>
-          <Grid item container style={{ marginBottom: "12px" }}>
-            {/* {
-              props.tags.map(value =>{
-                return(<Tasktag tag={value}/>)
-              })
-            } */}
-            <Tasktag tag={"Sample"} />
-          </Grid>
-          <Grid item container style={{ marginBottom: "8px" }}>
-            <div children="数据集" />
-            <div children={props.Team || "Sample"} />
-          </Grid>
-          <Grid item container>
-            <div children="数据量" />
-            <div children={props.Quantity || "Sample"} />
-          </Grid>
-        </Grid>
-        <Grid item container>
-          <AssignmentIndIcon className={classes.icon} />
-          <span style={{ color: "rgb(39, 42,66))" }}> {"雷达开发部"}</span>
-          <span style={{ margin: "0px 6px" }}> | </span>
-          <ScheduleIcon className={classes.icon} />
-          <span style={{ color: "rgb(39, 42,66))" }}> 2021-5-17 </span>
-        </Grid>
-        <Divider light />
-        <Grid item container style={{ padding: "12px 16px" }}>
-          <i>
-            <FiberManualRecordIcon
-              style={{ color: "rgb(4,178,238)", fontSize: "14px" }}
-            ></FiberManualRecordIcon>
-          </i>
-          <span> {props.TaskStatus || "Sample"} </span>
-        </Grid>
-      </Paper>
-    </Link>
-  );
-};
 
 export const Body: React.FC<{}> = (props) => {
   const [tab, setTab] = React.useState(1);
+  var [meta, setMeta] = React.useState([]);
+  var [fulllist, setFullList] = React.useState([]);
+  var [renderUnfinished, setRenderUnifished] = React.useState([]);
+
   const tabChangeHandler = (e, v) => {
     setTab(v);
-  };
-  const needTask: () => {
-    finish?: {
-      tags: string[];
-      Name: string;
-      Team: string;
-      Quantity: string;
-      TaskStatus: string;
-    }[];
-    unfinished?: {
-      tags: string[];
-      Name: string;
-      Team: string;
-      Quantity: string;
-      TaskStatus: string;
-    }[];
-  } = () => {
-    return ["a"];
   };
   React.useEffect(() => {
     axios
       .get(`${ip}${option.getTaskList}`)
-      .then((list) => {})
+      .then((response) => {
+        if (JSON.stringify(response.data.data) === JSON.stringify(meta)) {
+         
+        } else {
+          response.data.data.forEach((e, i) => {
+            console.log(e.status)
+            fulllist[i] = (
+              <PaperLikeTask
+                tags={e.tags}
+                Name={e.name}
+                Quantity={e.num}
+                Create_time={e.create_time}
+                Team={"fsda"}
+                TaskStatus={e.status}
+              />
+            );
+            if (e.status === 0) {
+              renderUnfinished[i] = (
+                <PaperLikeTask
+                  tags={e.tags}
+                  Name={e.name}
+                  Quantity={e.num}
+                  Create_time={e.create_time}
+                  Team={"fdsa"}
+                  TaskStatus={e.status}
+                />
+              );
+            }
+          });
+          setMeta(response.data.data);
+        }
+      })
       .catch((e) => {
         console.log(e);
       });
@@ -322,16 +287,36 @@ export const Body: React.FC<{}> = (props) => {
             服务介绍
           </Button>
           {/* 新建标注项目 */}
-          <Link href={`/tools/annotation/creation`}>
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.annotation}
-            >
-              {" "}
-              新建标注项目
-            </Button>
-          </Link>
+          {/* <Link href={`/tools/annotation/creation`}> */}
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.annotation}
+            onClick={() => {
+              axios
+                .post(
+                  `${ip}${option.createTask}`,
+                  qs.stringify({
+                    _id: "60a5cd03970dbe2236d071c6",
+                    name: "数据平台试验_432",
+                    tags: "5dbox",
+                    type: "como",
+                  
+                  })
+                )
+                .then((res) => {
+                  alert("successful");
+                  console.log(res);
+                })
+                .catch((err) => {
+                  alert(err);
+                });
+            }}
+          >
+            {" "}
+            新建标注项目
+          </Button>
+          {/* </Link> */}
         </Grid>
       </Grid>
       {/* 标注项目Grid */}
@@ -344,96 +329,80 @@ export const Body: React.FC<{}> = (props) => {
             aria-label="myTabs"
             className={classes.my_tab}
           >
-            <Tab label={`我的待标目标 (${3})`} value={1} />
-            <Tab label={`全部项目 (${6})`} value={2} />
+            <Tab
+              label={`我的待标目标 (${renderUnfinished.length})`}
+              value={1}
+            />
+            <Tab label={`全部项目 (${fulllist.length})`} value={2} />
 
             {/* <TabPanel value={未完成} /> */}
           </Tabs>
           <TabPanel
             className={classes.paperContainer}
             value={1}
-            children={
-              <>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-              </>
-            }
+            children={renderUnfinished}
           />
-          {/* <TabPanel value={已完成} /> */}
+          {/* <TabPanel value={全部项目} /> */}
           <TabPanel
             className={classes.paperContainer}
             value={2}
-            children={
-              <>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-                <PaperLikeTask
-                  tags={["1", "2d"]}
-                  Name={"HardCoding"}
-                  Team={"HardCoding"}
-                  Quantity={"HardCoding"}
-                  TaskStatus={"HardCoding"}
-                ></PaperLikeTask>
-              </>
-            }
+            children={fulllist}
           />
         </TabContext>
       </Grid>
     </Grid>
   );
 };
+const PaperLikeTask = (props: {
+  tags: string[];
+  Name: string;
+  Team: string;
+  Create_time: string;
+  Quantity: string;
+  TaskStatus: string;
+}) => {
+  const classes = useStyles();
+  return (
+    <Link href={`/taskdetail`} style={{flexBasis:"300px"}}>
+      <Paper className={clsx(classes.taskPaper)}>
+        <Grid container>
+          <Grid item> {props.Name || "Sample"} </Grid>
+          <Grid item container style={{ marginBottom: "12px" }}>
+            <Tasktag tag={"Sample"} />
+          </Grid>
+          <Grid item container style={{ marginBottom: "8px" }}>
+            <div children="数据集" />
+            <div children={props.Team || "Sample"} />
+          </Grid>
+          <Grid item container>
+            <div children="数据量" />
+            <div children={props.Quantity || "Sample"} />
+          </Grid>
+        </Grid>
+        <Grid item container>
+          <AssignmentIndIcon className={classes.icon} />
+          <span style={{ color: "rgb(39, 42,66))" }}> {"雷达开发部"}</span>
+          <span style={{ margin: "0px 6px" }}> | </span>
+          <ScheduleIcon className={classes.icon} />
+          <span style={{ color: "rgb(39, 42,66))" }}>
+            {" "}
+            {props.Create_time}{" "}
+          </span>
+        </Grid>
+        <Divider light />
+        <Grid item container style={{ padding: "12px 16px" }}>
+          <i>
+            <FiberManualRecordIcon
+              style={{ color: "rgb(4,178,238)", fontSize: "14px" }}
+            ></FiberManualRecordIcon>
+          </i>
+          <span> {props.TaskStatus || "Sample"} </span>
+        </Grid>
+      </Paper>
+    </Link>
+  );
+};
+
 export default function AnnotationPage(props) {
   const router = useRouter();
   return (

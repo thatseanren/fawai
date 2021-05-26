@@ -2,7 +2,7 @@
 // var server_ip = "http://10.78.7.191:888/"; //统一设置服务器ip
 const dreamview_ip = "http://10.78.4.88:8888/"; //统一设置服务器ip
 // var server_ip="http://10.78.7.169:888/";//统一设置服务器ip
-const server_ip = "http://10.78.4.88:888/"; //统一设置服务器ip
+const server_ip = "http://10.78.4.88:8880/"; //统一设置服务器ip
 interface API {
   dataset: string;
 
@@ -10,6 +10,7 @@ interface API {
   createTask: string;
   getTaskList: string;
 }
+
 const option: API = {
   dataset: "get_dataset_list",
   forkDataSet: "fork_dataset",
