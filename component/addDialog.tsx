@@ -7,6 +7,8 @@ import {
   DialogTitle,
   RadioGroup,
 } from "@material-ui/core";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl'
 import PublicIcon from "@material-ui/icons/Public";
 import PersonIcon from "@material-ui/icons/Person";
 import TextField from "@material-ui/core/TextField";
@@ -17,7 +19,8 @@ import axios from "axios";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import server, { option } from "../pages/main_config";
 import ShareIcon from '@material-ui/icons/Share';
-import Dataset from "./Grid";
+import qs from 'qs';
+import { Alert, AlertTitle } from '@material-ui/lab';
 const useStyles = makeStyles(
   {
     p14Gray: {
@@ -35,6 +38,7 @@ const useStyles = makeStyles(
     flexDiv: {
       display: "flex",
       flexFlow: "column",
+      marginTop: '11px',
     },
     flexMargin: {
       display: "flex",
@@ -54,21 +58,75 @@ function ForDialogWrapper(props) {
 export default ForDialogWrapper;
 export function ForkDialog(props: any): any {
   const classes = useStyles();
-  const [show, setShow] = useState<boolean>(false);
-  const [dataSetName, setDataSetName] = useState<string>(["",""]);
-  const [accessibility, setAccessibility] = useState<string>("Public");
+  const [show, setShow] = useState(false);
+  const [dataSetName, setDataSetName] = useState("");
+  const [description, setDscription] = useState("");
+  const [datalist, setDataList] = useState();
+  const [errorshow, setErrorShow] = useState(3);
+  const [category, setCategory] = React.useState('female');
+  const [accessibility, setAccessibility] = useState<string>("public");
   const handleCreate = () => {
-    const obj: httpObject = {
-      dataSetName: dataSetName,
-      accessibility: accessibility,
-    };
-    axios.get(`${server}${option.forkDataSet}`);
+    // const obj: httpObject = {
+    //   dataSetName: dataSetName,
+    //   accessibility: accessibility,
+    // };
+    // axios.get(`${server}${option.forkDataSet}`);
+    var qs = require('qs');
+    axios.post(server + 'add_dataset',qs.stringify({
+      'tags':show.tag,
+      'name':show.data_name||"",
+      'description':dataSetName,
+      'category':category,
+      'ids':show.operation.substring(10,show.operation.length),
+      'tasks':description,
+      'accessibility':accessibility
+    }))
+        .then(function (response) {
+        console.log(response.data.status)
+        response.data.status === 1 ? setErrorShow(2) : setErrorShow(1)
+        console.log(errorshow)
+        setTimeout( () => {
+          setErrorShow(3)
+        }, 3000);
+            
+        })
+        .catch(function (error) {
+            console.log(error);
+    });
+  };
+  const error = (event) => {
+    setCategory(event.target.value);
+  };
+  const handleChange = (event) => {
+    setCategory(event.target.value);
   };
   props.Syntec_ref.current = setShow;
   console.log(show)
+  // if(show.length == undefined){
+  //   const dat = [{
+  //     name:show.data_name,
+  //     ids:show.operation.substring(10,show.operation.length)
+  //   }]
+  //   console.log(dat);
+  // }
+  
+  
   return (
 
       <div style={{ position: "absolute", display: "flex" }}>
+        <div style={{position: 'fixed',left:"0px",right:"0px",display:errorshow === 3 ?'none':'block' }}>
+          {errorshow === 1 ? 
+          <Alert severity="error">
+            <AlertTitle>失败</AlertTitle>
+            您的数据集分解失败，请重新尝试 <strong>error</strong>
+          </Alert> :
+          <Alert severity="success">
+            <AlertTitle>成功</AlertTitle>
+            您的数据集创建成功 <strong>success</strong>
+          </Alert>
+          }
+        </div>
+        
         <Dialog aria-labelledby="fork_dialog" open={show} className={"fasd"}>
           <DialogTitle onClose={() => {}}> Fork数据集 </DialogTitle>
           <DialogContent dividers>
@@ -87,7 +145,7 @@ export function ForkDialog(props: any): any {
                 </p>
                 <TextField
                   label=""
-                  value={dataSetName[0]}
+                  value={dataSetName}
                   onChange={(e) => {
                     setDataSetName(e.target.value);
                   }}
@@ -103,12 +161,28 @@ export function ForkDialog(props: any): any {
                 </p>
                 <TextField
                   label=""
-                  value={dataSetName[1]}
+                  value={description}
                   onChange={(e) => {
-                    setDataSetName(e.target.value);
+                    setDscription(e.target.value);
                   }}
                   variant="outlined"
                 ></TextField>
+              </div>
+              <div className={classes.flexDiv}>
+                <p style={{ margin: "0", fontSize: "16px", fontWeight: 500 }}>
+                  数据类别
+                </p>
+                <p className={clsx(classes.p14Gray, classes.Size12)} style={{margin: '0px'}}>
+                  数据类别
+                </p>
+                <FormControl component="fieldset">
+                  <RadioGroup aria-label="gender" name="gender1" style={{flexDirection:"row"}} value={category} onChange={handleChange}>
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                    <FormControlLabel value="disabled" control={<Radio />} label="disabled" />
+                </RadioGroup>
+                </FormControl>
               </div>
               <div style={{ paddingTop: "20px" }}>
                 <FormLabel component="description" children={"可见范围"} />
@@ -123,7 +197,7 @@ export function ForkDialog(props: any): any {
                     {" "}
                     <Radio
                       color="primary"
-                      value={"Public"}
+                      value={"public"}
                       style={{ width: "24px", height: "24px" }}
                     />
                     <PublicIcon style={{ padding: "9px 9px 9px 0" }} />

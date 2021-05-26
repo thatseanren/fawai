@@ -126,6 +126,7 @@ export class Detailed extends React.Component {
     console.log(this.DialogRef, this.ButtonRef);
   }
   render() {
+    // let { accessibility } = this.props.router.query;
     let { accessibility } = "private";
     return (
       <div>

@@ -286,9 +286,15 @@ export const Body: React.FC<{}> = (props) => {
             <PagesIcon style={{ fontSize: "16px", marginRight: "8px" }} />
             服务介绍
           </Button>
+<<<<<<< HEAD:pages/tools/annotation/index.tsx
           {/* 新建标注项目 */}
           {/* <Link href={`/tools/annotation/creation`}> */}
           <Button
+=======
+          <Link href="../addTagGing">
+              <a>
+              <Button
+>>>>>>> 08a1a20... 新建标注:component/annotationTasks.tsx
             color="primary"
             variant="contained"
             className={classes.annotation}
@@ -316,7 +322,12 @@ export const Body: React.FC<{}> = (props) => {
             {" "}
             新建标注项目
           </Button>
+<<<<<<< HEAD:pages/tools/annotation/index.tsx
           {/* </Link> */}
+=======
+          </a>
+          </Link> 
+>>>>>>> 08a1a20... 新建标注:component/annotationTasks.tsx
         </Grid>
       </Grid>
       {/* 标注项目Grid */}

@@ -60,6 +60,7 @@ const useStyles = makeStyles({
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
     display: "block",
+    height: '20px'
   },
   metaData_Span: {
     "&:after": {
@@ -162,7 +163,7 @@ export default function Dataset(props: {
                   >
                     <img
                       className={classes.img}
-                      src={`${server}${img.slice(2, -1)}`}
+                      src={`${server}download?url=${img}`}
                     />
                     <div className={classes.miniLabel}>
                       <div className={classes.briefInfo}>
