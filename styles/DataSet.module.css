@@ -642,6 +642,7 @@
 .dataListBox{
     margin: 8px;
     flex:0 0 calc(23% - 16px);
+    max-width: 280px;
 }
 .boxImg{
     position: relative;
