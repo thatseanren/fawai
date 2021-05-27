@@ -115,7 +115,7 @@ const useStyles = makeStyles({
     flexFlow: "wrap",
   },
   taskPaper: {
-    minWidth:"300px",
+    minWidth: "300px",
     margin: "8px",
     position: "relative",
     // https://css-tricks.com/almanac/selectors/n/nth-of-type/
@@ -222,10 +222,9 @@ export const Body: React.FC<{}> = (props) => {
       .get(`${ip}${option.getTaskList}`)
       .then((response) => {
         if (JSON.stringify(response.data.data) === JSON.stringify(meta)) {
-         
         } else {
           response.data.data.forEach((e, i) => {
-            console.log(e.status)
+            console.log(e);
             fulllist[i] = (
               <PaperLikeTask
                 tags={e.tags}
@@ -234,6 +233,7 @@ export const Body: React.FC<{}> = (props) => {
                 Create_time={e.create_time}
                 Team={"fsda"}
                 TaskStatus={e.status}
+                Id={e._id}
               />
             );
             if (e.status === 0) {
@@ -245,6 +245,7 @@ export const Body: React.FC<{}> = (props) => {
                   Create_time={e.create_time}
                   Team={"fdsa"}
                   TaskStatus={e.status}
+                  Id={e._id}
                 />
               );
             }
@@ -286,48 +287,37 @@ export const Body: React.FC<{}> = (props) => {
             <PagesIcon style={{ fontSize: "16px", marginRight: "8px" }} />
             服务介绍
           </Button>
-<<<<<<< HEAD:pages/tools/annotation/index.tsx
-          {/* 新建标注项目 */}
-          {/* <Link href={`/tools/annotation/creation`}> */}
-          <Button
-=======
           <Link href="../addTagGing">
-              <a>
+            <a>
               <Button
->>>>>>> 08a1a20... 新建标注:component/annotationTasks.tsx
-            color="primary"
-            variant="contained"
-            className={classes.annotation}
-            onClick={() => {
-              axios
-                .post(
-                  `${ip}${option.createTask}`,
-                  qs.stringify({
-                    _id: "60a5cd03970dbe2236d071c6",
-                    name: "数据平台试验_432",
-                    tags: "5dbox",
-                    type: "como",
-                  
-                  })
-                )
-                .then((res) => {
-                  alert("successful");
-                  console.log(res);
-                })
-                .catch((err) => {
-                  alert(err);
-                });
-            }}
-          >
-            {" "}
-            新建标注项目
-          </Button>
-<<<<<<< HEAD:pages/tools/annotation/index.tsx
-          {/* </Link> */}
-=======
-          </a>
-          </Link> 
->>>>>>> 08a1a20... 新建标注:component/annotationTasks.tsx
+                color="primary"
+                variant="contained"
+                className={classes.annotation}
+                onClick={() => {
+                  axios
+                    .post(
+                      `${ip}${option.createTask}`,
+                      qs.stringify({
+                        _id: "60a5cd03970dbe2236d071c6",
+                        name: "数据平台试验_432",
+                        tags: "5dbox",
+                        type: "como",
+                      })
+                    )
+                    .then((res) => {
+                      alert("successful");
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      alert(err);
+                    });
+                }}
+              >
+                {" "}
+                新建标注项目
+              </Button>
+            </a>
+          </Link>
         </Grid>
       </Grid>
       {/* 标注项目Grid */}
@@ -371,10 +361,12 @@ const PaperLikeTask = (props: {
   Create_time: string;
   Quantity: string;
   TaskStatus: string;
+  Id:string
 }) => {
   const classes = useStyles();
+  console.log(props.Id)
   return (
-    <Link href={`/taskdetail`} style={{flexBasis:"300px"}}>
+    <Link href={`/taskdetail/${props.Id}`} style={{ flexBasis: "300px" }}>
       <Paper className={clsx(classes.taskPaper)}>
         <Grid container>
           <Grid item> {props.Name || "Sample"} </Grid>
