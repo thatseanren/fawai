@@ -28,15 +28,15 @@ class TagDetails extends React.Component {
       openlist: 0,
       data: {},
     };
+   
   }
   componentDidMount() {
-    console.log(this.props.TaskId);
-    axios
-      .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
-      .then((res) => {
-        console.log(res.data.data[0]);
-        this.setState({ data: res.data.data[0] });
-      });
+    // axios
+    //   .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
+    //   .then((res) => {
+    //     console.log(res.data.data[0]);
+    //     this.setState({ data: res.data.data[0] });
+    //   });
   }
 
   render() {

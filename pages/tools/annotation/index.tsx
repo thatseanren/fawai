@@ -234,6 +234,9 @@ export const Body: React.FC<{}> = (props) => {
                 Team={"fsda"}
                 TaskStatus={e.status}
                 Id={e._id}
+                Sequence={e.split}
+                datasetID={e.dataset_id}
+                perSequence = {e.each}
               />
             );
             if (e.status === 0) {
@@ -246,6 +249,8 @@ export const Body: React.FC<{}> = (props) => {
                   Team={"fdsa"}
                   TaskStatus={e.status}
                   Id={e._id}
+                  Sequence={e.split}
+                  datasetID={e.dataset_id}perSequence = {e.each}
                 />
               );
             }
@@ -361,10 +366,13 @@ const PaperLikeTask = (props: {
   Create_time: string;
   Quantity: string;
   TaskStatus: string;
-  Id:string
+  Id: string;
+  Sequence: number;
+  datasetID: string;
+  perSequence:number
 }) => {
   const classes = useStyles();
-  console.log(props.Id)
+  console.log(props.Id);
   return (
     <Link href={`/taskdetail/${props.Id}`} style={{ flexBasis: "300px" }}>
       <Paper className={clsx(classes.taskPaper)}>
