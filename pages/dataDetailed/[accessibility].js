@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Header from "../header.js";
+import server_ip from '../main_config';
 import React from "react";
 import ReactDOM from "react-dom";
 import DataSet from "../../styles/DataSet.module.css";
@@ -21,6 +22,7 @@ import clsx from "clsx";
 import Dataset from "../../component/Grid";
 import ForDialogWrapper from "../../component/ForkDialog";
 import { useRouter } from "next/router";
+import axios from 'axios';
 import {
   Grow,
   Popper,
@@ -33,9 +35,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShareIcon from "@material-ui/icons/Share";
 const Detailed_Wrapper = (props) => {
   const route = useRouter();
-  const id = route.query;
-  console.log(id);
-  return <Detailed {...props} router={route} />;
+  const urlQueryObj = route.query;
+  console.log(urlQueryObj);
+  return <Detailed {...props} router={route} urlQueryObj={urlQueryObj} />;
 };
 export default Detailed_Wrapper;
 export class Detailed extends React.Component {
@@ -47,35 +49,20 @@ export class Detailed extends React.Component {
       openPopper: false,
       openlist: 0,
       opacity: 0,
+      img:"",
       showlist: 0, //显示隐藏数据列表
       isOpen: false,
+      imgurl:"",
+      basic:[],
       filedata: [
         {
-          title: "test",
-          arr: [
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-          ],
+          jpg:"455"
         },
         {
-          title: "train",
-          arr: [
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-            "0009891e3ca4f4.jpg",
-          ],
-        },
+          jpg:"455"
+        }
       ],
-      fileindex: [0, 0],
+      fileindex: 0,
       fileshow: ["block", "none"],
     };
   }
@@ -124,6 +111,38 @@ export class Detailed extends React.Component {
   };
   componentDidMount() {
     console.log(this.DialogRef, this.ButtonRef);
+    console.log(this.props.urlQueryObj.accessibility)
+    axios.get(server_ip + 'get_dataset_filelist?_id='+this.props.urlQueryObj.accessibility+"&limit=1000",{})
+      .then( (response) => {
+      console.log(response.data.data)
+      console.log(this.state.filedata)
+      var ite = response.data.data[0].jpg
+      var url = ite.substring(0,10)+"..."+ite.substring(ite.length-10,ite.length)
+      console.log(ite.substring(0,10))
+      console.log(ite.substring(ite.length-10,ite.length))
+
+      this.setState({
+        img:server_ip +"download?url="+response.data.data[0].jpg,
+        filedata: response.data.data,
+        imgurl:url
+      });
+          
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+
+      axios.get(server_ip + 'get_dataset_list?_id='+this.props.urlQueryObj.accessibility,{})
+      .then( (response) => {
+          console.log(response.data.data[0])
+          this.setState({
+            basic:response.data.data[0]
+          });
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+
   }
   render() {
     // let { accessibility } = this.props.router.query;
@@ -271,34 +290,9 @@ export class Detailed extends React.Component {
                 >
                   <h1>Overview</h1>
                   <p>
-                    The Comprehensive Cars (CompCars) dataset contains data from
-                    two scenarios, including images from web-nature and
-                    surveillance-nature. The web-nature data contains 163 car
-                    makes with 1,716 car models. There are a total of 136,726
-                    images capturing the entire cars and 27,618 images capturing
-                    the car parts. The full car images are labeled with bounding
-                    boxes and viewpoints. Each car model is labeled with five
-                    attributes, including maximum speed, displacement, number of
-                    doors, number of seats, and type of car. The
-                    surveillance-nature data contains 50,000 car images captured
-                    in the front view. Please refer to our paper for the
-                    details.
+                    {this.state.basic.description}
                   </p>
-                  <h1>Overview</h1>
-                  <p>
-                    The Comprehensive Cars (CompCars) dataset contains data from
-                    two scenarios, including images from web-nature and
-                    surveillance-nature. The web-nature data contains 163 car
-                    makes with 1,716 car models. There are a total of 136,726
-                    images capturing the entire cars and 27,618 images capturing
-                    the car parts. The full car images are labeled with bounding
-                    boxes and viewpoints. Each car model is labeled with five
-                    attributes, including maximum speed, displacement, number of
-                    doors, number of seats, and type of car. The
-                    surveillance-nature data contains 50,000 car images captured
-                    in the front view. Please refer to our paper for the
-                    details.
-                  </p>
+                  
                 </div>
                 <div className={DataSet.expandBar} onClick={() => this.open()}>
                   {this.state.openlist === 0 ? (
@@ -334,7 +328,8 @@ export class Detailed extends React.Component {
                     >
                       <div className={DataSet.fileSelectorContainer}>
                         <div className={DataSet.objectPathDisplay}>
-                          .segment/t...06ef33c.jpg
+                          {this.state.imgurl}
+                          
                         </div>
                         <div
                           className={DataSet.objectSelectButton}
@@ -372,45 +367,27 @@ export class Detailed extends React.Component {
                       <div className={DataSet.fileList}>
                         <div className={DataSet.segmentContainer}>
                           {this.state.filedata.map((item, index) => {
+                            var jpg = item.jpg.split('/')
                             return (
                               <div>
-                                <div
-                                  className={DataSet.segmentTitle}
-                                  onClick={() => this.openfile(index)}
-                                >
-                                  {this.state.fileshow[index] === "block" ? (
-                                    <ArrowDropDownIcon />
-                                  ) : (
-                                    <ArrowRightIcon />
-                                  )}
-                                  <div className={DataSet.segmentName}>
-                                    {item.title}
-                                  </div>
+                                    <div
+                                      className={ index === this.state.fileindex
+                                          ? clsx(
+                                              DataSet.objectBlock,
+                                              DataSet.activeObjectBlock
+                                            )
+                                          : DataSet.objectBlock}
+                                          onClick={() => {
+                                            var url = item.jpg.substring(0,10)+"..."+item.jpg.substring(item.jpg.length-10,item.jpg.length)
+                                            this.setState({
+                                                imgurl:url,
+                                                fileindex:index,
+                                                img :server_ip +"download?url="+item.jpg
+                                            })
+                                          }}>
+                                      {jpg[5]}
+                                    </div>
                                 </div>
-                                <div
-                                  className={DataSet.objectListContainer}
-                                  style={{
-                                    display: this.state.fileshow[index],
-                                  }}
-                                >
-                                  {item.arr.map((k, v) => {
-                                    return (
-                                      <div
-                                        className={
-                                          v === this.state.fileindex[index]
-                                            ? clsx(
-                                                DataSet.objectBlock,
-                                                DataSet.activeObjectBlock
-                                              )
-                                            : DataSet.objectBlock
-                                        }
-                                      >
-                                        {k}
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
                             );
                           })}
                         </div>
@@ -425,19 +402,46 @@ export class Detailed extends React.Component {
                     <div style={{ opacity: this.state.opacity }}>
                       <div
                         className={DataSet.viewerArrowLeft}
-                        style={{ left: "20px" }}
+                        style={{ left: "20px" }} onClick={() => {
+                          var fileda=this.state.filedata;
+                          var ind=this.state.fileindex
+                          if(ind>0){
+                            var img = fileda[ind-1].jpg
+                            var url = fileda[ind-1].jpg.substring(0,10)+"..."+fileda[ind-1].jpg.substring(fileda[ind-1].jpg.length-10,fileda[ind-1].jpg.length)
+                            this.setState({
+                                imgurl:url,
+                                fileindex:ind-1,
+                                img :server_ip +"download?url="+img
+                            })
+
+                          }
+                          
+                        }}
                       >
                         <ArrowBackIosIcon style={{ fontSize: "12px" }} />
                       </div>
                       <div
                         className={DataSet.viewerArrowLeft}
-                        style={{ right: "20px" }}
+                        style={{ right: "20px" }} onClick={() => {
+                          var fileda=this.state.filedata;
+                          var ind=this.state.fileindex
+                          if(ind < fileda.length){
+                            var img = fileda[ind+1].jpg
+                            var url = fileda[ind+1].jpg.substring(0,10)+"..."+fileda[ind+1].jpg.substring(fileda[ind+1].jpg.length-10,fileda[ind+1].jpg.length)
+                            this.setState({
+                                imgurl:url,
+                                fileindex:ind+1,
+                                img :server_ip +"download?url="+img
+                            })
+                          }
+                          
+                        }}
                       >
                         <ArrowForwardIosIcon style={{ fontSize: "12px" }} />
                       </div>
                     </div>
 
-                    <img src="/d84.jpg" />
+                    <img src={this.state.img} />
                   </div>
                 </div>
               </div>
@@ -448,34 +452,40 @@ export class Detailed extends React.Component {
                   数据集信息
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
-                  <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
-                    应用场景
+                <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+                    数据格式
                   </span>
-                  <span className={DataSet.DatasetInfoFieldTagChip}>
-                    <span className={DataSet.DatasetDetailTagChipChip}>
-                      Vehicle
-                    </span>
-                  </span>
-                  <span className={DataSet.DatasetInfoFieldTagChip}>
-                    <span className={DataSet.DatasetDetailTagChipChip}>
-                      Box
-                    </span>
-                  </span>
+                {this.state.basic.tags ? this.state.basic.tags.map((item, index) => {
+                            return (
+                        <span className={DataSet.DatasetInfoFieldTagChip}>
+                          <span className={DataSet.DatasetDetailTagChipChip}>
+                            {item}
+                          </span>
+                        </span>
+                  );
+                }):<span className={DataSet.DatasetInfoFieldTagChip}>
+                <span className={DataSet.DatasetDetailTagChipChip}>
+                  暂无
+                </span>
+              </span>}
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
                   <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
-                    应用场景
+                    标注类型
                   </span>
-                  <span className={DataSet.DatasetInfoFieldTagChip}>
-                    <span className={DataSet.DatasetDetailTagChipChip}>
-                      Vehicle
-                    </span>
-                  </span>
-                  <span className={DataSet.DatasetInfoFieldTagChip}>
-                    <span className={DataSet.DatasetDetailTagChipChip}>
-                      Box
-                    </span>
-                  </span>
+                  {this.state.basic.tasks ? this.state.basic.tasks.map((item, index) => {
+                            return (
+                        <span className={DataSet.DatasetInfoFieldTagChip}>
+                          <span className={DataSet.DatasetDetailTagChipChip}>
+                            {item}
+                          </span>
+                        </span>
+                  );
+                }):<span className={DataSet.DatasetInfoFieldTagChip}>
+                <span className={DataSet.DatasetDetailTagChipChip}>
+                  暂无
+                </span>
+              </span>}
                 </div>
               </div>
             </div>

@@ -242,7 +242,7 @@
     overflow: hidden;
 }
 .mdContainerClose{
-    height: 269px;
+    max-height: 269px;
 }
 .mdContainer h1,.mdContainerClose h1{
     padding-bottom: .3em;
@@ -493,6 +493,7 @@
 .activeObjectBlock{
     color: #5a3cff;
     background: #f5f7f9;
+    margin-right: -20px;
 }
 .tagHome{
     margin: 0px auto;
