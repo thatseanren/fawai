@@ -81,6 +81,7 @@ export function ForkDialog(props: any): any {
       'tasks':description,
       'accessibility':accessibility
     }))
+<<<<<<< HEAD
       .then(function (response) {
       response.data.status === 1 ? setErrorShow(2) : setErrorShow(1)
       setTimeout( () => {
@@ -90,6 +91,19 @@ export function ForkDialog(props: any): any {
       })
       .catch(function (error) {
           console.log(error);
+=======
+        .then(function (response) {
+        console.log(response.data.status)
+        response.data.status === 1 ? setErrorShow(2) : setErrorShow(1)
+        console.log(errorshow)
+        setTimeout( () => {
+          setErrorShow(3)
+        }, 3000);
+            
+        })
+        .catch(function (error) {
+            console.log(error);
+>>>>>>> thatseanren-master
     });
   };
   const error = (event) => {
@@ -100,7 +114,18 @@ export function ForkDialog(props: any): any {
   };
   props.Syntec_ref.current = setShow;
   console.log(show)
+<<<<<<< HEAD
 
+=======
+  // if(show.length == undefined){
+  //   const dat = [{
+  //     name:show.data_name,
+  //     ids:show.operation.substring(10,show.operation.length)
+  //   }]
+  //   console.log(dat);
+  // }
+  
+>>>>>>> thatseanren-master
   
   return (
 

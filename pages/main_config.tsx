@@ -5,7 +5,7 @@ const dreamview_ip = "http://10.78.4.88:8888/"; //统一设置服务器ip
 const server_ip = "http://10.78.4.88:8880/"; //统一设置服务器ip
 interface API {
   dataset: string;
-
+  getSingleTask: string;
   forkDataSet: string;
   createTask: string;
   getTaskList: string;
@@ -16,6 +16,7 @@ const option: API = {
   forkDataSet: "fork_dataset",
   createTask: "add_dtask",
   getTaskList: "get_dtask_list",
+  getSingleTask: "get_onetask_filelist",
 };
 export type A = keyof API;
 

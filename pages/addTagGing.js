@@ -13,8 +13,11 @@ import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUnche
 import clsx from 'clsx';
 import Alert from '@material-ui/lab/Alert';
 import Radio from "@material-ui/core/Radio";
+<<<<<<< HEAD
 import Router  from 'next/router';
 import AlertTitle from '@material-ui/lab';
+=======
+>>>>>>> thatseanren-master
 import {
     FormLabel,
     DialogContent,
@@ -37,6 +40,7 @@ export default class Detailed extends React.Component {
             errorShow:"none",
             dataNmae:"",//数据集名称
             category:"2D矩形",
+<<<<<<< HEAD
             tag:[],
             dataBoxlist:[],
             type:"none",
@@ -46,6 +50,9 @@ export default class Detailed extends React.Component {
             time:"",
             names:"",
 
+=======
+            dataBoxlist:[]
+>>>>>>> thatseanren-master
         };
     }
     tarvalue = value => {
@@ -54,10 +61,15 @@ export default class Detailed extends React.Component {
     next = value => {
         console.log(this.state.BreadcrumbIndex)
         var numb=this.state.BreadcrumbIndex
+<<<<<<< HEAD
         console.log(this.state.dataIndex.length);
         var that =this
         if(this.state.BreadcrumbIndex === 0 ){
             if(this.state.dataIndex || this.state.dataIndex === 0){
+=======
+        if(this.state.BreadcrumbIndex === 0 ){
+            if(this.state.dataIndex){
+>>>>>>> thatseanren-master
                 numb=this.state.BreadcrumbIndex*1+1
             } else {
                 this.error("请选择一个数据集")
@@ -68,6 +80,7 @@ export default class Detailed extends React.Component {
             } else {
                 this.error("请输入项目名称")
             }
+<<<<<<< HEAD
         } else if(this.state.BreadcrumbIndex === 2){
             var qs = require('qs');
             
@@ -97,6 +110,9 @@ export default class Detailed extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
+=======
+
+>>>>>>> thatseanren-master
         }
         this.setState({
             BreadcrumbIndex :numb,
@@ -118,7 +134,10 @@ export default class Detailed extends React.Component {
         const that=this
         axios.get(server_ip + 'get_dataset_list',{})
         .then(function (response) {
+<<<<<<< HEAD
             console.log(response)
+=======
+>>>>>>> thatseanren-master
             that.setState({
                 dataBoxlist:response.data.data
             })
@@ -130,12 +149,19 @@ export default class Detailed extends React.Component {
     }
     render() {
         return (
+<<<<<<< HEAD
             
             <div className={Tag.tagHome}>
                 <Header />
                 <Alert style={{display:this.state.type}} severity="success">
                     您的标注任务创建成功 <strong>success</strong>
                 </Alert>
+=======
+
+            <div className={Tag.tagHome}>
+                <Header />
+                <Alert style={{display:this.state.errorShow}} severity="error">{this.state.errorspan}</Alert>
+>>>>>>> thatseanren-master
                 <div className={Tag.taghometop}>
                     <div className={Tag.filehome}>
                         <div style={{overflow:"hidden"}}>
@@ -159,7 +185,11 @@ export default class Detailed extends React.Component {
                             </div>
                         </div>
                         <div className={Tag.tagBoxIndex}>
+<<<<<<< HEAD
                             <div className={Tag.tagBoxList} style={{overflow: 'hidden',height:"690px",display:this.state.listShow === 0 ?'block' : 'none'}}>
+=======
+                            <div className={Tag.tagBoxList} style={{height:"690px",display:this.state.listShow === 0 ?'block' : 'none'}}>
+>>>>>>> thatseanren-master
                                 <div className={Tag.tagBoxTitle}>
                                 选择数据集
                                 </div>
@@ -188,6 +218,7 @@ export default class Detailed extends React.Component {
                                     <div className={this.state.dataIndex === index ? clsx(Tag.dataListBox,Tag.boxIndex) : Tag.dataListBox} key={item._id} onClick={() => {
                                         this.setState({
                                             dataIndex :index,
+<<<<<<< HEAD
                                             dataId:item._id,
                                             tag:item.tags,
                                             img:server_ip+'download?url='+item.img,
@@ -199,6 +230,13 @@ export default class Detailed extends React.Component {
                                       }}>
                                         <div className={Tag.boxImg}>
                                             <img className={Tag.boxImgBack} src={server_ip+'download?url='+item.img} />
+=======
+                                            dataId:item._id
+                                        })
+                                      }}>
+                                        <div className={Tag.boxImg}>
+                                            <img className={Tag.boxImgBack} src="/cover-CompCars.png" />
+>>>>>>> thatseanren-master
                                             <div style={{position: 'absolute',right:"6px",top:"6px"}}>
                                                 {this.state.dataIndex === index ? 
                                                 <RadioButtonCheckedRoundedIcon style={{color:"#54ded1",fontSize:24}} /> :
@@ -286,6 +324,7 @@ export default class Detailed extends React.Component {
                                 </div>
                                 <div className={Tag.dataListBox}>
                                         <div className={Tag.boxImg} style={{width: '300px'}}>
+<<<<<<< HEAD
                                             <img className={Tag.boxImgBack} src={this.state.img} />
                                         </div>
                                         <div className={Tag.boxSpanimg} style={{width:"300px"}}>
@@ -294,6 +333,16 @@ export default class Detailed extends React.Component {
                                             </div>
                                             <div style={{fontSize:"12px"}}>
                                                 数量 {this.state.numb}
+=======
+                                            <img className={Tag.boxImgBack} src="/cover-CompCars.png" />
+                                        </div>
+                                        <div className={Tag.boxSpanimg} style={{width:"300px"}}>
+                                            <div style={{fontWeight:"600",marginBottom:"10px"}}>
+                                            CompCars
+                                            </div>
+                                            <div style={{fontSize:"12px"}}>
+                                                数量 34566
+>>>>>>> thatseanren-master
                                             </div>
                                             <div className={Tag.userName}>
                                                 <div style={{display: 'flex',alignItems: 'center'}}> 
@@ -301,11 +350,19 @@ export default class Detailed extends React.Component {
                                                         <img style={{width:"28px"}} src="/index.png" />
                                                     </div>
                                                     <div style={{marginLeft: '10px',fontWeight: '600'}}>
+<<<<<<< HEAD
                                                     {this.state.department} 
                                                     </div>
                                                 </div>
                                                 <div style={{color: 'rgb(190, 192, 208)'}}>
                                                 {this.state.time}
+=======
+                                                    Graviti_851035 
+                                                    </div>
+                                                </div>
+                                                <div style={{color: 'rgb(190, 192, 208)'}}>
+                                                2021-04-07
+>>>>>>> thatseanren-master
                                                 </div>
                                             </div>
 
