@@ -6,9 +6,10 @@ import Tag from "../../styles/DataSet.module.css";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { ServerResponse } from "http";
+import Link from "next/link";
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 // import TextField from '@material-ui/core/TextField';
-import ip, { option } from "../main_config";
+import ip, { option, annotation } from "../main_config";
 import qs from "qs";
 export default function DetailsWrapper(props) {
   const route = useRouter();
@@ -28,17 +29,40 @@ class TagDetails extends React.Component {
       openlist: 0,
       data: {},
     };
-   
   }
   componentDidMount() {
-    // axios
-    //   .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
-    //   .then((res) => {
-    //     console.log(res.data.data[0]);
-    //     this.setState({ data: res.data.data[0] });
-    //   });
+    axios
+      .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
+      .then((res) => {
+        console.log(res.data.data[0]);
+        this.setState({ data: res.data.data[0] });
+      });
   }
-
+  SequenceRow = () => {
+    let list = [];
+    for (let a = 0; a < this.state.data.split; a++) {
+      list.push(
+        <div className={Tag.tableList}>
+          <div style={{ flex: "2 1 0%" }}>{a + 1}</div>
+          <div style={{ flex: "2 1 0%" }}>{this.state.data.each}</div>
+          <div style={{ flex: "3 1 0%" }}>{`1/${this.state.data.each}`}</div>
+          <div style={{ flex: "6 1 0%" }}>Admin</div>
+          <div style={{ flex: "3 1 0%" }}>
+            <Link
+              href={`${"http://192.168.50.161:8080"}?_id=${
+                this.state.data.dataset_id
+              }&_taskID=${this.state.data._id}&sequence=${a + 1}`}
+            >
+              <Button variant="outlined" color="primary">
+                标注
+              </Button>
+            </Link>
+          </div>
+        </div>
+      );
+    }
+    return list;
+  };
   render() {
     return (
       <div className={Tag.tagHome}>
@@ -64,7 +88,9 @@ class TagDetails extends React.Component {
                   </div>
                   <div className={Tag.listBoxSpan}>
                     <div className={Tag.boxSpanLeft}>创建人：</div>
-                    <div className={Tag.boxSpanRight}>Graviti_851035</div>
+                    <div className={Tag.boxSpanRight}>
+                      {this.state.data.user_id}
+                    </div>
                   </div>
                 </div>
                 <div className={Tag.topListBox}>
@@ -110,28 +136,7 @@ class TagDetails extends React.Component {
                   <div style={{ flex: "6 1 0%" }}>标注员</div>
                   <div style={{ flex: "3 1 0%" }}>操作</div>
                 </div>
-                <div className={Tag.tableList}>
-                  <div style={{ flex: "2 1 0%" }}>1</div>
-                  <div style={{ flex: "2 1 0%" }}>300张</div>
-                  <div style={{ flex: "3 1 0%" }}>2/300</div>
-                  <div style={{ flex: "6 1 0%" }}>Admin</div>
-                  <div style={{ flex: "3 1 0%" }}>
-                    <Button variant="outlined" color="primary">
-                      标注
-                    </Button>
-                  </div>
-                </div>
-                <div className={Tag.tableList}>
-                  <div style={{ flex: "2 1 0%" }}>2</div>
-                  <div style={{ flex: "2 1 0%" }}>300张</div>
-                  <div style={{ flex: "3 1 0%" }}>2/300</div>
-                  <div style={{ flex: "6 1 0%" }}>Admin</div>
-                  <div style={{ flex: "3 1 0%" }}>
-                    <Button variant="outlined" color="primary">
-                      标注
-                    </Button>
-                  </div>
-                </div>
+                {this.SequenceRow()}
               </div>
             </div>
           </div>

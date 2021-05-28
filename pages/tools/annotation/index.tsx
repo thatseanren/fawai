@@ -227,7 +227,7 @@ export const Body: React.FC<{}> = (props) => {
             console.log(e);
             fulllist[i] = (
               <PaperLikeTask
-                tags={e.tags}
+                Tags={e.tags}
                 Name={e.name}
                 Quantity={e.num}
                 Create_time={e.create_time}
@@ -235,14 +235,15 @@ export const Body: React.FC<{}> = (props) => {
                 TaskStatus={e.status}
                 Id={e._id}
                 Sequence={e.split}
-                datasetID={e.dataset_id}
-                perSequence = {e.each}
+                DatasetID={e.dataset_id}
+                perSequence={e.each}
+                Type={e.type}
               />
             );
             if (e.status === 0) {
               renderUnfinished[i] = (
                 <PaperLikeTask
-                  tags={e.tags}
+                  Tags={e.tags}
                   Name={e.name}
                   Quantity={e.num}
                   Create_time={e.create_time}
@@ -250,7 +251,9 @@ export const Body: React.FC<{}> = (props) => {
                   TaskStatus={e.status}
                   Id={e._id}
                   Sequence={e.split}
-                  datasetID={e.dataset_id}perSequence = {e.each}
+                  DatasetID={e.dataset_id}
+                  perSequence={e.each}
+                  Type={e.type}
                 />
               );
             }
@@ -360,7 +363,7 @@ export const Body: React.FC<{}> = (props) => {
   );
 };
 const PaperLikeTask = (props: {
-  tags: string[];
+  Tags: string[];
   Name: string;
   Team: string;
   Create_time: string;
@@ -368,11 +371,11 @@ const PaperLikeTask = (props: {
   TaskStatus: string;
   Id: string;
   Sequence: number;
-  datasetID: string;
-  perSequence:number
+  DatasetID: string;
+  perSequence: number;
+  Type: string;
 }) => {
   const classes = useStyles();
-  console.log(props.Id);
   return (
     <Link href={`/taskdetail/${props.Id}`} style={{ flexBasis: "300px" }}>
       <Paper className={clsx(classes.taskPaper)}>
