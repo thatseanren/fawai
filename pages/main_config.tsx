@@ -3,6 +3,7 @@
 const dreamview_ip = "http://10.78.4.88:8888/"; //统一设置服务器ip
 // var server_ip="http://10.78.7.169:888/";//统一设置服务器ip
 const server_ip = "http://10.78.4.88:8880/"; //统一设置服务器ip
+const annotation = "http://10.78.4.88:555/"
 interface API {
   dataset: string;
   getSingleTask: string;
@@ -20,7 +21,7 @@ const option: API = {
 };
 export type A = keyof API;
 
-export { server_ip as default, option };
+export { server_ip as default, option ,annotation};
 //封装了跨域请求
 // function my_post(url = '', data = {}, func) {
 // 	$.ajax({
