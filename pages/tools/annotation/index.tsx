@@ -296,6 +296,39 @@ export const Body: React.FC<{}> = (props) => {
             服务介绍
           </Button>
           <Link href="../addTagGing">
+<<<<<<< HEAD
+              <a>
+              <Button
+            color="primary"
+            variant="contained"
+            className={classes.annotation}
+            onClick={() => {
+              axios
+                .post(
+                  `${ip}${option.createTask}`,
+                  qs.stringify({
+                    _id: "60a5cd03970dbe2236d071c6",
+                    name: "数据平台试验_432",
+                    tags: "5dbox",
+                    type: "como",
+                  
+                  })
+                )
+                .then((res) => {
+                  alert("successful");
+                  console.log(res);
+                })
+                .catch((err) => {
+                  alert(err);
+                });
+            }}
+          >
+            {" "}
+            新建标注项目
+          </Button>
+          </a>
+          </Link> 
+=======
             <a>
               <Button
                 color="primary"
@@ -326,6 +359,7 @@ export const Body: React.FC<{}> = (props) => {
               </Button>
             </a>
           </Link>
+>>>>>>> thatseanren-master
         </Grid>
       </Grid>
       {/* 标注项目Grid */}
