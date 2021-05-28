@@ -9,6 +9,8 @@ import DataSet from "../component/Grid";
 import axios from "axios";
 import server, { option } from "./main_config";
 import { resolveHref } from "next/dist/next-server/lib/router/router";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 export interface HomeState {
   List?: {
     img: string;
@@ -22,6 +24,8 @@ export interface HomeState {
     create_time: string;
     department: string;
   }[];
+  pages:[];
+  pagesIndex:number;
   data: { title: string; arr: string[] }[];
 }
 // class MyComponent<P, S> extends <P, HomeState & S> {}
@@ -30,6 +34,9 @@ export default class Home extends React.Component<{}, HomeState> {
     super(props);
     this.state = {
       List:[],
+      pages:[],
+      pagesIndex:1,
+      valueName:"",
       data: [{ 
         title:"数据格式",
         arr: ['4','5'], 
@@ -41,16 +48,33 @@ export default class Home extends React.Component<{}, HomeState> {
     }
   }
 
-  componentDidMount() {
-    axios
-      .get(`${server}${option.dataset}`)
+  handleKeyDown = (e) => {
+    console.log(1)
+    if (e.keyCode === 13) {
+        console.log("按下了Enter键");
+        this.grid(1)
+    }
+  }
+
+  grid = value => {  //展开文章内容
+    axios 
+      .get(`${server}${option.dataset}`+"?limit=18&page="+ value+"&keywords="+this.state.valueName)
       .then((res) => {
         if (
           res.status === 200 &&
           !(console.log(`${server}${option.dataset}`), 0)
         ) {
           this.setState({ List: res.data.data });
-          console.log(res.data.data);
+          console.log(res.data);
+          var count=parseInt(res.data.count/15+1);
+          var numb = []
+          for(let i=1;i<=count;i++){
+            numb.push(i)
+          }
+          this.setState({
+            pages:numb
+          })
+          
         } else {
           console.log(`${server}${option.dataset} mulfunctioning`);
         }
@@ -58,6 +82,10 @@ export default class Home extends React.Component<{}, HomeState> {
       .catch(function (error) {
         console.log(error);
       });
+  }
+  componentDidMount() {
+    
+    this.grid(1)
     // localStorage.setItem("phone", "123")
     // //对象
     // let user = JSON.parse(localStorage.getItem("username"))
@@ -87,16 +115,9 @@ export default class Home extends React.Component<{}, HomeState> {
           var setdata=this.state.data;
           setdata[0].arr=response.data.data.tags
           setdata[1].arr=response.data.data.tasks
-<<<<<<< HEAD
           this.setState({
             data:setdata
           })
-=======
-          console.log(setdata);
-            this.setState({
-              data:setdata
-            })
->>>>>>> thatseanren-master
         })
         .catch(function (error) {
             console.log(error);
@@ -142,6 +163,13 @@ export default class Home extends React.Component<{}, HomeState> {
                 <SearchRoundedIcon style={{ fontSize: 26, marginTop: 15 }} />
                 <input
                   type="text"
+                  value={this.state.valueName}
+                  onKeyDown={(e)=>this.handleKeyDown(e)}
+                  onChange={(e) => {
+                    this.setState({
+                      valueName:e.target.value
+                    })
+                  }}
                   className={styles.searchInput}
                   placeholder="搜索数据集关键字"
                 />
@@ -155,10 +183,47 @@ export default class Home extends React.Component<{}, HomeState> {
         </div>
         <div className={styles.listHome}>
           <div className={styles.listContainer}>
-            <div className={styles.filterContainer}>
+            <div className={styles.filterContainer} style={{width:'278px'}}>
               <DataSetLeft data={this.state.data} />
             </div>
-            <DataSet data={this.state.List} accessibility={"public"} />
+            <div style={{width:"937px"}}>
+              <DataSet data={this.state.List} accessibility={"public"} />
+              <div className={styles.pages}>
+                <div className={styles.pagesLable} onClick={() => {
+                    if(this.state.pagesIndex>0){
+                      this.setState({
+                        pagesIndex:this.state.pagesIndex-1
+                      })
+                      this.grid(this.state.pagesIndex-1)
+                    }
+                    
+                  }}>
+                  <ArrowBackIosIcon style={{fontSize:12}} />
+                </div>
+                {this.state.pages ? this.state.pages.map((item, index) => {
+                      return (
+                        <div className={this.state.pagesIndex === item?styles.pagesLableStyle :styles.pagesLable}  onClick={() => {
+                          this.setState({
+                            pagesIndex:item
+                          })
+                          this.grid(item)
+                        }}>{item}</div>
+                  );
+                }):<div className={styles.pagesLable}>1</div>}
+                
+                <div className={styles.pagesLable} onClick={() => {
+                    if(this.state.pagesIndex<this.state.pages.length){
+                      this.setState({
+                        pagesIndex:this.state.pagesIndex+1
+                      })
+                      this.grid(this.state.pagesIndex+1)
+                    }
+                    
+                  }}>
+                  <ArrowForwardIosIcon style={{fontSize:12}} />
+                </div>
+              </div>
+            </div>     
           </div>
         </div>
       </div>
