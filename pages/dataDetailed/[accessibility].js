@@ -313,22 +313,22 @@ export class Detailed extends React.Component {
               <div className={DataSet.fieldHome}>
                 <div className={DataSet.previewTitle}>
                   <div className={DataSet.previewTitleLeft}>数据预览</div>
-                  <div className={DataSet.previewTitleBtnField}>
+                  {/* <div className={DataSet.previewTitleBtnField}>
                     <Button variant="outlined" color="primary">
                       查看数据
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
                 <div className={DataSet.groupContainer}>
                   <div className={DataSet.groupSideContainer}>
-                    <div
+                    {/* <div
                       className={clsx(DataSet.poweredBy, DataSet.poweredTitle)}
                     >
                       <span>Powered By Graviti</span>
                       <div className={DataSet.ico}>
                         <FormatIndentDecreaseIcon />
                       </div>
-                    </div>
+                    </div> */}
                     <div
                       style={{
                         display: this.state.showlist === 0 ? "block" : "none",
@@ -461,7 +461,7 @@ export class Detailed extends React.Component {
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
                 <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
-                    数据格式
+                        标注类型
                   </span>
                 {this.state.basic.tags ? this.state.basic.tags.map((item, index) => {
                             return (
@@ -479,7 +479,7 @@ export class Detailed extends React.Component {
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
                   <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
-                    标注类型
+                  数据格式
                   </span>
                   {this.state.basic.tasks ? this.state.basic.tasks.map((item, index) => {
                             return (

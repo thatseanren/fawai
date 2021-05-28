@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Tab from "@material-ui/core/Tab";
+import styles from "../../../styles/Home.module.css";
 import Tabs from "@material-ui/core/Tabs";
 import { Divider, Grid, Link } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -18,6 +19,8 @@ import { TabPanel, TabContext } from "@material-ui/lab";
 import clsx from "clsx";
 import axios from "axios";
 import ip, { option } from "../../main_config";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import qs from "qs";
 const useStyles = makeStyles({
   body: {
@@ -211,27 +214,47 @@ const Tasktag = (props: { tag: string }) => {
 export const Body: React.FC<{}> = (props) => {
   const [tab, setTab] = React.useState(1);
   var [meta, setMeta] = React.useState([]);
+  var [tarvalue, setTarValue] = React.useState([]);
+  var [pages, setpages] = React.useState([]);
+  var [pagesIndex, setpagesIndex] = React.useState(1);
   var [fulllist, setFullList] = React.useState([]);
   var [renderUnfinished, setRenderUnifished] = React.useState([]);
 
   const tabChangeHandler = (e, v) => {
     setTab(v);
   };
-  React.useEffect(() => {
+
+  const list = (value) => {
     axios
-      .get(`${ip}${option.getTaskList}`)
-      .then((response) => {
-        if (JSON.stringify(response.data.data) === JSON.stringify(meta)) {
-        } else {
-          response.data.data.forEach((e, i) => {
-            console.log(e);
-            fulllist[i] = (
+    .get(`${ip}${option.getTaskList}`)
+    .then((response) => {
+      console.log(response)
+      if (JSON.stringify(response.data.data) === JSON.stringify(meta)) {
+      } else {
+        response.data.data.forEach((e, i) => {
+          fulllist[i] = (
+            <PaperLikeTask
+              Tags={e.tags}
+              Name={e.name}
+              Quantity={e.num}
+              Create_time={e.create_time}
+              Team={"fsda"}
+              TaskStatus={e.status}
+              Id={e._id}
+              Sequence={e.split}
+              DatasetID={e.dataset_id}
+              perSequence={e.each}
+              Type={e.type}
+            />
+          );
+          if (e.status === 0) {
+            renderUnfinished[i] = (
               <PaperLikeTask
                 Tags={e.tags}
                 Name={e.name}
                 Quantity={e.num}
                 Create_time={e.create_time}
-                Team={"fsda"}
+                Team={"fdsa"}
                 TaskStatus={e.status}
                 Id={e._id}
                 Sequence={e.split}
@@ -240,30 +263,18 @@ export const Body: React.FC<{}> = (props) => {
                 Type={e.type}
               />
             );
-            if (e.status === 0) {
-              renderUnfinished[i] = (
-                <PaperLikeTask
-                  Tags={e.tags}
-                  Name={e.name}
-                  Quantity={e.num}
-                  Create_time={e.create_time}
-                  Team={"fdsa"}
-                  TaskStatus={e.status}
-                  Id={e._id}
-                  Sequence={e.split}
-                  DatasetID={e.dataset_id}
-                  perSequence={e.each}
-                  Type={e.type}
-                />
-              );
-            }
-          });
-          setMeta(response.data.data);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+          }
+        });
+        setMeta(response.data.data);
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  }
+  React.useEffect(() => {
+    list(1)
   });
   const classes = useStyles();
   return (
@@ -280,6 +291,7 @@ export const Body: React.FC<{}> = (props) => {
                 {...params}
                 label="请输入项目名称"
                 margin="normal"
+                onChange={(e)=> setTarValue(e.target.value)}
                 variant="outlined"
                 InputProps={{
                   endAdornment: <SearchIcon style={{ fontSize: "24px" }} />,
@@ -301,25 +313,7 @@ export const Body: React.FC<{}> = (props) => {
                 color="primary"
                 variant="contained"
                 className={classes.annotation}
-                onClick={() => {
-                  axios
-                    .post(
-                      `${ip}${option.createTask}`,
-                      qs.stringify({
-                        _id: "60a5cd03970dbe2236d071c6",
-                        name: "数据平台试验_432",
-                        tags: "5dbox",
-                        type: "como",
-                      })
-                    )
-                    .then((res) => {
-                      alert("successful");
-                      console.log(res);
-                    })
-                    .catch((err) => {
-                      alert(err);
-                    });
-                }}
+                
               >
                 {" "}
                 新建标注项目
@@ -423,6 +417,7 @@ export default function AnnotationPage(props) {
     <>
       <Header />
       <Body />
+      
     </>
   );
 }

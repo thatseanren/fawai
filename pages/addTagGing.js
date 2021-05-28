@@ -87,8 +87,8 @@ export default class Detailed extends React.Component {
                     var obj= data.split('&')
                     setTimeout( () => {
                         Router.push({
-                            pathname:'./taskdetail',
-                            query:{_id:obj[0].substring(4,obj[0].length)}
+                            pathname:'./taskdetail/'+response.data.id
+                            // query:{_id:obj[0].substring(4,obj[0].length)}
                             })
                     }, 2000);
                     
@@ -235,7 +235,7 @@ export default class Detailed extends React.Component {
                             </div>
                             <div className={Tag.tagBoxList} style={{height:"600px",display:this.state.listShow === 1 ?'block' : 'none'}}>
                                 <div className={Tag.tagBoxTitle}>
-                                选择数据集
+                                数据集名称
                                 </div>
                                 <Autocomplete  
                                     style={{width:'300px'}}
@@ -254,9 +254,7 @@ export default class Detailed extends React.Component {
                                         }}
                                         defaultValue="44"
                                         variant="outlined"
-                                        InputProps={{
-                                        endAdornment: <SearchIcon style={{ fontSize: "24px" }} />,
-                                        }}
+                                       
                                     />
                                     )}
                                 />

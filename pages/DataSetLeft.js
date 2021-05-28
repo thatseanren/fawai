@@ -10,7 +10,7 @@ export default class Left extends React.Component{
 
     //切换数据
     handle = (value,number,ind) => {
-        console.log(value+"+"+number);
+        this.props.parent.getChildrenMsg(this, value,ind)
         const listindex = this.state.index
         listindex[ind] = number
         this.setState({
@@ -59,13 +59,19 @@ export default class Left extends React.Component{
         });
     }
 
+    toParent  = (msg) => {
+        // this.props.parent.getChildrenMsg(this, msg)
+    }
+    
+    
+
 render() {
     const {data} = this.props;
-    const cb = (msg) => {
-        return () => {
-            this.props.callback(msg)
-        }
-    }
+    // const cb = (msg) => {
+    //     return () => {
+    //         this.props.callback(msg)
+    //     }
+    // }
     
 
     return (
@@ -73,15 +79,15 @@ render() {
             <div onClick={()=> this.onscrollto()} className={DataSet.scro} style={{display: this.state.scroindex === 0? 'none' : 'block'}}>
                 <KeyboardArrowUpRoundedIcon style={{ fontSize: 32}} />
             </div>
-            <div className={DataSet.left} onClick={()=> this.cb("dfgg22")}>
+            <div className={DataSet.left}>
                 {data.map((item,index) =>{
                     return(
                 <div className={DataSet.boxList}>
-                    <div className={DataSet.boxTitle}>
+                    <div className={DataSet.boxTitle} onClick={()=> this.toParent()}>
                         {item.title}
                     </div>
                     <div className={this.state.openlist[index] === 0? DataSet.boxSpan : DataSet.boxOpen}>
-                        <div className={this.state.index[index] === 0 ? DataSet.boxAllStyle : DataSet.boxSpanList} onClick={()=> this.handle('All',0,index)}>
+                        <div className={this.state.index[index] === 0 ? DataSet.boxAllStyle : DataSet.boxSpanList} onClick={()=> this.handle('',0,index)}>
                             All
                         </div>
                         {item.arr.map((k,v) =>{

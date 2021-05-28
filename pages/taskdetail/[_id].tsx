@@ -28,6 +28,9 @@ class TagDetails extends React.Component {
     this.state = {
       openlist: 0,
       data: {},
+      numb:"",
+      done:"",
+
     };
   }
   componentDidMount() {
@@ -35,7 +38,7 @@ class TagDetails extends React.Component {
       .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
       .then((res) => {
         console.log(res.data.data[0]);
-        this.setState({ data: res.data.data[0] });
+        this.setState({ data: res.data.data[0],done: res.data.data[0].done});
       });
   }
   SequenceRow = () => {
@@ -119,9 +122,9 @@ class TagDetails extends React.Component {
                     <div className={Tag.boxSpanRight}>1个</div>
                   </div>
                   <div className={Tag.listBoxSpan}>
-                    <Button variant="contained" size="large" color="primary">
+                    {/* <Button variant="contained" size="large" color="primary">
                       邀请成员
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
@@ -157,7 +160,7 @@ class TagDetails extends React.Component {
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <div>数据量</div>
-                  <div>596</div>
+                  <div>{parseInt(this.state.data.num - this.state.done)}</div>
                 </div>
                 <div>
                   {/* <Autocomplete
@@ -187,9 +190,9 @@ class TagDetails extends React.Component {
                   }}
                 >
                   <div>数据量</div>
-                  <div>2</div>
+                  <div>{this.state.done}</div>
                 </div>
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -198,8 +201,8 @@ class TagDetails extends React.Component {
                 >
                   <div>标注数</div>
                   <div>3</div>
-                </div>
-                <div style={{ marginBottom: "8px", overflow: "hidden" }}>
+                </div> */}
+                {/* <div style={{ marginBottom: "8px", overflow: "hidden" }}>
                   <div style={{ float: "left" }}>
                     <Button
                       variant="contained"
@@ -213,7 +216,7 @@ class TagDetails extends React.Component {
                   <div style={{ float: "right" }}>
                     <Button variant="outlined">同步标注结果到数据集</Button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

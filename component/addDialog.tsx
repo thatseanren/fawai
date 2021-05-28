@@ -118,7 +118,7 @@ export function ForkDialog(props: any): any {
         </div>
         
         <Dialog aria-labelledby="fork_dialog" open={show} className={"fasd"}>
-          <DialogTitle onClose={() => {}}> Fork数据集 </DialogTitle>
+          <DialogTitle onClose={() => {}}> 添加数据集 </DialogTitle>
           <DialogContent dividers>
             <p className={classes.p14Gray}>
               通过开发者工具直接管理、使用、读取数据

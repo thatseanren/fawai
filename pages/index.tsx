@@ -37,12 +37,15 @@ export default class Home extends React.Component<{}, HomeState> {
       pages:[],
       pagesIndex:1,
       valueName:"",
+      childrenMsg:"",
+      tags:"",
+      tasks:"",
       data: [{ 
-        title:"数据格式",
+        title:"标注类型",
         arr: ['4','5'], 
       },
       { 
-        title:"标注类型",
+        title:"数据格式",
         arr: ['4','5'], 
       },],
     }
@@ -55,10 +58,31 @@ export default class Home extends React.Component<{}, HomeState> {
         this.grid(1)
     }
   }
+  getChildrenMsg = (result, msg,ind) => {
+    // console.log(result, msg)
+    // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
+    var ms=["",""];
+    ms[ind]=msg;
+      if(ind === 0 ){
+        this.setState({
+          tags:msg
+        })
+      } else {
+        this.setState({
+          tasks:msg
+        })
+      }
+      this.grid(1,ms[0],ms[1])
+    }
+  callback(msg){
+      console.log(msg);
+  }
 
-  grid = value => {  //展开文章内容
+  grid = (value,tags,tasks) => {  //展开文章内容
+    var tag = tags? tags : this.state.tags
+    var tas = tasks ? tasks : this.state.tasks
     axios 
-      .get(`${server}${option.dataset}`+"?limit=18&page="+ value+"&keywords="+this.state.valueName)
+      .get(`${server}${option.dataset}`+"?limit=18&page="+ value+"&keywords="+this.state.valueName+"&tags="+tag+"&tasks="+tas)
       .then((res) => {
         if (
           res.status === 200 &&
@@ -97,6 +121,7 @@ export default class Home extends React.Component<{}, HomeState> {
       threshold:[0.9,0.89,0.88,0.8,0.7,0.5,0]
     }
     let callback = (entries, observer) =>{
+      console.log(entries)
       entries.forEach(entry =>{
         console.log(entry)
         if (entry.intersectionRatio < 1) document.querySelector('#header_>div:nth-of-type(1)').style.backgroundColor = 'black'
@@ -184,7 +209,7 @@ export default class Home extends React.Component<{}, HomeState> {
         <div className={styles.listHome}>
           <div className={styles.listContainer}>
             <div className={styles.filterContainer} style={{width:'278px'}}>
-              <DataSetLeft data={this.state.data} />
+              <DataSetLeft data={this.state.data} parent={this} />
             </div>
             <div style={{width:"937px"}}>
               <DataSet data={this.state.List} accessibility={"public"} />
