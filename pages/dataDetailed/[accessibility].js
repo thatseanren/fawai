@@ -109,12 +109,14 @@ export class Detailed extends React.Component {
     });
     // e.preventPro
   };
-  componentDidMount() {
+  axios = (e) => {
     console.log(this.DialogRef, this.ButtonRef);
     console.log(this.props.urlQueryObj.accessibility)
+    if(this.props.urlQueryObj.accessibility == undefined){
+      // this.axios()
+    }
     axios.get(server_ip + 'get_dataset_filelist?_id='+this.props.urlQueryObj.accessibility+"&limit=1000",{})
       .then( (response) => {
-      console.log(response.data.data)
       console.log(this.state.filedata)
       var ite = response.data.data[0].jpg
       var url = ite.substring(0,10)+"..."+ite.substring(ite.length-10,ite.length)
@@ -142,6 +144,12 @@ export class Detailed extends React.Component {
       .catch(function (error) {
           console.log(error);
       });
+  };
+  componentDidMount() {
+    setTimeout( () => {
+      this.axios()
+    }, 500);
+    
 
   }
   render() {
@@ -486,6 +494,22 @@ export class Detailed extends React.Component {
                   暂无
                 </span>
               </span>}
+                </div>
+                <div className={DataSet.DatasetInfoFieldInfoEntry}>
+                  <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+                    创建部门
+                  </span>
+                  <span className={DataSet.DatasetInfoFieldTagChipSpan}>
+                      {this.state.basic.department ? this.state.basic.department : "暂无"}
+                  </span>
+                </div>
+                <div className={DataSet.DatasetInfoFieldInfoEntry}>
+                  <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+                    更新时间
+                  </span>
+                  <span className={DataSet.DatasetInfoFieldTagChipSpan}>
+                      {this.state.basic.create_time ? this.state.basic.create_time : "暂无"}
+                  </span>
                 </div>
               </div>
             </div>

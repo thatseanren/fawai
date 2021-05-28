@@ -643,10 +643,7 @@
 .dataListBox{
     margin: 8px;
     flex:0 0 calc(23% - 16px);
-<<<<<<< HEAD
     max-width: 280px;
-=======
->>>>>>> thatseanren-master
 }
 .boxImg{
     position: relative;
@@ -663,7 +660,7 @@
     width: 100%;
 }
 .boxSpanimg{
-    padding: 10px;
+    padding: 10px; 
     color: rgb(75, 75, 83);
     font-size: 15px;
 }
@@ -716,4 +713,8 @@
 }
 .tagType{
     
+}
+.DatasetInfoFieldTagChipSpan{
+    font-size: 12px;
+    color: #666;
 }

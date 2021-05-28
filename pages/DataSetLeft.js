@@ -5,8 +5,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import KeyboardArrowUpRoundedIcon from '@material-ui/icons/KeyboardArrowUpRounded';
 
+
 export default class Left extends React.Component{
-    
+
     //切换数据
     handle = (value,number,ind) => {
         console.log(value+"+"+number);
@@ -60,7 +61,11 @@ export default class Left extends React.Component{
 
 render() {
     const {data} = this.props;
-
+    const cb = (msg) => {
+        return () => {
+            this.props.callback(msg)
+        }
+    }
     
 
     return (
@@ -68,7 +73,7 @@ render() {
             <div onClick={()=> this.onscrollto()} className={DataSet.scro} style={{display: this.state.scroindex === 0? 'none' : 'block'}}>
                 <KeyboardArrowUpRoundedIcon style={{ fontSize: 32}} />
             </div>
-            <div className={DataSet.left}>
+            <div className={DataSet.left} onClick={()=> this.cb("dfgg22")}>
                 {data.map((item,index) =>{
                     return(
                 <div className={DataSet.boxList}>

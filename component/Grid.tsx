@@ -114,13 +114,13 @@ export default function Dataset(props: {
     <div
       className={"first_Dataset_Div"}
       style={{
-        width: "calc(100% - 280px)",
+        // width: "calc(100% - 280px)",
         display: "flex",
         paddingTop: "15px",
         flexWrap: "wrap",
       }}
     >
-      {props.data.map(
+      {props.data ? props.data.map(
         ({
           img,
           format,
@@ -226,7 +226,10 @@ export default function Dataset(props: {
             </a>
           </Link>
         )
-      )}
+      ):<div style={{margin:"0px auto",textAlign:"center",paddingTop:"100px"}}>
+        <img style={{width:"180px"}} src="https://tutu.s3.cn-northwest-1.amazonaws.com.cn/company-website/open+dataset/detail/icon-default%402x.png" />
+        <div style={{fontSize: '14px',color: '#dbe0e9'}}>很抱歉，没有搜索到相关数据集</div>
+        </div>}
     </div>
   );
 }
