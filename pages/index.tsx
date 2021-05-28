@@ -87,10 +87,16 @@ export default class Home extends React.Component<{}, HomeState> {
           var setdata=this.state.data;
           setdata[0].arr=response.data.data.tags
           setdata[1].arr=response.data.data.tasks
+<<<<<<< HEAD
+          this.setState({
+            data:setdata
+          })
+=======
           console.log(setdata);
             this.setState({
               data:setdata
             })
+>>>>>>> thatseanren-master
         })
         .catch(function (error) {
             console.log(error);
