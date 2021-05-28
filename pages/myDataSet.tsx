@@ -24,14 +24,16 @@ export default class My extends React.Component<
       List: [],
       focusFn: 0,
       pages:[],
+      tags:"",
+      tasks:"",
       pagesIndex:1,
       valueName:"",
       data: [{ 
-        title:"数据格式",
+        title:"标注类型",
         arr: ['4','5'], 
       },
       { 
-        title:"标注类型",
+        title:"数据格式",
         arr: ['4','5'], 
       },],
     };
@@ -54,9 +56,28 @@ export default class My extends React.Component<
       focusFn: 0,
     });
   };
-  grid = value => {  //展开文章内容
+  getChildrenMsg = (result, msg,ind) => {
+    // console.log(result, msg)
+    // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
+    var ms=["",""];
+    ms[ind]=msg;
+      if(ind === 0 ){
+        this.setState({
+          tags:msg
+        })
+      } else {
+        this.setState({
+          tasks:msg
+        })
+      }
+      this.grid(1,ms[0],ms[1])
+    }
+  grid = (value,tags,tasks) => {  //展开文章内容
+    var tag = tags? tags : this.state.tags
+    console.log(this.state.tags)
+    var tas = tasks ? tasks : this.state.tasks
     axios 
-      .get(`${server}${option.dataset}`+"?limit=18&page="+ value +"&keywords="+this.state.valueName)
+      .get(`${server}${option.dataset}`+"?limit=18&page="+ value +"&keywords="+this.state.valueName+"&tags="+tag+"&tasks="+tas)
       .then((res) => {
         if (
           res.status === 200 &&
@@ -133,7 +154,7 @@ export default class My extends React.Component<
                 </div>
               </div>
               <div className={DataSet.leftContent}>
-                <DataSetLeft data={this.state.data} />
+                <DataSetLeft data={this.state.data} parent={this} />
               </div>
             </div>
             <div style={{width:"937px"}}>
