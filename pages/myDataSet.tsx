@@ -8,7 +8,7 @@ import DataSet from "../styles/DataSet.module.css";
 import SearchIcon from "@material-ui/icons/Search";
 import styles from "../styles/Home.module.css";
 import clsx from "clsx";
-import Dataset from "../component/Grid";
+import Dataset from "../component/DisplayDataset";
 import { HomeState } from "./index";
 import axios from "axios";
 import server, { option } from "./main_config";

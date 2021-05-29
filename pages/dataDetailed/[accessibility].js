@@ -19,7 +19,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import clsx from "clsx";
-import Dataset from "../../component/Grid";
+import Dataset from "../../component/DisplayDataset";
 import ForDialogWrapper from "../../component/ForkDialog";
 import { useRouter } from "next/router";
 import axios from 'axios';

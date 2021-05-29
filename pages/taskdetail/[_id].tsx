@@ -52,7 +52,7 @@ class TagDetails extends React.Component {
           <div style={{ flex: "6 1 0%" }}>Admin</div>
           <div style={{ flex: "3 1 0%" }}>
             <Link
-              href={`${"http://192.168.50.161:8080"}?_id=${
+              href={`${"http://10.78.4.88:555"}?_id=${
                 this.state.data.dataset_id
               }&_taskID=${this.state.data._id}&sequence=${a + 1}`}
             >
