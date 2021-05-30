@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
-import Header from "../header.js";
-import server_ip from '../../main_config';
+import Header from "../../header.js";
+import server_ip from '../../../main_config';
 import React from "react";
 import ReactDOM from "react-dom";
-import DataSet from "../../styles/DataSet.module.css";
+import DataSet from "../../../styles/DataSet.module.css";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
@@ -19,8 +19,8 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import clsx from "clsx";
-import Dataset from "../../component/DisplayDataset";
-import ForDialogWrapper from "../../component/ForkDialog";
+import Dataset from "../../../component/DisplayDataset";
+import ForDialogWrapper from "../../../component/ForkDialog";
 import { useRouter } from "next/router";
 import axios from 'axios';
 import {
@@ -115,7 +115,7 @@ export class Detailed extends React.Component {
     if(this.props.urlQueryObj.accessibility == undefined){
       // this.axios()
     }
-    axios.get(server_ip + 'get_dataset_filelist?_id='+this.props.urlQueryObj.accessibility+"&limit=1000",{})
+    axios.get(server_ip + 'get_dataset_filelist?_id='+this.props.urlQueryObj._id+"&limit=1000",{})
       .then( (response) => {
       console.log(this.state.filedata)
       var ite = response.data.data[0].jpg
@@ -134,7 +134,7 @@ export class Detailed extends React.Component {
           console.log(error);
       });
 
-      axios.get(server_ip + 'get_dataset_list?_id='+this.props.urlQueryObj.accessibility,{})
+      axios.get(server_ip + 'get_dataset_list?_id='+this.props.urlQueryObj._id,{})
       .then( (response) => {
           console.log(response.data.data[0])
           this.setState({

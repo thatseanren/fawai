@@ -10,7 +10,7 @@ import VideocamIcon from "@material-ui/icons/Videocam";
 import StorageIcon from "@material-ui/icons/Storage";
 import clsx from "clsx";
 import Link from "next/link";
-import server from "../pages/main_config";
+import server from "../main_config";
 const useStyles = makeStyles({
   briefInfo: {
     marginRight: "8px",

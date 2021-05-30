@@ -18,7 +18,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import clsx from 'clsx';
-import server, { option } from "./main_config";
+import server, { option } from "../main_config";
 import axios from 'axios';
 
 export default class Detailed extends React.Component {

@@ -9,7 +9,7 @@ import { ServerResponse } from "http";
 import Link from "next/link";
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 // import TextField from '@material-ui/core/TextField';
-import ip, { option, annotation } from "../main_config";
+import ip, { option, annotation } from "../../main_config";
 import qs from "qs";
 export default function DetailsWrapper(props) {
   const route = useRouter();

@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import axios from "axios";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import server, { option } from "../pages/main_config";
+import server, { option } from "../main_config";
 import ShareIcon from '@material-ui/icons/Share';
 const useStyles = makeStyles(
   {

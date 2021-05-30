@@ -11,7 +11,7 @@ import clsx from "clsx";
 import Dataset from "../component/DisplayDataset";
 import { HomeState } from "./index";
 import axios from "axios";
-import server, { option } from "./main_config";
+import server, { option } from "../main_config";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 export default class My extends React.Component<

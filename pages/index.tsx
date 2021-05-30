@@ -7,7 +7,7 @@ import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import DataSetLeft from "./DataSetLeft.js";
 import DataSetDisplay from "../component/DisplayDataset";
 import axios from "axios";
-import server, { option } from "./main_config";
+import server, { option } from "../main_config";
 import { resolveHref } from "next/dist/next-server/lib/router/router";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
