@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Header from "./header.js";
-import DataSetLeft from "./DataSetLeft.js";
+import FilterSection from "../component/FilterSection.js";
 import React from "react";
 import ReactDOM from "react-dom";
 import DataSet from "../styles/DataSet.module.css";
@@ -154,7 +154,7 @@ export default class My extends React.Component<
                 </div>
               </div>
               <div className={DataSet.leftContent}>
-                <DataSetLeft data={this.state.data} parent={this} />
+                <FilterSection data={this.state.data} parent={this} father={ 'mydataset'}/>
               </div>
             </div>
             <div style={{width:"937px"}}>

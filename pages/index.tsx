@@ -4,7 +4,7 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 import Header from "./header.js";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
-import DataSetLeft from "./DataSetLeft.js";
+import FilterSection from "../component/FilterSection.js";
 import DataSetDisplay from "../component/DisplayDataset";
 import axios from "axios";
 import server, { option } from "../main_config";
@@ -209,7 +209,7 @@ export default class Home extends React.Component<{}, HomeState> {
         <div className={styles.listHome}>
           <div className={styles.listContainer}>
             <div className={styles.filterContainer} style={{width:'278px'}}>
-              <DataSetLeft data={this.state.data} parent={this} />
+              <FilterSection data={this.state.data} parent={this} father={'index'} />
             </div>
             <div style={{width:"937px"}}>
               <DataSetDisplay data={this.state.List} accessibility={"public"} />
