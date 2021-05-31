@@ -6,7 +6,7 @@ import Link from 'next/link';
 import NotificationsNone from '@material-ui/icons/NotificationsNone';
 import qs from 'qs';
 import headerstyle from'../styles/header.module.css';
-import server, { option } from "./main_config";
+import server, { option } from "../main_config";
 
 
 export default class App extends React.Component {

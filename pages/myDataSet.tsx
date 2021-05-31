@@ -154,11 +154,7 @@ export default class My extends React.Component<
                 </div>
               </div>
               <div className={DataSet.leftContent}>
-<<<<<<< HEAD
-                <DataSetLeft data={this.state.data} parent={this} />
-=======
                 <FilterSection data={this.state.data} parent={this} father={ 'mydataset'}/>
->>>>>>> thatseanren-master
               </div>
             </div>
             <div style={{width:"937px"}}>
