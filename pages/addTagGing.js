@@ -1,7 +1,7 @@
 import React, { useState,useEffect  } from "react";
 import Header from './header.js';
 import Tag from '../styles/DataSet.module.css'
-import server_ip from './main_config';
+import server_ip from '../main_config';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Link from 'next/link';

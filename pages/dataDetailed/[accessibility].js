@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Header from "../header.js";
-import server_ip from '../main_config';
+import server_ip from "../../main_config";
 import React from "react";
 import ReactDOM from "react-dom";
 import DataSet from "../../styles/DataSet.module.css";
@@ -19,10 +19,10 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import clsx from "clsx";
-import Dataset from "../../component/Grid";
+import Dataset from "../../component/DisplayDataset";
 import ForDialogWrapper from "../../component/ForkDialog";
 import { useRouter } from "next/router";
-import axios from 'axios';
+import axios from "axios";
 import {
   Grow,
   Popper,
@@ -36,7 +36,6 @@ import ShareIcon from "@material-ui/icons/Share";
 const Detailed_Wrapper = (props) => {
   const route = useRouter();
   const urlQueryObj = route.query;
-  console.log(urlQueryObj);
   return <Detailed {...props} router={route} urlQueryObj={urlQueryObj} />;
 };
 export default Detailed_Wrapper;
@@ -49,18 +48,18 @@ export class Detailed extends React.Component {
       openPopper: false,
       openlist: 0,
       opacity: 0,
-      img:"",
+      img: "",
       showlist: 0, //显示隐藏数据列表
       isOpen: false,
-      imgurl:"",
-      basic:[],
+      imgurl: "",
+      basic: [],
       filedata: [
         {
-          jpg:"455"
+          jpg: "455",
         },
         {
-          jpg:"455"
-        }
+          jpg: "455",
+        },
       ],
       fileindex: 0,
       fileshow: ["block", "none"],
@@ -110,47 +109,49 @@ export class Detailed extends React.Component {
     // e.preventPro
   };
   axios = (e) => {
-    console.log(this.DialogRef, this.ButtonRef);
-    console.log(this.props.urlQueryObj.accessibility)
-    if(this.props.urlQueryObj.accessibility == undefined){
+    if (this.props.urlQueryObj.accessibility == undefined) {
       // this.axios()
     }
-    axios.get(server_ip + 'get_dataset_filelist?_id='+this.props.urlQueryObj.accessibility+"&limit=1000",{})
-      .then( (response) => {
-      console.log(this.state.filedata)
-      var ite = response.data.data[0].jpg
-      var url = ite.substring(0,10)+"..."+ite.substring(ite.length-10,ite.length)
-      console.log(ite.substring(0,10))
-      console.log(ite.substring(ite.length-10,ite.length))
+    axios
+      .get(
+        server_ip +
+          "get_dataset_filelist?_id=" +
+          this.props.urlQueryObj._id +
+          "&limit=1000",
+        {}
+      )
+      .then((response) => {
+        var ite = response.data.data[0].jpg;
+        var url =
+          ite.substring(0, 10) +
+          "..." +
+          ite.substring(ite.length - 10, ite.length);
 
-      this.setState({
-        img:server_ip +"download?url="+response.data.data[0].jpg,
-        filedata: response.data.data,
-        imgurl:url
-      });
-          
+        this.setState({
+          img: server_ip + "download?url=" + response.data.data[0].jpg,
+          filedata: response.data.data,
+          imgurl: url,
+        });
       })
       .catch(function (error) {
-          console.log(error);
+        console.log(error);
       });
 
-      axios.get(server_ip + 'get_dataset_list?_id='+this.props.urlQueryObj.accessibility,{})
-      .then( (response) => {
-          console.log(response.data.data[0])
-          this.setState({
-            basic:response.data.data[0]
-          });
+    axios
+      .get(server_ip + "get_dataset_list?_id=" + this.props.urlQueryObj._id, {})
+      .then((response) => {
+        this.setState({
+          basic: response.data.data[0],
+        });
       })
       .catch(function (error) {
-          console.log(error);
+        console.log(error);
       });
   };
   componentDidMount() {
-    setTimeout( () => {
-      this.axios()
+    setTimeout(() => {
+      this.axios();
     }, 500);
-    
-
   }
   render() {
     // let { accessibility } = this.props.router.query;
@@ -264,7 +265,12 @@ export class Detailed extends React.Component {
                                 onClick={() => this.DialogRef.current(true)}
                               >
                                 {" "}
-                                <ShareIcon style={{marginRight:"10px",fontSize:"1.2rem"}}/>
+                                <ShareIcon
+                                  style={{
+                                    marginRight: "10px",
+                                    fontSize: "1.2rem",
+                                  }}
+                                />
                                 Fork数据集
                               </MenuItem>
                               <MenuItem> Comming Soon</MenuItem>
@@ -297,10 +303,7 @@ export class Detailed extends React.Component {
                   }
                 >
                   <h1>Overview</h1>
-                  <p>
-                    {this.state.basic.description}
-                  </p>
-                  
+                  <p>{this.state.basic.description}</p>
                 </div>
                 <div className={DataSet.expandBar} onClick={() => this.open()}>
                   {this.state.openlist === 0 ? (
@@ -337,7 +340,6 @@ export class Detailed extends React.Component {
                       <div className={DataSet.fileSelectorContainer}>
                         <div className={DataSet.objectPathDisplay}>
                           {this.state.imgurl}
-                          
                         </div>
                         <div
                           className={DataSet.objectSelectButton}
@@ -375,27 +377,37 @@ export class Detailed extends React.Component {
                       <div className={DataSet.fileList}>
                         <div className={DataSet.segmentContainer}>
                           {this.state.filedata.map((item, index) => {
-                            var jpg = item.jpg.split('/')
+                            var jpg = item.jpg.split("/");
                             return (
                               <div>
-                                    <div
-                                      className={ index === this.state.fileindex
-                                          ? clsx(
-                                              DataSet.objectBlock,
-                                              DataSet.activeObjectBlock
-                                            )
-                                          : DataSet.objectBlock}
-                                          onClick={() => {
-                                            var url = item.jpg.substring(0,10)+"..."+item.jpg.substring(item.jpg.length-10,item.jpg.length)
-                                            this.setState({
-                                                imgurl:url,
-                                                fileindex:index,
-                                                img :server_ip +"download?url="+item.jpg
-                                            })
-                                          }}>
-                                      {jpg[5]}
-                                    </div>
+                                <div
+                                  className={
+                                    index === this.state.fileindex
+                                      ? clsx(
+                                          DataSet.objectBlock,
+                                          DataSet.activeObjectBlock
+                                        )
+                                      : DataSet.objectBlock
+                                  }
+                                  onClick={() => {
+                                    var url =
+                                      item.jpg.substring(0, 10) +
+                                      "..." +
+                                      item.jpg.substring(
+                                        item.jpg.length - 10,
+                                        item.jpg.length
+                                      );
+                                    this.setState({
+                                      imgurl: url,
+                                      fileindex: index,
+                                      img:
+                                        server_ip + "download?url=" + item.jpg,
+                                    });
+                                  }}
+                                >
+                                  {jpg[5]}
                                 </div>
+                              </div>
                             );
                           })}
                         </div>
@@ -410,39 +422,50 @@ export class Detailed extends React.Component {
                     <div style={{ opacity: this.state.opacity }}>
                       <div
                         className={DataSet.viewerArrowLeft}
-                        style={{ left: "20px" }} onClick={() => {
-                          var fileda=this.state.filedata;
-                          var ind=this.state.fileindex
-                          if(ind>0){
-                            var img = fileda[ind-1].jpg
-                            var url = fileda[ind-1].jpg.substring(0,10)+"..."+fileda[ind-1].jpg.substring(fileda[ind-1].jpg.length-10,fileda[ind-1].jpg.length)
+                        style={{ left: "20px" }}
+                        onClick={() => {
+                          var fileda = this.state.filedata;
+                          var ind = this.state.fileindex;
+                          if (ind > 0) {
+                            var img = fileda[ind - 1].jpg;
+                            var url =
+                              fileda[ind - 1].jpg.substring(0, 10) +
+                              "..." +
+                              fileda[ind - 1].jpg.substring(
+                                fileda[ind - 1].jpg.length - 10,
+                                fileda[ind - 1].jpg.length
+                              );
                             this.setState({
-                                imgurl:url,
-                                fileindex:ind-1,
-                                img :server_ip +"download?url="+img
-                            })
-
+                              imgurl: url,
+                              fileindex: ind - 1,
+                              img: server_ip + "download?url=" + img,
+                            });
                           }
-                          
                         }}
                       >
                         <ArrowBackIosIcon style={{ fontSize: "12px" }} />
                       </div>
                       <div
                         className={DataSet.viewerArrowLeft}
-                        style={{ right: "20px" }} onClick={() => {
-                          var fileda=this.state.filedata;
-                          var ind=this.state.fileindex
-                          if(ind < fileda.length){
-                            var img = fileda[ind+1].jpg
-                            var url = fileda[ind+1].jpg.substring(0,10)+"..."+fileda[ind+1].jpg.substring(fileda[ind+1].jpg.length-10,fileda[ind+1].jpg.length)
+                        style={{ right: "20px" }}
+                        onClick={() => {
+                          var fileda = this.state.filedata;
+                          var ind = this.state.fileindex;
+                          if (ind < fileda.length) {
+                            var img = fileda[ind + 1].jpg;
+                            var url =
+                              fileda[ind + 1].jpg.substring(0, 10) +
+                              "..." +
+                              fileda[ind + 1].jpg.substring(
+                                fileda[ind + 1].jpg.length - 10,
+                                fileda[ind + 1].jpg.length
+                              );
                             this.setState({
-                                imgurl:url,
-                                fileindex:ind+1,
-                                img :server_ip +"download?url="+img
-                            })
+                              imgurl: url,
+                              fileindex: ind + 1,
+                              img: server_ip + "download?url=" + img,
+                            });
                           }
-                          
                         }}
                       >
                         <ArrowForwardIosIcon style={{ fontSize: "12px" }} />
@@ -460,47 +483,66 @@ export class Detailed extends React.Component {
                   数据集信息
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
+<<<<<<< HEAD
                 <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
                         标注类型
+=======
+                  <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+                    标注类型
+>>>>>>> thatseanren-master
                   </span>
-                {this.state.basic.tags ? this.state.basic.tags.map((item, index) => {
-                            return (
+                  {this.state.basic.tags ? (
+                    this.state.basic.tags.map((item, index) => {
+                      return (
                         <span className={DataSet.DatasetInfoFieldTagChip}>
                           <span className={DataSet.DatasetDetailTagChipChip}>
                             {item}
                           </span>
                         </span>
-                  );
-                }):<span className={DataSet.DatasetInfoFieldTagChip}>
-                <span className={DataSet.DatasetDetailTagChipChip}>
-                  暂无
-                </span>
-              </span>}
+                      );
+                    })
+                  ) : (
+                    <span className={DataSet.DatasetInfoFieldTagChip}>
+                      <span className={DataSet.DatasetDetailTagChipChip}>
+                        暂无
+                      </span>
+                    </span>
+                  )}
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
                   <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+<<<<<<< HEAD
                   数据格式
+=======
+                    数据格式
+>>>>>>> thatseanren-master
                   </span>
-                  {this.state.basic.tasks ? this.state.basic.tasks.map((item, index) => {
-                            return (
+                  {this.state.basic.tasks ? (
+                    this.state.basic.tasks.map((item, index) => {
+                      return (
                         <span className={DataSet.DatasetInfoFieldTagChip}>
                           <span className={DataSet.DatasetDetailTagChipChip}>
                             {item}
                           </span>
                         </span>
-                  );
-                }):<span className={DataSet.DatasetInfoFieldTagChip}>
-                <span className={DataSet.DatasetDetailTagChipChip}>
-                  暂无
-                </span>
-              </span>}
+                      );
+                    })
+                  ) : (
+                    <span className={DataSet.DatasetInfoFieldTagChip}>
+                      <span className={DataSet.DatasetDetailTagChipChip}>
+                        暂无
+                      </span>
+                    </span>
+                  )}
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
                   <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
                     创建部门
                   </span>
                   <span className={DataSet.DatasetInfoFieldTagChipSpan}>
-                      {this.state.basic.department ? this.state.basic.department : "暂无"}
+                    {this.state.basic.department
+                      ? this.state.basic.department
+                      : "暂无"}
                   </span>
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
@@ -508,7 +550,9 @@ export class Detailed extends React.Component {
                     更新时间
                   </span>
                   <span className={DataSet.DatasetInfoFieldTagChipSpan}>
-                      {this.state.basic.create_time ? this.state.basic.create_time : "暂无"}
+                    {this.state.basic.create_time
+                      ? this.state.basic.create_time
+                      : "暂无"}
                   </span>
                 </div>
               </div>

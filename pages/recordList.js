@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Header from './header.js';
-import server_ip from './main_config';
+import server_ip from '../main_config';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import ForkDialog from '../component/addDialog';

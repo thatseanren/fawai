@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import axios from "axios";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import server, { option } from "../pages/main_config";
+import server, { option } from "../main_config";
 import ShareIcon from '@material-ui/icons/Share';
 const useStyles = makeStyles(
   {
@@ -69,7 +69,7 @@ export function ForkDialog(props: any): any {
 
       <div style={{ position: "absolute", display: "flex" }}>
         <Dialog aria-labelledby="fork_dialog" open={show} className={"fasd"}>
-          <DialogTitle onClose={() => {}}> Fork数据集 </DialogTitle>
+          <DialogTitle > Fork数据集 </DialogTitle>
           <DialogContent dividers>
             <p className={classes.p14Gray}>
               通过开发者工具直接管理、使用、读取数据

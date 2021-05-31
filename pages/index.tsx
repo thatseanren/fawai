@@ -4,10 +4,10 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 import Header from "./header.js";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
-import DataSetLeft from "./DataSetLeft.js";
-import DataSet from "../component/Grid";
+import FilterSection from "../component/FilterSection.js";
+import DataSetDisplay from "../component/DisplayDataset";
 import axios from "axios";
-import server, { option } from "./main_config";
+import server, { option } from "../main_config";
 import { resolveHref } from "next/dist/next-server/lib/router/router";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -200,7 +200,7 @@ export default class Home extends React.Component<{}, HomeState> {
                 />
               </div>
               <div className={styles.searchRight}>
-                <span className={styles.searchNumber}>3723</span>
+                <span className={styles.searchNumber}>{this.state.List.length}</span>
                 <span>公开数据集</span>
               </div>
             </div>
@@ -209,10 +209,14 @@ export default class Home extends React.Component<{}, HomeState> {
         <div className={styles.listHome}>
           <div className={styles.listContainer}>
             <div className={styles.filterContainer} style={{width:'278px'}}>
+<<<<<<< HEAD
               <DataSetLeft data={this.state.data} parent={this} />
+=======
+              <FilterSection data={this.state.data} parent={this} father={'index'} />
+>>>>>>> thatseanren-master
             </div>
             <div style={{width:"937px"}}>
-              <DataSet data={this.state.List} accessibility={"public"} />
+              <DataSetDisplay data={this.state.List} accessibility={"public"} />
               <div className={styles.pages}>
                 <div className={styles.pagesLable} onClick={() => {
                     if(this.state.pagesIndex>0){
