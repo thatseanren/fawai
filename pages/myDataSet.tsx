@@ -1,17 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
 import Header from "./header.js";
-import DataSetLeft from "./DataSetLeft.js";
+import FilterSection from "../component/FilterSection.js";
 import React from "react";
 import ReactDOM from "react-dom";
 import DataSet from "../styles/DataSet.module.css";
 import SearchIcon from "@material-ui/icons/Search";
 import styles from "../styles/Home.module.css";
 import clsx from "clsx";
-import Dataset from "../component/Grid";
+import Dataset from "../component/DisplayDataset";
 import { HomeState } from "./index";
 import axios from "axios";
-import server, { option } from "./main_config";
+import server, { option } from "../main_config";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 export default class My extends React.Component<
@@ -154,11 +154,15 @@ export default class My extends React.Component<
                 </div>
               </div>
               <div className={DataSet.leftContent}>
+<<<<<<< HEAD
                 <DataSetLeft data={this.state.data} parent={this} />
+=======
+                <FilterSection data={this.state.data} parent={this} father={ 'mydataset'}/>
+>>>>>>> thatseanren-master
               </div>
             </div>
             <div style={{width:"937px"}}>
-              <Dataset data={this.state.List} accessibility={"public"} />
+              <Dataset data={this.state.List} accessibility={"private"} />
               <div className={styles.pages}>
                 <div className={styles.pagesLable} onClick={() => {
                     if(this.state.pagesIndex>0){
@@ -167,7 +171,6 @@ export default class My extends React.Component<
                       })
                       this.grid(this.state.pagesIndex-1)
                     }
-                    
                   }}>
                   <ArrowBackIosIcon style={{fontSize:12}} />
                 </div>

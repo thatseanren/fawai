@@ -16,7 +16,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 // import TextField from '@material-ui/core/TextField';
-import ip, { option, annotation } from "../main_config";
+import ip, { option, annotation } from "../../main_config";
 import qs from "qs";
 export default function DetailsWrapper(props) {
   const route = useRouter();
@@ -36,9 +36,13 @@ class TagDetails extends React.Component {
       openlist: 0,
       data: {},
       numb:"",
+<<<<<<< HEAD
       open:false,
       done:"",
       type:"none",
+=======
+      done:"",
+>>>>>>> thatseanren-master
 
     };
   }
@@ -46,6 +50,7 @@ class TagDetails extends React.Component {
     axios
       .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
       .then((res) => {
+<<<<<<< HEAD
         console.log(res.data);
         this.setState({ data: res.data.data[0],done: res.data.data[0].done});
     });
@@ -81,6 +86,11 @@ class TagDetails extends React.Component {
         }
         
     });
+=======
+        console.log(res.data.data[0]);
+        this.setState({ data: res.data.data[0],done: res.data.data[0].done});
+      });
+>>>>>>> thatseanren-master
   }
   SequenceRow = () => {
     let list = [];
@@ -93,7 +103,7 @@ class TagDetails extends React.Component {
           <div style={{ flex: "6 1 0%" }}>Admin</div>
           <div style={{ flex: "3 1 0%" }}>
             <Link
-              href={`${"http://192.168.50.161:8080"}?_id=${
+              href={`${"http://10.78.4.88:555"}?_id=${
                 this.state.data.dataset_id
               }&_taskID=${this.state.data._id}&sequence=${a + 1}`}
             >
@@ -259,7 +269,10 @@ class TagDetails extends React.Component {
                   <div>数据量</div>
                   <div>{this.state.done}</div>
                 </div>
+<<<<<<< HEAD
               
+=======
+>>>>>>> thatseanren-master
                 {/* <div
                   style={{
                     display: "flex",
