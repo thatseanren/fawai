@@ -60,7 +60,7 @@ const useStyles = makeStyles({
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
     display: "block",
-    height: '20px'
+    height: "20px",
   },
   metaData_Span: {
     "&:after": {
@@ -120,116 +120,140 @@ export default function Dataset(props: {
         flexWrap: "wrap",
       }}
     >
-      {props.data ? props.data.map(
-        ({
-          img,
-          format,
-          name,
-          num,
-          size,
-          tags,
-          _id,
-          category,
-          create_time,
-          department,
-        }) => (
-          <Link href={`/dataDetailed/${props.accessibility}`} as={`/dataDetailed/`+_id}>
-          {/* <Link href={`/dataDetailed?id=`+_id} as={`/dataDetailed/${props.accessibility}`}> */}
-            <a
-              style={{
-                cursor: "pointer",
-                width: "calc((100% - 32px)/3)",
-                height: "fit-content",
-                marginRight: "10px",
-                marginBottom: "16px",
-                position: "relative",
-              }}
+      {props.data ? (
+        props.data.map(
+          ({
+            img,
+            format,
+            name,
+            num,
+            size,
+            tags,
+            _id,
+            category,
+            create_time,
+            department,
+          }) => (
+            <Link
+              href={`/dataDetailed/`}
+              as={`/dataDetailed/${props.accessibility}?` + "_id" + "=" + _id}
             >
-              <Paper
-                className={clsx(classes.paper_hover, "second_Dataset_Div")}
+              {/* <Link href={`/dataDetailed?id=`+_id} as={`/dataDetailed/${props.accessibility}`}> */}
+              <a
                 style={{
+                  cursor: "pointer",
+                  width: "calc((100% - 32px)/3)",
                   height: "fit-content",
                   marginRight: "10px",
                   marginBottom: "16px",
                   position: "relative",
                 }}
-                elevation={1}
               >
-                <Grid container justify="center" style={{ flexFlow: "column" }}>
+                <Paper
+                  className={clsx(classes.paper_hover, "second_Dataset_Div")}
+                  style={{
+                    height: "fit-content",
+                    marginRight: "10px",
+                    marginBottom: "16px",
+                    position: "relative",
+                  }}
+                  elevation={1}
+                >
                   <Grid
-                    item
-                    className={"forth_Dataset_Div_Grid_item"}
-                    style={{ position: "relative", overflow: "hidden" }}
+                    container
+                    justify="center"
+                    style={{ flexFlow: "column" }}
                   >
-                    <img
-                      className={classes.img}
-                      src={`${server}download?url=${img}`}
-                    />
-                    <div className={classes.miniLabel}>
-                      <div className={classes.briefInfo}>
-                        <span className={classes.miniLabel_Span}>
-                          {format === "video" ? (
-                            <VideocamIcon className={classes.miniLabel_icon} />
-                          ) : (
-                            <ImageIcon className={classes.miniLabel_icon} />
-                          )}
-                        </span>
-                        <span className={classes.miniLabel_Span}>
-                          <BarChartIcon className={classes.miniLabel_icon} />
-                          <i style={{ fontSize: "12px" }}> {num || "C"}</i>
-                        </span>
+                    <Grid
+                      item
+                      className={"forth_Dataset_Div_Grid_item"}
+                      style={{ position: "relative", overflow: "hidden" }}
+                    >
+                      <img
+                        className={classes.img}
+                        src={`${server}download?url=${img}`}
+                      />
+                      <div className={classes.miniLabel}>
+                        <div className={classes.briefInfo}>
+                          <span className={classes.miniLabel_Span}>
+                            {format === "video" ? (
+                              <VideocamIcon
+                                className={classes.miniLabel_icon}
+                              />
+                            ) : (
+                              <ImageIcon className={classes.miniLabel_icon} />
+                            )}
+                          </span>
+                          <span className={classes.miniLabel_Span}>
+                            <BarChartIcon className={classes.miniLabel_icon} />
+                            <i style={{ fontSize: "12px" }}> {num || "C"}</i>
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "16px",
+                              paddingRight: "6px",
+                              paddingLeft: "6px",
+                              display: "flex",
+                            }}
+                          >
+                            <StorageIcon className={classes.miniLabel_icon} />
+                            <i style={{ fontSize: "12px" }}> {size || "S"}</i>
+                          </span>
+                        </div>
+                      </div>
+                    </Grid>
+                    <div className={classes.metaData}>
+                      <div className={classes.metaData_Div}>
                         <span
                           style={{
                             fontSize: "16px",
-                            paddingRight: "6px",
-                            paddingLeft: "6px",
-                            display: "flex",
+                            fontWeight: 600,
+                            height: "18px",
                           }}
                         >
-                          <StorageIcon className={classes.miniLabel_icon} />
-                          <i style={{ fontSize: "12px" }}> {size || "S"}</i>
+                          {name || "Dataset Name"}
+                        </span>
+                      </div>
+                      <div className={classes.metaData_Div}>
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            height: "15px",
+                          }}
+                        >
+                          {category || "Category"}
+                        </span>
+                      </div>
+                      {<div className={classes.metaData_Div}> {tags}</div>}
+                      <div className={classes.metaData_Div}>
+                        <span style={{ fontSize: "12px" }}>
+                          {department || "Author"}
                         </span>
                       </div>
                     </div>
                   </Grid>
-                  <div className={classes.metaData}>
-                    <div className={classes.metaData_Div}>
-                      <span
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          height: "18px",
-                        }}
-                      >
-                        {name || "Dataset Name"}
-                      </span>
-                    </div>
-                    <div className={classes.metaData_Div}>
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          height: "15px",
-                        }}
-                      >
-                        {category || "Category"}
-                      </span>
-                    </div>
-                    {<div className={classes.metaData_Div}> {tags}</div>}
-                    <div className={classes.metaData_Div}>
-                      <span style={{ fontSize: "12px" }}>
-                        {department || "Author"}
-                      </span>
-                    </div>
-                  </div>
-                </Grid>
-              </Paper>
-            </a>
-          </Link>
+                </Paper>
+              </a>
+            </Link>
+          )
         )
-      ):<div style={{margin:"0px auto",textAlign:"center",paddingTop:"100px"}}>
-        <img style={{width:"180px"}} src="https://tutu.s3.cn-northwest-1.amazonaws.com.cn/company-website/open+dataset/detail/icon-default%402x.png" />
-        <div style={{fontSize: '14px',color: '#dbe0e9'}}>很抱歉，没有搜索到相关数据集</div>
-        </div>}
+      ) : (
+        <div
+          style={{
+            margin: "0px auto",
+            textAlign: "center",
+            paddingTop: "100px",
+          }}
+        >
+          <img
+            style={{ width: "180px" }}
+            src="https://tutu.s3.cn-northwest-1.amazonaws.com.cn/company-website/open+dataset/detail/icon-default%402x.png"
+          />
+          <div style={{ fontSize: "14px", color: "#dbe0e9" }}>
+            很抱歉，没有搜索到相关数据集
+          </div>
+        </div>
+      )}
     </div>
   );
 }

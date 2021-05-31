@@ -158,7 +158,7 @@ export default class My extends React.Component<
               </div>
             </div>
             <div style={{width:"937px"}}>
-              <Dataset data={this.state.List} accessibility={"public"} />
+              <Dataset data={this.state.List} accessibility={"private"} />
               <div className={styles.pages}>
                 <div className={styles.pagesLable} onClick={() => {
                     if(this.state.pagesIndex>0){
@@ -167,7 +167,6 @@ export default class My extends React.Component<
                       })
                       this.grid(this.state.pagesIndex-1)
                     }
-                    
                   }}>
                   <ArrowBackIosIcon style={{fontSize:12}} />
                 </div>
