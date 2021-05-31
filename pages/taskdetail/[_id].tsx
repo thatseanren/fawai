@@ -6,7 +6,14 @@ import Tag from "../../styles/DataSet.module.css";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { ServerResponse } from "http";
+import Alert from '@material-ui/lab/Alert';
 import Link from "next/link";
+import Router  from 'next/router';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 // import TextField from '@material-ui/core/TextField';
 import ip, { option, annotation } from "../main_config";
@@ -29,7 +36,9 @@ class TagDetails extends React.Component {
       openlist: 0,
       data: {},
       numb:"",
+      open:false,
       done:"",
+      type:"none",
 
     };
   }
@@ -37,9 +46,41 @@ class TagDetails extends React.Component {
     axios
       .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
       .then((res) => {
-        console.log(res.data.data[0]);
+        console.log(res.data);
         this.setState({ data: res.data.data[0],done: res.data.data[0].done});
-      });
+    });
+  }
+
+  handleClose = () => {
+    this.setState({ 
+      open:false
+    });
+  };
+  deleteData = () => {
+    this.setState({ 
+      open:true
+    });
+  }
+  deleteAgree = () => {
+    this.setState({ 
+      open:false
+    });
+    axios
+      .get(`${ip}del_dtask?_id=${this.props.TaskId}`)
+      .then((res) => {
+        console.log(res);
+        if(res.status === 200){
+          this.setState({
+              type :'flex'
+          })
+        setTimeout( () => {
+            Router.push({
+                pathname:'.././tools/annotation'
+                })
+        }, 2000);
+        }
+        
+    });
   }
   SequenceRow = () => {
     let list = [];
@@ -70,6 +111,32 @@ class TagDetails extends React.Component {
     return (
       <div className={Tag.tagHome}>
         <Header />
+        <Alert style={{display:this.state.type}} severity="success">
+              您的标注任务删除成功 <strong>success</strong>
+          </Alert>
+
+          <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/* <DialogTitle id="alert-dialog-title">{"删除提示"}</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+          确定要删除该标注任务?
+          </DialogContentText>
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            取消
+          </Button>
+          <Button onClick={this.deleteAgree} color="primary" autoFocus>
+            确认
+          </Button>
+        </DialogActions>
+      </Dialog>
         <div className={Tag.homeTop}>
           <div className={Tag.tagListLeft}>
             <div className={Tag.basicInfoWindow}>
@@ -192,6 +259,7 @@ class TagDetails extends React.Component {
                   <div>数据量</div>
                   <div>{this.state.done}</div>
                 </div>
+              
                 {/* <div
                   style={{
                     display: "flex",
@@ -218,6 +286,15 @@ class TagDetails extends React.Component {
                   </div>
                 </div> */}
               </div>
+              <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={() => this.deleteData()}
+                  style={{width:"100%" }}
+                >
+                  删除
+                </Button>
             </div>
           </div>
         </div>
