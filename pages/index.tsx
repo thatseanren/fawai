@@ -209,11 +209,7 @@ export default class Home extends React.Component<{}, HomeState> {
         <div className={styles.listHome}>
           <div className={styles.listContainer}>
             <div className={styles.filterContainer} style={{width:'278px'}}>
-<<<<<<< HEAD
-              <DataSetLeft data={this.state.data} parent={this} />
-=======
               <FilterSection data={this.state.data} parent={this} father={'index'} />
->>>>>>> thatseanren-master
             </div>
             <div style={{width:"937px"}}>
               <DataSetDisplay data={this.state.List} accessibility={"public"} />

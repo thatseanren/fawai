@@ -36,13 +36,9 @@ class TagDetails extends React.Component {
       openlist: 0,
       data: {},
       numb:"",
-<<<<<<< HEAD
       open:false,
       done:"",
       type:"none",
-=======
-      done:"",
->>>>>>> thatseanren-master
 
     };
   }
@@ -50,7 +46,6 @@ class TagDetails extends React.Component {
     axios
       .get(`${ip}${option.getTaskList}?_id=${this.props.TaskId}`)
       .then((res) => {
-<<<<<<< HEAD
         console.log(res.data);
         this.setState({ data: res.data.data[0],done: res.data.data[0].done});
     });
@@ -86,11 +81,6 @@ class TagDetails extends React.Component {
         }
         
     });
-=======
-        console.log(res.data.data[0]);
-        this.setState({ data: res.data.data[0],done: res.data.data[0].done});
-      });
->>>>>>> thatseanren-master
   }
   SequenceRow = () => {
     let list = [];
@@ -269,10 +259,7 @@ class TagDetails extends React.Component {
                   <div>数据量</div>
                   <div>{this.state.done}</div>
                 </div>
-<<<<<<< HEAD
               
-=======
->>>>>>> thatseanren-master
                 {/* <div
                   style={{
                     display: "flex",
