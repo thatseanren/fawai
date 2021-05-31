@@ -483,8 +483,13 @@ export class Detailed extends React.Component {
                   数据集信息
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
+<<<<<<< HEAD
+                <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+                        标注类型
+=======
                   <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
                     标注类型
+>>>>>>> thatseanren-master
                   </span>
                   {this.state.basic.tags ? (
                     this.state.basic.tags.map((item, index) => {
@@ -506,7 +511,11 @@ export class Detailed extends React.Component {
                 </div>
                 <div className={DataSet.DatasetInfoFieldInfoEntry}>
                   <span className={DataSet.DatasetInfoFieldInfoSubtitle}>
+<<<<<<< HEAD
+                  数据格式
+=======
                     数据格式
+>>>>>>> thatseanren-master
                   </span>
                   {this.state.basic.tasks ? (
                     this.state.basic.tasks.map((item, index) => {

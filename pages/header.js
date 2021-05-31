@@ -1,11 +1,53 @@
 import React,{useContext} from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
-import Link from 'next/link'
+import axios from "axios";
+import Link from 'next/link';
 import NotificationsNone from '@material-ui/icons/NotificationsNone';
+import qs from 'qs';
 import headerstyle from'../styles/header.module.css';
+import server, { option } from "./main_config";
 
-function App() {
+
+export default class App extends React.Component {
+    
+    componentDidMount () {
+        
+        
+        if(localStorage.getItem("login")){
+            localStorage.setItem("login", "123")
+            let user = localStorage.getItem("username")
+            user=eval('(' + user + ')');
+            console.log(user)
+        }
+        // var qs = require('qs');
+        // axios.post(server + 'login',qs.stringify({
+        // 'name':user.name,
+        // 'password':user.password
+        // }))
+        // .then(function (response) {
+        //     console.log(response)
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
+
+
+        const instance = axios.create({
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    
+        instance.interceptors.request.use(
+            console.log("登陆生效"),
+        )
+
+    }
+    render() {
+
+        
+
     return (
       <div className={headerstyle.Herder} style={{backgroundColor:"#324D57"}}id={"header_"}>
         <div id={headerstyle.appBar} style={{backgroundColor:"#324D57"}}>
@@ -41,7 +83,7 @@ function App() {
             </div>
         </div>
       </div>
-    );
+    )
   }
+}
   
-  export default App;
