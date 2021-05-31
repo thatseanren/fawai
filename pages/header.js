@@ -15,22 +15,49 @@ export default class App extends React.Component {
         
         
         if(localStorage.getItem("login")){
-            localStorage.setItem("login", "123")
             let user = localStorage.getItem("username")
             user=eval('(' + user + ')');
             console.log(user)
+            var qs = require('qs');
+            axios.post(server + 'login',qs.stringify({
+            'name':'admin',
+            'password':'admin123456'
+            }))
+            .then(function (response) {
+                console.log(response)
+                response.status === 200 ? localStorage.setItem("login", "123") : ""
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            setTimeout( () => {
+                console.log(1)
+            }, 2000);
         }
-        // var qs = require('qs');
-        // axios.post(server + 'login',qs.stringify({
-        // 'name':user.name,
-        // 'password':user.password
-        // }))
-        // .then(function (response) {
-        //     console.log(response)
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        var qs = require('qs');
+            axios.post(server + 'login',qs.stringify({
+            'name':'admin',
+            'password':'admin123456'
+            }))
+            .then(function (response) {
+                console.log(response)
+                response.status === 200 ? localStorage.setItem("login", "123") : ""
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            setTimeout( () => {
+                axios.post(server + 'text',{})
+                    .then(function (response) {
+                        console.log(response)
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }, 2000);
+        
 
 
         const instance = axios.create({
