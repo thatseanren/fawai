@@ -26,6 +26,7 @@ export interface HomeState {
   }[];
   pages:[];
   pagesIndex:number;
+  pageNumber:number;
   data: { title: string; arr: string[] }[];
 }
 // class MyComponent<P, S> extends <P, HomeState & S> {}
@@ -36,6 +37,7 @@ export default class Home extends React.Component<{}, HomeState> {
       List:[],
       pages:[],
       pagesIndex:1,
+      pageNumber:0,
       valueName:"",
       childrenMsg:"",
       tags:"",
@@ -66,13 +68,17 @@ export default class Home extends React.Component<{}, HomeState> {
       if(ind === 0 ){
         this.setState({
           tags:msg
-        })
+        }, function() {
+          this.grid(1);
+        }) 
       } else {
         this.setState({
           tasks:msg
+        }, function() {
+          this.grid(1);
         })
       }
-      this.grid(1,ms[0],ms[1])
+      // this.grid(1,ms[0],ms[1])
     }
   callback(msg){
       console.log(msg);
@@ -88,7 +94,7 @@ export default class Home extends React.Component<{}, HomeState> {
           res.status === 200 &&
           !(console.log(`${server}${option.dataset}`), 0)
         ) {
-          this.setState({ List: res.data.data });
+          this.setState({ List: res.data.data ,pageNumber:res.data.count});
           console.log(res.data);
           var count=parseInt(res.data.count/15+1);
           var numb = []
@@ -200,7 +206,7 @@ export default class Home extends React.Component<{}, HomeState> {
                 />
               </div>
               <div className={styles.searchRight}>
-                <span className={styles.searchNumber}>{this.state.List.length}</span>
+                <span className={styles.searchNumber}>{this.state.pageNumber}</span>
                 <span>公开数据集</span>
               </div>
             </div>

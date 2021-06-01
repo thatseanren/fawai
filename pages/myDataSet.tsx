@@ -64,13 +64,16 @@ export default class My extends React.Component<
       if(ind === 0 ){
         this.setState({
           tags:msg
-        })
+        }, function() {
+          this.grid(1);
+        }) 
       } else {
         this.setState({
           tasks:msg
+        }, function() {
+          this.grid(1);
         })
       }
-      this.grid(1,ms[0],ms[1])
     }
   grid = (value,tags,tasks) => {  //展开文章内容
     var tag = tags? tags : this.state.tags
