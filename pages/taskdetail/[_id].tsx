@@ -95,7 +95,7 @@ class TagDetails extends React.Component {
             <Link
               href={`${"http://10.78.4.88:555"}?_id=${
                 this.state.data.dataset_id
-              }&_taskID=${this.state.data._id}&sequence=${a + 1}`}
+              }&_taskID=${this.state.data._id}&sequence=${a}`}
             >
               <Button variant="outlined" color="primary">
                 标注

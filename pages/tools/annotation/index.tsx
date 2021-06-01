@@ -18,11 +18,7 @@ import PagesIcon from "@material-ui/icons/Pages";
 import { TabPanel, TabContext } from "@material-ui/lab";
 import clsx from "clsx";
 import axios from "axios";
-<<<<<<< HEAD
-import ip, { option } from "../../main_config";
-=======
 import ip, { option } from "../../../main_config";
->>>>>>> thatseanren-master
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import qs from "qs";
