@@ -6,18 +6,18 @@ import Link from 'next/link';
 import NotificationsNone from '@material-ui/icons/NotificationsNone';
 import qs from 'qs';
 import headerstyle from'../styles/header.module.css';
+import Cookies from 'js-cookie';
 import server, { option } from "../main_config";
 
 
 export default class App extends React.Component {
     
     componentDidMount () {
-        
+        let user = Cookies.get('username');
+        user=eval('(' + user + ')');
+        console.log(user)
         
         if(localStorage.getItem("login")){
-            let user = localStorage.getItem("username")
-            user=eval('(' + user + ')');
-            console.log(user)
             var qs = require('qs');
             axios.post(server + 'login',qs.stringify({
             'name':user.name,
@@ -35,6 +35,8 @@ export default class App extends React.Component {
                 console.log(1)
             }, 2000);
         }
+
+
         // var qs = require('qs');
         //     axios.post(server + 'login',qs.stringify({
         //     'name':'admin',
@@ -49,7 +51,7 @@ export default class App extends React.Component {
         //     });
 
         //     setTimeout( () => {
-        //         axios.post(server + 'text',{})
+        //         axios.post(server + 'test',{})
         //             .then(function (response) {
         //                 console.log(response)
         //             })
@@ -61,14 +63,32 @@ export default class App extends React.Component {
 
 
         const instance = axios.create({
+            baseURL:'http://localhost:3000/',
             xhrFields: {
                 withCredentials: true
+            },
+            headers:{
+                'Content-Type': "application/json;charset=UTF-8"
             }
         })
-    
-        instance.interceptors.request.use(
-            console.log("登陆生效"),
-        )
+        // axios.interceptors.request.use(config => {
+        //     // 在请求头中添加token
+        //     config.headers["Content-type"] = "application/json;charset=UTF-d8";
+        //     return config;
+        // })
+        axios.interceptors.request.use(
+            config => {
+                console.log(config);
+                 config.headers.Authorization = "bdta";//把localStorage的token放在Authorization里
+                //  config.headers["Content-type"] = "application/json;charset=UTF-8";
+                 config.withCredentials = true;
+                return config;
+            },
+            function(err) {
+                console.log("失败信息" + err);
+            }
+        );
+
 
     }
     render() {
