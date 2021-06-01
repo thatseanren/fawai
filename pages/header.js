@@ -43,7 +43,6 @@ export default class App extends React.Component {
 
         // }
 
-        
 
 
         const instance = axios.create({
