@@ -11,13 +11,23 @@ import server, { option } from "../main_config";
 
 
 export default class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name:"Adcccmin",
+        };
+      }
     
     componentDidMount () {
         let user = Cookies.get('username');
         user=eval('(' + user + ')');
         console.log(user)
+        this.setState({
+            name: user.name
+        });
         
-        if(localStorage.getItem("login")){
+        // if(localStorage.getItem("login")){
             var qs = require('qs');
             axios.post(server + 'login',qs.stringify({
             'name':user.name,
@@ -31,34 +41,8 @@ export default class App extends React.Component {
                 console.log(error);
             });
 
-            setTimeout( () => {
-                console.log(1)
-            }, 2000);
-        }
+        // }
 
-
-        // var qs = require('qs');
-        //     axios.post(server + 'login',qs.stringify({
-        //     'name':'admin',
-        //     'password':'admin123456'
-        //     }))
-        //     .then(function (response) {
-        //         console.log(response)
-        //         response.status === 200 ? localStorage.setItem("login", "123") : ""
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-
-        //     setTimeout( () => {
-        //         axios.post(server + 'test',{})
-        //             .then(function (response) {
-        //                 console.log(response)
-        //             })
-        //             .catch(function (error) {
-        //                 console.log(error);
-        //             });
-        //     }, 2000);
         
 
 
@@ -120,9 +104,9 @@ export default class App extends React.Component {
             <div className={headerstyle.barRight}>
                 <div className={headerstyle.userNmae}>
                     <div className={headerstyle.portrait}>
-                        A
+                    {this.state.name[0].toUpperCase()}
                     </div>
-                    <span>Admin</span>
+                    <span>{this.state.name}</span>
                 </div>
                 <div className={headerstyle.noti}>
                 <NotificationsNone style={{ fontSize: 26}} />
