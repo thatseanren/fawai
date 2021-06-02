@@ -4,9 +4,9 @@ import Image from 'next/image';
 import axios from "axios";
 import Link from 'next/link';
 import NotificationsNone from '@material-ui/icons/NotificationsNone';
-import qs from 'qs';
 import headerstyle from'../styles/header.module.css';
 import Cookies from 'js-cookie';
+import Router  from 'next/router';
 import server, { option } from "../main_config";
 
 
@@ -19,30 +19,57 @@ export default class App extends React.Component {
         };
       }
     
-    componentDidMount () {
-        let user = Cookies.get('username');
-        user=eval('(' + user + ')');
-        console.log(user)
-        this.setState({
-            name: user.name
-        });
+      componentDidMount () {
+        console.log(Cookies.get('username'))
+        
+        if(Cookies.get('username')){
+            if(!localStorage.getItem("login")){
+                let user = Cookies.get('username');
+                user=eval('(' + user + ')');
+                console.log(user)
+                this.setState({
+                    name: user.name
+                });
+                var qs = require('qs');
+                axios.post(server + 'login',qs.stringify({
+                'name':user.name,
+                'password':user.password
+                }))
+                .then(function (response) {
+                    console.log(response)
+                    response.status === 200 ? localStorage.setItem("login", "123") : ""
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+            
+        } else {
+            localStorage.removeItem('login');
+            Router.push({
+                pathname:'http://10.78.4.88:890/page/login.html'
+            })
+        }
+        
         
         // if(localStorage.getItem("login")){
-            var qs = require('qs');
-            axios.post(server + 'login',qs.stringify({
-            'name':user.name,
-            'password':user.password
-            }))
-            .then(function (response) {
-                console.log(response)
-                response.status === 200 ? localStorage.setItem("login", "123") : ""
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            
 
         // }
 
+        // setTimeout( () => {
+        //     axios.post(server + 'test',{})
+        //     .then(function (response) {
+        //         console.log(response)
+        //         response.status === 200 ? localStorage.setItem("login", "123") : ""
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        //   }, 1000);
+        
+
+        
 
 
         const instance = axios.create({
@@ -61,7 +88,6 @@ export default class App extends React.Component {
         // })
         axios.interceptors.request.use(
             config => {
-                console.log(config);
                  config.headers.Authorization = "bdta";//把localStorage的token放在Authorization里
                 //  config.headers["Content-type"] = "application/json;charset=UTF-8";
                  config.withCredentials = true;

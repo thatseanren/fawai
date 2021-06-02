@@ -114,8 +114,8 @@ export default class Home extends React.Component<{}, HomeState> {
       });
   }
   componentDidMount() {
-    
-    this.grid(1)
+    setTimeout( () => {
+      this.grid(1)
     // localStorage.setItem("phone", "123")
     // //对象
     // let user = JSON.parse(localStorage.getItem("username"))
@@ -127,9 +127,9 @@ export default class Home extends React.Component<{}, HomeState> {
       threshold:[0.9,0.89,0.88,0.8,0.7,0.5,0]
     }
     let callback = (entries, observer) =>{
-      console.log(entries)
+      // console.log(entries)
       entries.forEach(entry =>{
-        console.log(entry)
+        // console.log(entry)
         if (entry.intersectionRatio < 1) document.querySelector('#header_>div:nth-of-type(1)').style.backgroundColor = 'black'
       })
      
@@ -153,6 +153,10 @@ export default class Home extends React.Component<{}, HomeState> {
         .catch(function (error) {
             console.log(error);
         });
+
+    }, 500);
+
+    
   }
 
   render() {
