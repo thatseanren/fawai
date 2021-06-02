@@ -18,29 +18,56 @@ export default class App extends React.Component {
             name:"Adcccmin",
         };
       }
+
+      login = value => {
+            let user = Cookies.get('account');
+            user=eval('(' + user + ')');
+            console.log(user)
+            this.setState({
+                name: user.name
+            });
+            var qs = require('qs');
+            axios.post(server + 'login',qs.stringify({
+            'name':user.name,
+            'password':user.password
+            }))
+            .then(function (response) {
+                console.log(response)
+                response.status === 200 ? localStorage.setItem("login", user.name) : ""
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     
       componentDidMount () {
-        console.log(Cookies.get('username'))
+        console.log(Cookies.get('account'))
         
-        if(Cookies.get('username')){
+        if(Cookies.get('account')){
             if(!localStorage.getItem("login")){
-                let user = Cookies.get('username');
-                user=eval('(' + user + ')');
-                console.log(user)
-                this.setState({
-                    name: user.name
-                });
-                var qs = require('qs');
-                axios.post(server + 'login',qs.stringify({
-                'name':user.name,
-                'password':user.password
-                }))
+                this.login()
+                
+                
+            } else {
+                axios.post(server + 'get_dataset_info',{})
                 .then(function (response) {
                     console.log(response)
-                    response.status === 200 ? localStorage.setItem("login", "123") : ""
                 })
                 .catch(function (error) {
                     console.log(error);
+                });
+                this.setState({
+                    name: localStorage.getItem("login")
+                });
+                axios.post(server + 'test',{})
+                .then(function (response) {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+                this.setState({
+                    name: localStorage.getItem("login")
                 });
             }
             
@@ -51,6 +78,7 @@ export default class App extends React.Component {
             })
         }
         
+
         
         // if(localStorage.getItem("login")){
             
