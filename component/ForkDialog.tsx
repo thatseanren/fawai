@@ -17,6 +17,7 @@ import axios from "axios";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import server, { option } from "../main_config";
 import ShareIcon from '@material-ui/icons/Share';
+import { Alert, AlertTitle } from '@material-ui/lab';
 const useStyles = makeStyles(
   {
     p14Gray: {
@@ -56,18 +57,45 @@ export function ForkDialog(props: any): any {
   const classes = useStyles();
   const [show, setShow] = useState<boolean>(false);
   const [dataSetName, setDataSetName] = useState<string>("");
+  const [errorshow, setErrorShow] = useState(3);
   const [accessibility, setAccessibility] = useState<string>("Public");
   const handleCreate = () => {
-    const obj: httpObject = {
-      dataSetName: dataSetName,
-      accessibility: accessibility,
-    };
-    axios.get(`${server}${option.forkDataSet}`);
+    var qs = require('qs');
+    axios.post(server + 'fork_dataset',qs.stringify({
+      'name':dataSetName,  //数据集名称
+      '_id':show,  //id
+      'accessibility':accessibility  //可见范围
+    }))
+      .then(function (response) {
+      console.log(response)
+      response.data.status === 1 ? setErrorShow(2) : setErrorShow(1)
+      setTimeout( () => {
+        setErrorShow(3)
+      }, 3000);
+          
+      })
+      .catch(function (error) {
+          console.log(error);
+    });
   };
   props.Syntec_ref.current = setShow;
+  console.log(show)
   return (
 
       <div style={{ position: "absolute", display: "flex" }}>
+        <div style={{position: 'fixed',left:"0px",right:"0px",top: "55px",display:errorshow === 3 ?'none':'block' }}>
+          {errorshow === 1 ? 
+          <Alert severity="error">
+            <AlertTitle>失败</AlertTitle>
+            您的数据集分解失败，请重新尝试 <strong>error</strong>
+          </Alert> :
+          <Alert severity="success">
+            <AlertTitle>成功</AlertTitle>
+            您的数据集创建成功 <strong>success</strong>
+          </Alert>
+          }
+        </div>
+
         <Dialog aria-labelledby="fork_dialog" open={show} className={"fasd"}>
           <DialogTitle > Fork数据集 </DialogTitle>
           <DialogContent dividers>
@@ -120,7 +148,7 @@ export function ForkDialog(props: any): any {
                   <div className={classes.flexMargin}>
                     {" "}
                     <Radio
-                      value={"Private"}
+                      value={"private"}
                       color="primary"
                       style={{ width: "24px", height: "24px" }}
                     />

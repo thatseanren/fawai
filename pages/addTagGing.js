@@ -115,7 +115,7 @@ export default class Detailed extends React.Component {
     componentDidMount () {
 
         const that=this
-        axios.get(server_ip + 'get_dataset_list',{})
+        axios.get(server_ip + 'get_dataset_list?accessibility=private',{})
         .then(function (response) {
             console.log(response)
             that.setState({
@@ -182,7 +182,7 @@ export default class Detailed extends React.Component {
                                     )}
                                 />
                                 <div className={Tag.dataList}>
-                                {this.state.dataBoxlist.map((item,index) =>{
+                                {this.state.dataBoxlist ? this.state.dataBoxlist.map((item,index) =>{
                                      return(
                                     <div className={this.state.dataIndex === index ? clsx(Tag.dataListBox,Tag.boxIndex) : Tag.dataListBox} key={item._id} onClick={() => {
                                         this.setState({
@@ -230,7 +230,7 @@ export default class Detailed extends React.Component {
                                         </div>
                                     </div>
                                     )
-                                })}
+                                }): ""}
                                 </div>
                             </div>
                             <div className={Tag.tagBoxList} style={{height:"600px",display:this.state.listShow === 1 ?'block' : 'none'}}>

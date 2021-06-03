@@ -201,7 +201,7 @@ export function ForkDialog(props: any): any {
                   <div className={classes.flexMargin}>
                     {" "}
                     <Radio
-                      value={"Private"}
+                      value={"private"}
                       color="primary"
                       style={{ width: "24px", height: "24px" }}
                     />

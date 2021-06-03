@@ -44,32 +44,9 @@ export default class App extends React.Component {
         console.log(Cookies.get('account'))
         
         if(Cookies.get('account')){
-            if(!localStorage.getItem("login")){
-                this.login()
-                
-                
-            } else {
-                axios.post(server + 'get_dataset_info',{})
-                .then(function (response) {
-                    console.log(response)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-                this.setState({
-                    name: localStorage.getItem("login")
-                });
-                axios.post(server + 'test',{})
-                .then(function (response) {
-                    console.log(response)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-                this.setState({
-                    name: localStorage.getItem("login")
-                });
-            }
+
+            this.login()
+    
             
         } else {
             localStorage.removeItem('login');
@@ -77,26 +54,6 @@ export default class App extends React.Component {
                 pathname:'http://10.78.4.88:890/page/login.html'
             })
         }
-        
-
-        
-        // if(localStorage.getItem("login")){
-            
-
-        // }
-
-        // setTimeout( () => {
-        //     axios.post(server + 'test',{})
-        //     .then(function (response) {
-        //         console.log(response)
-        //         response.status === 200 ? localStorage.setItem("login", "123") : ""
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-        //   }, 1000);
-        
-
         
 
 

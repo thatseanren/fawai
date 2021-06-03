@@ -80,7 +80,7 @@ export default class My extends React.Component<
     console.log(this.state.tags)
     var tas = tasks ? tasks : this.state.tasks
     axios 
-      .get(`${server}${option.dataset}`+"?limit=18&page="+ value +"&keywords="+this.state.valueName+"&tags="+tag+"&tasks="+tas)
+      .get(`${server}${option.dataset}`+"?limit=18&page="+ value +"&keywords="+this.state.valueName+"&tags="+tag+"&tasks="+tas+"&accessibility=private")
       .then((res) => {
         if (
           res.status === 200 &&

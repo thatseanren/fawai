@@ -262,7 +262,7 @@ export class Detailed extends React.Component {
                           >
                             <MenuList>
                               <MenuItem
-                                onClick={() => this.DialogRef.current(true)}
+                                onClick={() => this.DialogRef.current(this.props.urlQueryObj._id)}
                               >
                                 {" "}
                                 <ShareIcon
