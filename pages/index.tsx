@@ -44,11 +44,11 @@ export default class Home extends React.Component<{}, HomeState> {
       tasks:"",
       data: [{ 
         title:"标注类型",
-        arr: ['4','5'], 
+        arr: [], 
       },
       { 
         title:"数据格式",
-        arr: ['4','5'], 
+        arr: [], 
       },],
     }
   }

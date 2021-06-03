@@ -45,10 +45,14 @@ export default class Detailed extends React.Component {
             department:"",
             time:"",
             names:"",
+            datavalue:"",
 
         };
     }
     tarvalue = value => {
+        this.setState({
+            datavalue :value
+        })
         console.log(value)
     }
     next = value => {
@@ -101,6 +105,13 @@ export default class Detailed extends React.Component {
             listShow:numb
         })
     }
+
+    handleKeyDown = (e) => {
+        if (e.keyCode === 13) {
+            this.setData()
+        }
+      }
+
     error = value => {
         this.setState({
             errorspan :value,
@@ -112,10 +123,9 @@ export default class Detailed extends React.Component {
             })
         }, 3000);
     }
-    componentDidMount () {
-
+    setData = value => {
         const that=this
-        axios.get(server_ip + 'get_dataset_list?accessibility=private',{})
+        axios.get(server_ip + 'get_dataset_list?accessibility=private&keywords='+this.state.datavalue,{})
         .then(function (response) {
             console.log(response)
             that.setState({
@@ -125,6 +135,11 @@ export default class Detailed extends React.Component {
         .catch(function (error) {
             console.log(error);
         });
+    }
+    componentDidMount () {
+
+        this.setData()
+        
 
     }
     render() {
@@ -158,7 +173,7 @@ export default class Detailed extends React.Component {
                             </div>
                         </div>
                         <div className={Tag.tagBoxIndex}>
-                            <div className={Tag.tagBoxList} style={{overflow: 'hidden',height:"690px",display:this.state.listShow === 0 ?'block' : 'none'}}>
+                            <div className={Tag.tagBoxList} style={{overflow: 'hidden',height:"690px",overflowY: 'auto',display:this.state.listShow === 0 ?'block' : 'none'}}>
                                 <div className={Tag.tagBoxTitle}>
                                 选择数据集
                                 </div>
@@ -172,6 +187,7 @@ export default class Detailed extends React.Component {
                                         {...params}
                                         label="数据集名称"
                                         margin="normal"
+                                        onKeyDown={(e)=>this.handleKeyDown(e)}
                                         onChange={(e)=> this.tarvalue(e.target.value)}
                                         defaultValue="44"
                                         variant="outlined"
