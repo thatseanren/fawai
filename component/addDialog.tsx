@@ -167,10 +167,10 @@ export function ForkDialog(props: any): any {
                 </p>
                 <FormControl component="fieldset">
                   <RadioGroup aria-label="gender" name="gender1" style={{flexDirection:"row"}} value={category} onChange={handleChange}>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                    <FormControlLabel value="disabled" control={<Radio />} label="disabled" />
+                    <FormControlLabel value="2dBox" control={<Radio />} label="2dBox" />
+                    <FormControlLabel value="3dBox" control={<Radio />} label="3dBox" />
+                    <FormControlLabel value="Both" control={<Radio />} label="Both" />
+                    <FormControlLabel value="Segm" control={<Radio />} label="Segm" />
                 </RadioGroup>
                 </FormControl>
               </div>
