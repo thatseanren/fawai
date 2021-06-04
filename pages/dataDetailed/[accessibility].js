@@ -18,11 +18,16 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import clsx from "clsx";
 import Dataset from "../../component/DisplayDataset";
 import ForDialogWrapper from "../../component/ForkDialog";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Router  from 'next/router';
 import {
   Grow,
   Popper,
@@ -48,6 +53,7 @@ export class Detailed extends React.Component {
       openPopper: false,
       openlist: 0,
       opacity: 0,
+      open:false,
       img: "",
       showlist: 0, //显示隐藏数据列表
       isOpen: false,
@@ -108,6 +114,37 @@ export class Detailed extends React.Component {
     });
     // e.preventPro
   };
+  deleteData = value => {
+    this.setState({ 
+      open:true
+    });
+  }
+
+
+  deleteAgree = value => {
+      this.setState({ 
+        open:false
+      });
+      var qs = require('qs');  
+        axios.post(server_ip + 'del_dataset',qs.stringify({
+            '_id':this.props.urlQueryObj._id
+        }))
+      .then((response) => {
+        console.log(response)
+        if(response.status === 200){
+          setTimeout( () => {
+              Router.push({
+                  pathname:'../myDataSet'
+              })
+          }, 2000);
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   axios = (e) => {
     if (this.props.urlQueryObj.accessibility == undefined) {
       // this.axios()
@@ -140,6 +177,7 @@ export class Detailed extends React.Component {
     axios
       .get(server_ip + "get_dataset_list?_id=" + this.props.urlQueryObj._id, {})
       .then((response) => {
+        console.log(response)
         this.setState({
           basic: response.data.data[0],
         });
@@ -148,17 +186,45 @@ export class Detailed extends React.Component {
         console.log(error);
       });
   };
+  handleClose = () => {
+    this.setState({ 
+      open:false
+    });
+  };
   componentDidMount() {
     setTimeout(() => {
       this.axios();
     }, 500);
   }
   render() {
-    // let { accessibility } = this.props.router.query;
-    let { accessibility } = "private";
+    let { accessibility } = this.props.router.query;
+    // let { accessibility } = "private";
     return (
       <div>
         <Header />
+        <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/* <DialogTitle id="alert-dialog-title">{"删除提示"}</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+          确定要删除该标注任务?
+          </DialogContentText>
+        </DialogContent>
+        
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            取消
+          </Button>
+          <Button onClick={this.deleteAgree} color="primary" autoFocus>
+            确认
+          </Button>
+        </DialogActions>
+      </Dialog>
+
         {/* <ForkDialog ref={this.ForkRef} /> */}
         <div className={DataSet.home}>
           <div className={DataSet.grid}>
@@ -207,16 +273,70 @@ export class Detailed extends React.Component {
             </div>
             <div className={DataSet.dataButton}>
               {accessibility === "private" ? (
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  onClick={() => {
-                    this.ForkRef.current;
-                  }}
-                >
-                  管理数据1
-                </Button>
+                <>
+                  <Button
+                    ref={this.ButtonRef}
+                    style={{
+                      padding: "6px 8px",
+                    }}
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    aria-haspopup="true"
+                    aria-controls={
+                      this.state.openPopper ? "menu-list-grow" : undefined
+                    }
+                    onClick={(e) => {
+                      this.openPopper(e);
+                    }}
+                  >
+                    管理数据
+                    <ExpandMoreIcon style={{ marginLeft: "10px" }} />
+                  </Button>{" "}
+                  <Popper
+                    open={this.state.openPopper}
+                    anchorEl={this.ButtonRef.current}
+                    role={undefined}
+                    transition
+                  >
+                    {({ TransitionProps, placement }) => (
+                      <Grow
+                        {...TransitionProps}
+                        style={{
+                          transformOrigin:
+                            placement === "bottom"
+                              ? "center top"
+                              : "center bottom",
+                        }}
+                      >
+                        <Paper>
+                          <ClickAwayListener
+                            onClickAway={() => {
+                              this.openPopper();
+                            }}
+                          >
+                            <MenuList>
+                              <MenuItem
+                                onClick={() => this.deleteData()}
+                              >
+                                {" "}
+                                <ShareIcon
+                                  style={{
+                                    marginRight: "10px",
+                                    fontSize: "1.2rem",
+                                  }}
+                                />
+                                删除数据集
+                              </MenuItem>
+                              <MenuItem> Comming Soon</MenuItem>
+                              <MenuItem> Comming Soon </MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
+                </>
               ) : (
                 <>
                   <Button
