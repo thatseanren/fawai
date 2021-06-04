@@ -224,7 +224,7 @@ export default function Dataset(props: {
                           {category || "Category"}
                         </span>
                       </div>
-                      {<div className={classes.metaData_Div}> {tags}</div>}
+                      {<div className={classes.metaData_Div} style={{fontSize: '17px'}}> {tags}</div>}
                       <div className={classes.metaData_Div}>
                         <span style={{ fontSize: "12px" }}>
                           {department || "Author"}
