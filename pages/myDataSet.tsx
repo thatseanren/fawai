@@ -124,7 +124,7 @@ export default class My extends React.Component<
   componentDidMount() {
     this.fetchDataSetList(1);
     axios
-      .get(server + "get_dataset_info", {})
+      .get(server + "get_dataset_info?accessibility=private", {})
       .then((response) => {
         response.data.data;
         var setdata = this.state.data;
