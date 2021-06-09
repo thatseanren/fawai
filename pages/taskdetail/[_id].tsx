@@ -88,8 +88,8 @@ class TagDetails extends React.Component {
       list.push(
         <div className={Tag.tableList}>
           <div style={{ flex: "2 1 0%" }}>{a + 1}</div>
-          <div style={{ flex: "2 1 0%" }}>{this.state.data.each}</div>
-          <div style={{ flex: "3 1 0%" }}>{`1/${this.state.data.each}`}</div>
+          <div style={{ flex: "2 1 0%" }}>{this.state.data.num}</div>
+          <div style={{ flex: "3 1 0%" }}>{`${this.state.data.done}/${this.state.data.num}`}</div>
           <div style={{ flex: "6 1 0%" }}>Admin</div>
           <div style={{ flex: "3 1 0%" }}>
             <Link
@@ -97,7 +97,7 @@ class TagDetails extends React.Component {
                 this.state.data.dataset_id
               }&_taskID=${this.state.data._id}&sequence=${a}`}
             >
-              <Button variant="outlined" color="primary">
+              <Button  style={{display:this.state.data.num === 0 ? 'none' : 'block'}} variant="outlined" color="primary">
                 标注
               </Button>
             </Link>

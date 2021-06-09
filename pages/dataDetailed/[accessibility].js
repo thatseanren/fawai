@@ -59,6 +59,7 @@ export class Detailed extends React.Component {
       isOpen: false,
       imgurl: "",
       basic: [],
+      status:"",
       filedata: [
         {
           jpg: "455",
@@ -180,6 +181,7 @@ export class Detailed extends React.Component {
         console.log(response)
         this.setState({
           basic: response.data.data[0],
+          status:response.data.data[0].flag
         });
       })
       .catch(function (error) {
@@ -202,6 +204,11 @@ export class Detailed extends React.Component {
     return (
       <div>
         <Header />
+        <div style={{width:"400px",margin:"20px auto",paddingTop:"220px",display:this.state.status === 0 ? 'block' : 'none'}}>
+          <img style={{width:"100%"}} src="/qsy.png" />
+          <div style={{textAlign:"center",color:"#666",marginTop:"20px",fontWeight:"500",fontSize:"17px"}}>请等待数据分解</div>
+        </div>
+        <div style={{display:this.state.status === 1 ? 'block' : 'none'}}>
         <Dialog
         open={this.state.open}
         onClose={this.handleClose}
@@ -668,6 +675,7 @@ export class Detailed extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
