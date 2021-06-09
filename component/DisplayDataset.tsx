@@ -171,7 +171,7 @@ export default function Dataset(props: {
                     >
                       <img
                         className={classes.img}
-                        src={`${server}download?url=${img}`}
+                        src={img ? `${server}download?url=${img}` : '/imgqs.jpg'}
                       />
                       <div className={classes.miniLabel}>
                         <div className={classes.briefInfo}>

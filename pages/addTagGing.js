@@ -36,7 +36,7 @@ export default class Detailed extends React.Component {
             errorspan:"",
             errorShow:"none",
             dataNmae:"",//数据集名称
-            category:"2D矩形",
+            category:"2DBox",
             tag:[],
             dataBoxlist:[],
             type:"none",
@@ -213,7 +213,7 @@ export default class Detailed extends React.Component {
                                         })
                                       }}>
                                         <div className={Tag.boxImg}>
-                                            <img className={Tag.boxImgBack} src={server_ip+'download?url='+item.img} />
+                                            <img className={Tag.boxImgBack} src={item.img ? server_ip+'download?url='+item.img : '/imgqs.jpg'} />
                                             <div style={{position: 'absolute',right:"6px",top:"6px"}}>
                                                 {this.state.dataIndex === index ? 
                                                 <RadioButtonCheckedRoundedIcon style={{color:"#54ded1",fontSize:24}} /> :
@@ -286,10 +286,10 @@ export default class Detailed extends React.Component {
                                             category :event.target.value
                                         })
                                       }}>
-                                            <FormControlLabel value="2D矩形" control={<Radio />} label="2D矩形" />
-                                            <FormControlLabel value="分类" control={<Radio />} label="分类" />
-                                            <FormControlLabel value="2D多边形" control={<Radio />} label="2D多边形" />
-                                            <FormControlLabel value="2D折线" control={<Radio />} label="2D折线" />
+                                            <FormControlLabel value="2DBox" control={<Radio />} label="2DBox" />
+                                            <FormControlLabel value="3DBox" control={<Radio />} label="3DBox" />
+                                            <FormControlLabel value="2D多边形" control={<Radio />} label="Both" />
+                                            <FormControlLabel value="Segm" control={<Radio/>} label="Segm" />
                                         </RadioGroup>
                                     </FormControl>
                                 </div>
