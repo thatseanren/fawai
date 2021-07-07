@@ -10,6 +10,7 @@ interface API {
   forkDataSet: string;
   createTask: string;
   getTaskList: string;
+  getMeterail: string;
 }
 
 const option: API = {
@@ -18,6 +19,7 @@ const option: API = {
   createTask: "add_dtask",
   getTaskList: "get_dtask_list",
   getSingleTask: "get_onetask_filelist",
+  getMeterail: "download?url=",
 };
 export type A = keyof API;
 

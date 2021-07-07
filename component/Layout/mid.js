@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
 function MidPage(props) {
     var [offsetXY,] = React.useState([])
     var [clientXY,] = React.useState([])
+    console.log('fdsfdf',props)
     const HandleMouseDown = (event) => {
         console.log("currentBoundingBoxIndex:", store.getState().GeneralReducer.currentBoundingBoxIndex, "x", event.offsetX, 'y', event.offsetY)
         offsetXY = [event.offsetX, event.offsetY]
@@ -134,7 +135,7 @@ function MidPage(props) {
             <img
                 id="image"
                 src={
-                    "https://upload.wikimedia.org/wikipedia/commons/5/52/Sinsinawa_640_480.jpg"
+                   `${props.imageArray[props.currentFrameIndex]}`
                 }
                 alt="fdsa"
                 role="presentation"
