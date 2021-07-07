@@ -127,8 +127,9 @@ function MidPage(props) {
             document.querySelector('#image').removeEventListener("mouseup", HandleMouseUp)
         }
     })
-    return (<Grid item container wrap="nowrap" direction="column" alignItems="center" justify="center"
-        style={{ width: "64vw", height: "93vh", background: "#f4f4f4" }}>
+    return (
+        <Grid item container wrap="nowrap" direction="column" alignItems="center" justify="center"
+        style={{ width: "auto", background: "#f4f4f4" }}>
         <div position="relative">
             <img
                 id="image"
@@ -138,9 +139,9 @@ function MidPage(props) {
                 alt="fdsa"
                 role="presentation"
                 style={{
-                    width: 640,
+                    width: 1080,
                     // maxWidth: `${200}`,
-                    height: "480",
+                    height: 720,
                     maxHeight: `${3000}`,
                     display: "block"
                 }}

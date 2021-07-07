@@ -9,10 +9,18 @@ export default function Annotator() {
     return (
         <Provider store={store} >
             <Header />
-            <Grid container nowrap style={{position:"relative", top:56}}>
-                <MainAnnotator />
-                <Categories />
-                <Position />
+            <Grid container wrap="nowrap" direction="column" style={{ position: "relative", top: 56 }}>
+                <Grid item container>
+                    <div className="toolBar">
+                        
+                    </div>
+                </Grid>
+                <Grid item container wrap="nowrap">
+                    <MainAnnotator />
+                    <Categories />
+                </Grid>
+
+                {/* <Position /> */}
             </Grid>
         </Provider >
     )
