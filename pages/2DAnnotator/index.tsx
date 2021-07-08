@@ -26,6 +26,9 @@ const SaveToCloud_through_redud_store_button = connect(
   mapDispatchToProps
 )((props) => {
   const { SaveToCloud_through_redux_store, _taskID, sequence } = props;
+  React.useEffect(() => {
+    window.SaveToCloud_through_redux_store = SaveToCloud_through_redux_store
+  })
   return (
     <button
       style={{ display: "none" }}
