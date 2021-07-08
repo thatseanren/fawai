@@ -69,7 +69,7 @@ export default function Annotator(props) {
       });
       console.log(imageArray);
       console.log("Object keys",Object.keys(JSON.parse(response).data[0]) )
-      if ("json" in Object.keys(JSON.parse(response).data[0])) {
+      if (Object.keys(JSON.parse(response).data[0]).includes("json")) {
         annotationArray = JSON.parse(response).data.map((object, index) => {
           return object.json;
         });
