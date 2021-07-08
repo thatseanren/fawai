@@ -1,8 +1,8 @@
 import {
     REMOVEBOUNDINGBOX, UPDATEBOUNDINGBOX,
-    HANDLEMOUSEUP, HANDLERESIZE
+    HANDLEMOUSEUP, HANDLERESIZE, HANDLESAVETOCLOUD
 } from '../action/actionConstant'
-
+import FAWAI_ip, { option,test_ip } from '../../main_config'
 const state = []
 for (let a = 0; a < 50; a++) {
     state.push([])
@@ -38,6 +38,24 @@ const BoundingBoxCollection = (state = Array.from(Array(50), () => []), { type, 
                 drawX: payload.drawX,
                 drawY: payload.drawY
             }
+            return NewState
+        case HANDLESAVETOCLOUD:
+            const { _id, _taskID, sequence } = payload
+            const annotation = JSON.stringify(NewState)
+            const SynchronouseAnnotation_UI = new XMLHttpRequest()
+            SynchronouseAnnotation_UI.open("POST", `${FAWAI_ip}${option.sendAnnotation}`)
+            SynchronouseAnnotation_UI.onreadystatechange = function () {
+                // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    console.log(this);
+                }
+            };
+            SynchronouseAnnotation_UI.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            SynchronouseAnnotation_UI.setRequestHeader("Authorization", "bdta")
+            SynchronouseAnnotation_UI.withCredentials = true
+            SynchronouseAnnotation_UI.send(
+                `data=${annotation}&_id=${_taskID}&index=${sequence}`
+            );
             return NewState
         default:
     }
