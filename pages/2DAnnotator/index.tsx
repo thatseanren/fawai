@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 const SaveToCloud_through_redud_store_button = connect(null, mapDispatchToProps)((props) => {
     const { SaveToCloud_through_redux_store } = props
-   window.SaveToCloud_through_redux_store = SaveToCloud_through_redux_store
+//    window.SaveToCloud_through_redux_store = SaveToCloud_through_redux_store
    return <button style={{display: 'none'}} />
 })
 
