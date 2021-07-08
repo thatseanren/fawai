@@ -59,6 +59,7 @@ export default function Annotator(props) {
     imageRequest.withCredentials = true;
     imageRequest.addEventListener("load", ({ target }) => {
       let { status, response, responseURL } = target;
+      console.log("My data retrieved ",JSON.parse(response).data)
       imageArray = JSON.parse(response).data.map((object, index) => {
         return object.jpg;
       });
