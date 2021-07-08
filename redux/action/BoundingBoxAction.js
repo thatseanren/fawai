@@ -1,4 +1,4 @@
-import {  REMOVEBOUNDINGBOX, UPDATEBOUNDINGBOX, HANDLEMOUSEUP,HANDLERESIZE } from './actionConstant'
+import {  REMOVEBOUNDINGBOX, UPDATEBOUNDINGBOX, HANDLEMOUSEUP,HANDLERESIZE,HANDLESAVETOCLOUD } from './actionConstant'
 
 export const createUpdateBoudingBoxAction = (payload) => ({
     type: UPDATEBOUNDINGBOX,
@@ -17,3 +17,8 @@ export const createHandleMouseUpAction = (event,) => ({
 export const createResizeAction = () => ({
     type: HANDLERESIZE,
 })
+export const createSaveToCloudAction = (taskInfo) => ({
+    type: HANDLESAVETOCLOUD,
+    payload: taskInfo
+})
+
