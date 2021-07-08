@@ -26,9 +26,8 @@ const mapDispatchToProps = (dispatch) => ({
 function MidPage(props) {
     var [offsetXY,] = React.useState([])
     var [clientXY,] = React.useState([])
-    console.log('fdsfdf',props)
     const HandleMouseDown = (event) => {
-        console.log("currentBoundingBoxIndex:", store.getState().GeneralReducer.currentBoundingBoxIndex, "x", event.offsetX, 'y', event.offsetY)
+        // console.log("currentBoundingBoxIndex:", store.getState().GeneralReducer.currentBoundingBoxIndex, "x", event.offsetX, 'y', event.offsetY)
         offsetXY = [event.offsetX, event.offsetY]
         clientXY = [event.clientX, event.clientY]
     }
@@ -119,6 +118,7 @@ function MidPage(props) {
     }
 
     React.useEffect(() => {
+
         console.log("BOundingBOX-Re-render!")
         // props.setCurrentBoundingBoxIndex(props.entireBoundingBox[props.current_frame].length)
         document.querySelector('#image').addEventListener("mousedown", HandleMouseDown)
@@ -154,7 +154,8 @@ function MidPage(props) {
                     event.preventDefault()
                 }}
             />
-            {renderBB()}
+                {typeof document !== "undefined" && renderBB()}
+    
         </div>
         <div className={"changeFrame"} style={{
             width: "20%",
