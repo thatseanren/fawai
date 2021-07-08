@@ -59,18 +59,21 @@ export default function Annotator(props) {
       imageArray = JSON.parse(response).data.map((object, index) => {
         return object.jpg;
       });
-      annotationArray = JSON.parse(response).data.map((object, index) => {
-        return object.json;
-      });
-      annotationArray = annotationArray.map((address) => {
-        return `${dataServer}/${option.getMeterail}${address}`;
-      });
-      console.log(imageArray);
+
       imageArray = imageArray.map((address) => {
         return `${dataServer}/${option.getMeterail}${address}`;
       });
-      console.log(annotationArray);
-      setAnnotationArray(annotationArray);
+      console.log(imageArray);
+      if ("json" in Object.keys(JSON.parse(response).data[0])) {
+        annotationArray = JSON.parse(response).data.map((object, index) => {
+          return object.json;
+        });
+        annotationArray = annotationArray.map((address) => {
+          return `${dataServer}/${option.getMeterail}${address}`;
+        });
+        console.log("加载已有标注", annotationArray);
+        setAnnotationArray(annotationArray);
+      }
       setImageArray(imageArray);
     });
     imageRequest.send();
