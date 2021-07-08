@@ -45,7 +45,7 @@ export default function Annotator(props) {
   const { _id, _taskID, sequence } = router.query;
   console.log("router.query", router.query);
   var [imageArray, setImageArray] = React.useState([]);
-
+  var [annotationArray, setAnnotationArray] = React.useState([]);
   React.useEffect(() => {
     const imageRequest = new XMLHttpRequest();
     imageRequest.open(
@@ -59,10 +59,18 @@ export default function Annotator(props) {
       imageArray = JSON.parse(response).data.map((object, index) => {
         return object.jpg;
       });
+      annotationArray = JSON.parse(response).data.map((object, index) => {
+        return object.json;
+      });
+      annotationArray = annotationArray.map((address) => {
+        return `${dataServer}/${option.getMeterail}${address}`;
+      });
       console.log(imageArray);
       imageArray = imageArray.map((address) => {
         return `${dataServer}/${option.getMeterail}${address}`;
       });
+      console.log(annotationArray);
+      setAnnotationArray(annotationArray);
       setImageArray(imageArray);
     });
     imageRequest.send();
