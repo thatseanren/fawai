@@ -68,6 +68,7 @@ export default function Annotator(props) {
         return `${dataServer}/${option.getMeterail}${address}`;
       });
       console.log(imageArray);
+      console.log("Object keys",Object.keys(JSON.parse(response).data[0]) )
       if ("json" in Object.keys(JSON.parse(response).data[0])) {
         annotationArray = JSON.parse(response).data.map((object, index) => {
           return object.json;
