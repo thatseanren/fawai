@@ -130,7 +130,10 @@ function MidPage(props) {
     })
     return (
         <Grid item container wrap="nowrap" direction="column" alignItems="center" justify="center"
-        style={{ width: "auto", background: "#f4f4f4" }}>
+        style={{background: "#000",justifyContent: "flex-start",height:"100%" }}>
+            <div style={{height:"48px",background: "#272a42",width:"100%"}}>
+
+</div>
         <div position="relative">
             <img
                 id="image"
