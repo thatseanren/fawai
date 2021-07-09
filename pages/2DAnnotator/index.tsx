@@ -128,7 +128,7 @@ export default function Annotator(props) {
                     </div>
                 </div>
                 <div style={{height:"100%",display:"flex"}}>            
-                    <MainAnnotator />
+                    <MainAnnotator imageArray={imageArray} />
                     <Categories />
                     {/* <Position /> */}
                 </div>
