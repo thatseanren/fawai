@@ -169,7 +169,7 @@ function MidPage(props) {
             marginTop: "10px"
         }}
         >
-            <div style={{ width: "30px", height: "30px", cursor: "pointer", background: "#e3e5e4", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px" }}>
+            {/* <div style={{ width: "30px", height: "30px", cursor: "pointer", background: "#e3e5e4", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px" }}>
                 <Button onClick={props.previousFrame}> < ChevronLeftIcon style={{ fontSize: "18" }} /></Button>
             </div>
             <div style={{
@@ -182,7 +182,7 @@ function MidPage(props) {
             <div style={{ width: "30px", height: "30px", cursor: "pointer", background: "#e3e5e4", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px" }}>
                 <Button onClick={props.nextFrame}>  < ChevronRightIcon style={{ fontSize: "18" }} />
 
-                </Button></div>
+                </Button></div> */}
         </div>
     </Grid>)
 }
