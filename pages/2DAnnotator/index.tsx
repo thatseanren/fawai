@@ -11,7 +11,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { useRouter } from 'next/router'
 interface taskInfo {
   taskid: string;
   sequence: number;
