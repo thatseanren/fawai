@@ -13,6 +13,7 @@ import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
+import store from '../../redux'
 interface taskInfo {
   taskid: string;
   sequence: number;
