@@ -9,7 +9,13 @@ import { useRouter } from "next/router";
 import dataServer, { option } from "../../main_config";
 import { connect } from "react-redux";
 import { createSaveToCloudAction } from "../../redux/action/BoundingBoxAction";
+import DataSet from "../../styles/DataSet.module.css";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Button from '@material-ui/core/Button';
 import store from "../../redux";
+import SaveIcon from '@material-ui/icons/Save';
 interface taskInfo {
   taskid: string;
   sequence: number;
@@ -84,28 +90,92 @@ export default function Annotator(props) {
     imageRequest.send();
   }, [router.query]);
   return (
-    <Provider store={store}>
-      <Header />
-      <Grid
-        container
-        wrap="nowrap"
-        direction="column"
-        style={{ position: "relative", top: 56 }}
-      >
-        <Grid item container>
-          <div className="toolBar"></div>
-        </Grid>
-        <Grid item container wrap="nowrap">
-          <MainAnnotator imageArray={imageArray} />
-          <Categories />
-        </Grid>
-        <SaveToCloud_through_redud_store_button
-          _taskID={_taskID}
-          sequence={sequence}
-        />
-        {/* {false && <SaveToCloud_through_redud_store_button />} */}
-        {/* <Position /> */}
-      </Grid>
+    <Provider store={store} >
+       <Grid container wrap="nowrap" direction="column" style={{ position: "absolute",top:"0px",bottom:"0px"}}>
+                <div className={DataSet.sheet}>
+                    <div style={{display: "flex",alignItems: "center",height:"100%"}}>
+                        <div style={{flexGrow: "1"}}></div>
+                        <div className={DataSet.numb_list}>1 / 5589</div>
+                        <div>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                className={DataSet.sub}
+                                startIcon={<SaveIcon />}
+                            >
+                                保存并退出
+                            </Button>
+                        </div>
+                        <div>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            className={DataSet.pagenet}
+                            startIcon={<ArrowBackIosIcon />}
+                        >
+                            上一页
+                        </Button>
+                        </div>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            className={DataSet.pagenet}
+                            endIcon={<ArrowForwardIosIcon />}
+                        >
+                            下一页
+                        </Button>
+                        
+                    </div>
+                </div>
+                <div style={{height:"100%",display:"flex"}}>            
+                    <MainAnnotator />
+                    <Categories />
+                    {/* <Position /> */}
+                </div>
+
+                
+            </Grid>
     </Provider>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    // <Provider store={store}>
+    //   <Header />
+    //   <Grid
+    //     container
+    //     wrap="nowrap"
+    //     direction="column"
+    //     style={{ position: "relative", top: 56 }}
+    //   >
+    //     <Grid item container>
+    //       <div className="toolBar"></div>
+    //     </Grid>
+    //     <Grid item container wrap="nowrap">
+    //       <MainAnnotator imageArray={imageArray} />
+    //       <Categories />
+    //     </Grid>
+    //     <SaveToCloud_through_redud_store_button
+    //       _taskID={_taskID}
+    //       sequence={sequence}
+    //     />
+    //     {/* {false && <SaveToCloud_through_redud_store_button />} */}
+    //     {/* <Position /> */}
+    //   </Grid>
+    // </Provider>
   );
 }
