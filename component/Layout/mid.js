@@ -26,8 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
 function MidPage(props) {
     var [offsetXY,] = React.useState([])
     var [clientXY,] = React.useState([])
+    console.log('fdsfdf', props)
     const HandleMouseDown = (event) => {
-        // console.log("currentBoundingBoxIndex:", store.getState().GeneralReducer.currentBoundingBoxIndex, "x", event.offsetX, 'y', event.offsetY)
+        console.log("currentBoundingBoxIndex:", store.getState().GeneralReducer.currentBoundingBoxIndex, "x", event.offsetX, 'y', event.offsetY)
         offsetXY = [event.offsetX, event.offsetY]
         clientXY = [event.clientX, event.clientY]
     }
@@ -102,7 +103,7 @@ function MidPage(props) {
         const offsetVY = imageElement ? imageElement.offsetTop : 0
         return props.entireBoundingBox[props.currentFrameIndex].map((value, index) => {
             return < BoundingBox
-                backdropFilter = "opacity(0.5)"
+                backdropFilter="opacity(0.5)"
                 backgroundColor="transparent"
                 cursor="pointer"
                 color={class_colors[value.category]}
@@ -118,7 +119,6 @@ function MidPage(props) {
     }
 
     React.useEffect(() => {
-
         console.log("BOundingBOX-Re-render!")
         // props.setCurrentBoundingBoxIndex(props.entireBoundingBox[props.current_frame].length)
         document.querySelector('#image').addEventListener("mousedown", HandleMouseDown)
@@ -130,43 +130,45 @@ function MidPage(props) {
     })
     return (
         <Grid item container wrap="nowrap" direction="column" alignItems="center" justify="center"
-        style={{ width: "auto", background: "#f4f4f4" }}>
-        <div position="relative">
-            <img
-                id="image"
-                src={
-                   `${props.imageArray[props.currentFrameIndex]}`
-                }
-                alt="fdsa"
-                role="presentation"
-                style={{
-                    width: 1080,
-                    // maxWidth: `${200}`,
-                    height: 720,
-                    maxHeight: `${3000}`,
-                    display: "block"
-                }}
-                onDragOver={(e) => {
-                    e.preventDefault()
-                }}
-                draggable={false}
-                onContextMenu={event => {
-                    event.preventDefault()
-                }}
-            />
-                {typeof document !== "undefined" && renderBB()}
-    
-        </div>
-        <div className={"changeFrame"} style={{
-            width: "20%",
-            float: "left",
-            display: "flex",
-            justifyContent: "center",
-            color: "#1976d3",
-            marginTop: "10px"
-        }}
-        >
-            <div style={{ width: "30px", height: "30px", cursor: "pointer", background: "#e3e5e4", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px" }}>
+            style={{ background: "#000", justifyContent: "flex-start", height: "100%" }}>
+            <div style={{ height: "48px", background: "#272a42", width: "100%" }}>
+
+            </div>
+            <div>
+                <img
+                    id="image"
+                    src={
+                        `${props.imageArray[props.currentFrameIndex]}`
+                    }
+                    alt="fdsa"
+                    role="presentation"
+                    style={{
+                        width: 1080,
+                        // maxWidth: `${200}`,
+                        height: 720,
+                        maxHeight: `${3000}`,
+                        display: "block"
+                    }}
+                    onDragOver={(e) => {
+                        e.preventDefault()
+                    }}
+                    draggable={false}
+                    onContextMenu={event => {
+                        event.preventDefault()
+                    }}
+                />
+                {renderBB()}
+            </div>
+            <div className={"changeFrame"} style={{
+                width: "20%",
+                float: "left",
+                display: "flex",
+                justifyContent: "center",
+                color: "#1976d3",
+                marginTop: "10px"
+            }}
+            >
+                {/* <div style={{ width: "30px", height: "30px", cursor: "pointer", background: "#e3e5e4", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px" }}>
                 <Button onClick={props.previousFrame}> < ChevronLeftIcon style={{ fontSize: "18" }} /></Button>
             </div>
             <div style={{
@@ -179,8 +181,8 @@ function MidPage(props) {
             <div style={{ width: "30px", height: "30px", cursor: "pointer", background: "#e3e5e4", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px" }}>
                 <Button onClick={props.nextFrame}>  < ChevronRightIcon style={{ fontSize: "18" }} />
 
-                </Button></div>
-        </div>
-    </Grid>)
+                </Button></div> */}
+            </div>
+        </Grid>)
 }
 export default connect(mapStatesToProps, mapDispatchToProps)(MidPage)
